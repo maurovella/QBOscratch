@@ -1,10 +1,9 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 
 from multiprocessing import Process, Queue
 import time
 import fileinput
-import thread
 import readline
 import serial
 
@@ -25,15 +24,15 @@ if len(sys.argv) == 1:
         line = ""
         while (1):
                 idx = 0
-	        print("Opening FIFO...")
-                line = raw_input('QBO_>> ')
-        	with open(FIFO_cmd, 'w') as fifo:
-                	print("FIFO opened")
-			print "line: ", line
-			fifo.write(line)
-			if (line == "exit" or line == "quit"):
-				sys.exit()
-			fifo.close()
+                print("Opening FIFO...")
+                line = input('QBO_>> ')
+                with open(FIFO_cmd, 'w') as fifo:
+                        print("FIFO opened")
+                        print("line: ", line)
+                        fifo.write(line)
+                        if (line == "exit" or line == "quit"):
+                                sys.exit()
+                        fifo.close()
 sys.exit()
 
 

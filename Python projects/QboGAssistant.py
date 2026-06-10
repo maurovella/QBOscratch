@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 import io
 import json
@@ -59,10 +59,12 @@ class GAssistant:
 
     def process_event(self, event):
         if event.type == EventType.ON_CONVERSATION_TURN_STARTED:
-	    if self.doBlip:
+            if self.doBlip:
                 blip = "aplay /home/pi/Documents/blip.wav"
-	        result = subprocess.call(blip, shell = True)
-                self.doBlip = True
+                result = subprocess.call(blip, shell = True)
+            # rearmar siempre: si la conversacion vino de la cara (doBlip=False),
+            # el reset dentro del if dejaba el blip apagado para siempre
+            self.doBlip = True
             self.onConversation = True
         
         if event.type == EventType.ON_CONVERSATION_TURN_FINISHED:

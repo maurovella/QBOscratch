@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 from multiprocessing import Process, Queue
 import subprocess
@@ -18,10 +18,10 @@ try:
         print(port)
         # Open serial port
         ser = serial.Serial(port, baudrate=115200, bytesize = serial.EIGHTBITS, stopbits = serial.STOPBITS_ONE, parity = serial.PARITY_NONE, rtscts = False, dsrdtr =False, timeout = 0)
-        print "Open serial port sucessfully."
+        print("Open serial port sucessfully.")
         print(ser.name)
 except:
-        print "Error opening serial port."
+        print("Error opening serial port.")
         sys.exit()
 
 HeadServo = QboCmd.Controller(ser)
@@ -39,9 +39,10 @@ def WaitForTouch():
                     touch_str = "Touch: left"
 
                 if touch == [1] or touch == [2] or touch == [3]:
-	                print(touch_str + "TO FIFO FEEL" )
-			fifo = os.open(FIFO_feel, os.O_WRONLY)
-			os.write(fifo, touch_str)
+                        print(touch_str + "TO FIFO FEEL" )
+                        fifo = os.open(FIFO_feel, os.O_WRONLY)
+                        os.write(fifo, touch_str.encode())
+                        os.close(fifo)
         time.sleep(.250)
         return touch_str
 
@@ -57,5 +58,5 @@ except OSError as oe:
         raise
 
 while True:
-	time.sleep(1)
+        time.sleep(1)
         WaitForTouch()

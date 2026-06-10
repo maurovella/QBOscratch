@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 from multiprocessing import Process, Queue
 import subprocess
@@ -11,6 +11,7 @@ import binascii
 import sys
 import time
 import yaml
+import shlex
 import QBOtalk
 
 Qbo = QBOtalk.QBOtalk()
@@ -22,23 +23,33 @@ listen_thd = 0
 def SayFromFifo():
         print("Opening FIFO...")
         fifo = os.open(FIFO_say, os.O_RDONLY | os.O_NONBLOCK)
-	try:
-       	        data = os.read(fifo, 100)
-	except OSError as oe: 
-		if oe.errno != 11: #errno.EEXIST:
-       			raise
+        # leer hasta EOF/EAGAIN y decodificar al final: un solo read(100)
+        # podia truncar el mensaje o partir un caracter UTF-8
+        raw = b""
+        try:
+                while True:
+                        chunk = os.read(fifo, 4096)
+                        if not chunk:
+                                break
+                        raw += chunk
+        except OSError as oe:
+                if oe.errno != errno.EAGAIN:
+                        raise
 
-       	os.close(fifo)
+        os.close(fifo)
+        data = raw.decode("utf-8", errors="replace")
 
         if data:
-	        config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+                config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
 
                 print('Read: "{0}"'.format(data))
-                if config["languaje"] == "english":
-                        speak = "espeak -ven+f3 \"" + data + "\" --stdout  | aplay -D convertQBO"
-                elif config["languaje"] == "spanish":
-                        speak = "espeak -v mb-es2 -s 120 \"" + data + "\" --stdout  | aplay -D convertQBO"
-                print "Talk: " + speak
+                # shlex.quote: el texto viene del FIFO; sin escapar,
+                # una comilla rompe el comando (inyeccion de shell)
+                if config["language"] == "spanish":
+                        speak = "espeak -v mb-es2 -s 120 " + shlex.quote(data) + " --stdout  | aplay -D convertQBO"
+                else:
+                        speak = "espeak -ven+f3 " + shlex.quote(data) + " --stdout  | aplay -D convertQBO"
+                print("Talk: " + speak)
                 result = subprocess.call(speak, shell = True)
 
 
@@ -49,14 +60,14 @@ def WaitForSpeech():
                 return
         elif Qbo.GetAudio == True:
 #                HeadServo.SetNoseColor(0)       #Off QBO nose brigth
-		fifo = os.open(FIFO_cmd, os.O_WRONLY)
-                os.write(fifo, "-c nose -co red")
-		os.close(fifo)
+                fifo = os.open(FIFO_cmd, os.O_WRONLY)
+                os.write(fifo, b"-c nose -co red")
+                os.close(fifo)
                 listen_thd(wait_for_stop = True)
                 print("Ha llegado algo al WaitForSpeech: " + Qbo.strAudio)
-		fifo = os.open(FIFO_listen, os.O_WRONLY)
-		os.write(fifo, Qbo.strAudio)
-		os.close(fifo)
+                fifo = os.open(FIFO_listen, os.O_WRONLY)
+                os.write(fifo, Qbo.strAudio.encode())
+                os.close(fifo)
         return
 
 
@@ -82,26 +93,26 @@ except OSError as oe:
 listen_thd = Qbo.StartBackListen()
 #HeadServo.SetNoseColor(1)       # Set QBO nose green
 fifo = os.open(FIFO_cmd, os.O_WRONLY)
-os.write(fifo, "-c nose -co green")
+os.write(fifo, b"-c nose -co green")
 os.close(fifo)
 
 
 while True:
-	SayFromFifo()
+        SayFromFifo()
         WaitForSpeech()
         if Qbo.GetAudio == True:
-	    fifo = os.open(FIFO_cmd, os.O_WRONLY)
-            os.write(fifo, "-c nose -co red")
-	    os.close(fifo)
+            fifo = os.open(FIFO_cmd, os.O_WRONLY)
+            os.write(fifo, b"-c nose -co red")
+            os.close(fifo)
             # HeadServo.SetNoseColor(0)       #Off QBO nose brigth
             time.sleep(1)
             print("StartBackListen")
             try:
                 listen_thd = Qbo.StartBackListen()
 #                HeadServo.SetNoseColor(1)       # Set QBO nose green
-		fifo = os.open(FIFO_cmd, os.O_WRONLY)
-                os.write(fifo, "-c nose -co green")
-	    	os.close(fifo)
+                fifo = os.open(FIFO_cmd, os.O_WRONLY)
+                os.write(fifo, b"-c nose -co green")
+                os.close(fifo)
                 Qbo.GetAudio = False
             except:
                 print("StartBackListe EXCEPTION")

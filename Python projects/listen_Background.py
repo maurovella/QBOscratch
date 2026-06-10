@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 from multiprocessing import Process, Queue
 import subprocess
@@ -25,14 +25,14 @@ def WaitForSpeech():
                 return
         elif Qbo.GetAudio == True:
 #                HeadServo.SetNoseColor(0)       #Off QBO nose brigth
-		fifo = os.open(FIFO_cmd, os.O_WRONLY)
-                os.write(fifo, "-c nose -co red")
-		os.close(fifo)
+                fifo = os.open(FIFO_cmd, os.O_WRONLY)
+                os.write(fifo, b"-c nose -co red")
+                os.close(fifo)
                 listen_thd(wait_for_stop = True)
                 print("Ha llegado algo al WaitForSpeech: " + Qbo.strAudio)
-		fifo = os.open(FIFO_listen, os.O_WRONLY)
-		os.write(fifo, Qbo.strAudio)
-		os.close(fifo)
+                fifo = os.open(FIFO_listen, os.O_WRONLY)
+                os.write(fifo, Qbo.strAudio.encode())
+                os.close(fifo)
         return
 
 
@@ -57,25 +57,25 @@ except OSError as oe:
 listen_thd = Qbo.StartBackListen()
 #HeadServo.SetNoseColor(1)       # Set QBO nose green
 fifo = os.open(FIFO_cmd, os.O_WRONLY)
-os.write(fifo, "-c nose -co green")
+os.write(fifo, b"-c nose -co green")
 os.close(fifo)
 
 
 while True:
         WaitForSpeech()
         if Qbo.GetAudio == True:
-	    fifo = os.open(FIFO_cmd, os.O_WRONLY)
-            os.write(fifo, "-c nose -co red")
-	    os.close(fifo)
+            fifo = os.open(FIFO_cmd, os.O_WRONLY)
+            os.write(fifo, b"-c nose -co red")
+            os.close(fifo)
             # HeadServo.SetNoseColor(0)       #Off QBO nose brigth
             time.sleep(1)
             print("StartBackListen")
             try:
                 listen_thd = Qbo.StartBackListen()
 #                HeadServo.SetNoseColor(1)       # Set QBO nose green
-		fifo = os.open(FIFO_cmd, os.O_WRONLY)
-                os.write(fifo, "-c nose -co green")
-	    	os.close(fifo)
+                fifo = os.open(FIFO_cmd, os.O_WRONLY)
+                os.write(fifo, b"-c nose -co green")
+                os.close(fifo)
                 Qbo.GetAudio = False
             except:
                 print("StartBackListe EXCEPTION")

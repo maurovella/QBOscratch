@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 # NOTE: this example requires PyAudio because it uses the Microphone class
 
@@ -7,21 +7,21 @@
 
 import speech_recognition as sr
 import subprocess
-import pipes
 import json
 import apiai
 import time
 import yaml
 import os
 import wave
+import shlex
 # from gtts import gTTS
 
 class QBOtalk:
     def __init__(self):
-	config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
 
         CLIENT_ACCESS_TOKEN = config["tokenAPIai"]
-	print "TOKEN: " + CLIENT_ACCESS_TOKEN
+        print("TOKEN: " + CLIENT_ACCESS_TOKEN)
 #	You can enter your token in the next line
 #        CLIENT_ACCESS_TOKEN = 'YOUR_TOKEN'
         # obtain audio from the microphone
@@ -31,28 +31,34 @@ class QBOtalk:
         self.GetResponse = False
         self.GetAudio = False
         self.strAudio = ""
-	self.config = config
+        self.config = config
         
+        self.m = None
         for i, mic_name in enumerate (sr.Microphone.list_microphone_names()):
             if(mic_name == "dmicQBO_sv"):
                 self.m = sr.Microphone(i)
-        with self.m as source:        
+        if self.m is None:
+            raise RuntimeError("Microfono 'dmicQBO_sv' no encontrado. Disponibles: "
+                               + str(sr.Microphone.list_microphone_names()))
+        with self.m as source:
             self.r.adjust_for_ambient_noise(source)
 
     def Decode(self, audio):
         try:
             # print(r.recognize_google(audio,language="es-ES"))
 
-	    if (self.config["language"] == "spanish"):
-	            str = self.r.recognize_google(audio, language="es-ES")
+            if (self.config["language"] == "spanish"):
+                    str = self.r.recognize_google(audio, language="es-ES")
             else:
-		    str = self.r.recognize_google(audio)
-	    print "LISTEN: " + str
+                    str = self.r.recognize_google(audio)
+            print("LISTEN: " + str)
             request = self.ai.text_request()
 #	    request.lang = 'es'
             request.query = str
             response = request.getresponse()
             jsonresp = response.read()
+            if isinstance(jsonresp, bytes):
+                jsonresp = jsonresp.decode("utf-8")
             data = json.loads(jsonresp)
             str_resp = data["result"]["fulfillment"]["speech"]
 
@@ -60,32 +66,37 @@ class QBOtalk:
             str_resp = ""
         except sr.RequestError as e:
             str_resp = "Could not request results from Speech Recognition service"
+        except (KeyError, TypeError, ValueError):
+            # la API v1 de Dialogflow (apiai) fue apagada por Google en 2020;
+            # la respuesta ya no trae result.fulfillment.speech
+            print("Decode: respuesta del NLU sin formato esperado (servicio apiai discontinuado)")
+            str_resp = ""
         return str_resp
 
     def downsampleWav(self, src):
-	print "src: " + src
+        print("src: " + src)
         s_read = wave.open(src, 'r')
-	print "frameRate: " + s_read.getframerate()
-	s_read.setframerate(16000)
-	print "frameRate_2: " + s_read.getframerate()
-	return
+        print("frameRate: " + str(s_read.getframerate()))
+        s_read.setframerate(16000)
+        print("frameRate_2: " + str(s_read.getframerate()))
+        return
 
 
     def downsampleWave_2(self, src, dst, inrate, outrate, inchannels, outchannels):
         if not os.path.exists(src):
-            print 'Source not found!'
+            print('Source not found!')
             return False
 
         if not os.path.exists(os.path.dirname(dst)):
-	    print "dst: " + dst
-	    print "path: " + os.path.dirname(dst)
+            print("dst: " + dst)
+            print("path: " + os.path.dirname(dst))
             os.makedirs(os.path.dirname(dst))
 
         try:
             s_read = wave.open(src, 'r')
             s_write = wave.open(dst, 'w')
         except:
-            print 'Failed to open files!'
+            print('Failed to open files!')
             return False
 
         n_frames = s_read.getnframes()
@@ -96,35 +107,36 @@ class QBOtalk:
             if outchannels == 1:
                 converted = audioop.tomono(converted[0], 2, 1, 0)
         except:
-            print 'Failed to downsample wav'
+            print('Failed to downsample wav')
             return False
 
         try:
             s_write.setparams((outchannels, 2, outrate, 0, 'NONE', 'Uncompressed'))
             s_write.writeframes(converted)
         except:
-            print 'Failed to write wav'
+            print('Failed to write wav')
             return False
 
         try:
             s_read.close()
             s_write.close()
         except:
-            print 'Failed to close wav files'
+            print('Failed to close wav files')
             return False
 
         return True
 
     def SpeechText(self, text_to_speech):
-	self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-	print "config:" + str(self.config)
+        self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        print("config:" + str(self.config))
 
+        # shlex.quote: el texto viene del reconocimiento de voz; sin escapar,
+        # una comilla rompe el comando (inyeccion de shell)
+        tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech)
         if (self.config["language"] == "spanish"):
-                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-#               speak = "pico2wave -l \"es-ES\" -w /var/local/pico2wave.wav \"" + text_to_speech + "\" | aplay -D convertQBO"
+                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
         else:
-                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-#               speak = "pico2wave -l \"en-US\" -w /var/local/pico2wave.wav \"" + text_to_speech + "\" | aplay -D convertQBO"
+                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
 
 #        speak = "espeak -ven+f3 \"" + text_to_speech + "\" --stdout  | aplay -D convertQBO"
 
@@ -136,20 +148,22 @@ class QBOtalk:
 #       os.system("aplay -D convertQBO say16.wav")
 # hasta aqui
 
-        print "QBOtalk: " + speak.encode('utf-8')
+        print("QBOtalk: " + speak)
         result = subprocess.call(speak, shell = True)
     
 
     def SpeechText_2(self, text_to_speech, text_spain):
-	self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-	print "config:" + str(self.config)
-	if (self.config["language"] == "spanish"):
-		speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_spain + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-	else:
-		speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        print("config:" + str(self.config))
+        if (self.config["language"] == "spanish"):
+                tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_spain)
+                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        else:
+                tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech)
+                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
 
-        print "QBOtalk_2: " + speak.encode('utf-8')
-	result = subprocess.call(speak, shell = True)
+        print("QBOtalk_2: " + speak)
+        result = subprocess.call(speak, shell = True)
     
     def callback(self, recognizer, audio):
         try:
@@ -170,9 +184,7 @@ class QBOtalk:
                     self.strAudio = self.r.recognize_google(audio, language="es-ES")
             else:
                     self.strAudio = self.r.recognize_google(audio)
-
-            self.strAudio = self.r.recognize_google(audio)
-	    self.GetAudio = True
+            self.GetAudio = True
             print("listen: " + self.strAudio)
             #print("listenSpanish: ", strSpanish)
             #self.SpeechText(self.Response)

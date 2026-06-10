@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 from multiprocessing import Process, Queue
 import subprocess
@@ -22,22 +22,22 @@ listen_thd = 0
 def WaitForSpeech():
         global Listening, listen_thd, FIFO_listen, FIFO_cmd
 
-	print "WaitForSpeech: Listening=" + str(Listening) + "getAudio=" + str(Qbo.GetAudio)
+        print("WaitForSpeech: Listening=" + str(Listening) + "getAudio=" + str(Qbo.GetAudio))
         if Listening == False:
-                print "Listening = False"
-		return
+                print("Listening = False")
+                return
         elif Qbo.GetAudio == True:
 #                HeadServo.SetNoseColor(0)       #Off QBO nose brigth
 #		fifo = os.open(FIFO_cmd, os.O_WRONLY)
-#                os.write(fifo, "-c nose -co red")
+#                os.write(fifo, b"-c nose -co red")
 #		os.close(fifo)
                 listen_thd(wait_for_stop = True)
                 print("Ha llegado algo al WaitForSpeech: " + Qbo.strAudio)
-		fifo = os.open(FIFO_listen, os.O_WRONLY)
-		os.write(fifo, Qbo.strAudio)
-		os.close(fifo)
-		Qbo.GetAudio = False
-		Listening = False
+                fifo = os.open(FIFO_listen, os.O_WRONLY)
+                os.write(fifo, Qbo.strAudio.encode())
+                os.close(fifo)
+                Qbo.GetAudio = False
+                Listening = False
         return
 
 
@@ -68,12 +68,12 @@ listen_thd = Qbo.StartBackListen()
 
 while True:
         time.sleep(1)
-	WaitForSpeech()
+        WaitForSpeech()
 
         if Qbo.GetAudio == True:
-	    fifo = os.open(FIFO_cmd, os.O_WRONLY)
-            os.write(fifo, "-c nose -co red")
-	    os.close(fifo)
+            fifo = os.open(FIFO_cmd, os.O_WRONLY)
+            os.write(fifo, b"-c nose -co red")
+            os.close(fifo)
             # HeadServo.SetNoseColor(0)       #Off QBO nose brigth
             time.sleep(1)
             print("StartBackListen")
@@ -87,6 +87,6 @@ while True:
             except:
                 print("StartBackListe EXCEPTION")
 
-	if Listening == False:
-		listen_thd = Qbo.StartBackListen()
-		Listening = True
+        if Listening == False:
+                listen_thd = Qbo.StartBackListen()
+                Listening = True

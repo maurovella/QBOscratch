@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 import serial
 import binascii
@@ -160,7 +160,7 @@ class Controller:
             rdBuffer = self.port.read()
             
             for i in rdBuffer:
-                x = ord(i)
+                x = i   # py3: iterar bytes ya devuelve int (en py2 era str de 1 char)
                 if x == self.INPUT_FLAG:
                     rx_data = []
                     isInputEscaped = False
@@ -169,9 +169,13 @@ class Controller:
                     bExit = True
                     break;
                 elif isInputEscaped:
-                    rx_data[len(rx_data) - 1] += 2
+                    # byte posterior al marcador: valor real = x + 2,
+                    # simetrico a InputEscape() del lado TX
+                    rx_data.append(x + 2)
                     isInputEscaped = False
-                elif rx_data and rx_data[len(rx_data) - 1] == self.INPUT_ESCAPE:
+                    continue
+                elif x == self.INPUT_ESCAPE:
+                    # marcador de escape: no se almacena
                     isInputEscaped = True
                     continue
 
@@ -203,7 +207,7 @@ class Controller:
         return rx_param
 
     def GetHeadCmd(self, cmd, cmd_buffer):
-        if self.cmd_params.has_key(cmd) == False:
+        if (cmd in self.cmd_params) == False:
             return 0
         nParams = self.cmd_params[cmd][1]
         tx_buffer = []
@@ -219,9 +223,9 @@ class Controller:
             if len(rxBuffer) >= 5:
                 break
             else:
-                print "NACK ",rxBuffer
+                print("NACK ",rxBuffer)
         if len(rxBuffer) < 5:
-            print" Error reading response.!"
+            print(" Error reading response.!")
         rdParam = self.ProcessRxData(rxBuffer)
         return rdParam
         
@@ -238,15 +242,18 @@ class Controller:
             
         for i in range(nParam):
             if nParam== 1:
-                data = cmd.data_bytes #[0]
+                data = cmd.data_bytes
+                # los comandos de 1 parametro pueden llegar como [valor]
+                if isinstance(data, (list, tuple)):
+                    data = data[0]
             else:
                 data = cmd.data_bytes[i]
 
             if data > 255:
-                tmp_buffer.append(data[0] & 0xff)
-                tmp_buffer.append((data[0] >> 8) & 0xff)
+                tmp_buffer.append(data & 0xff)
+                tmp_buffer.append((data >> 8) & 0xff)
             else :
-                tmp_buffer.append(data)
+                tmp_buffer.append(data & 0xff)
 
         tmp_buffer.append(self.pearson(tmp_buffer, cmd.Inputs + 3, 1))
         tmp_buffer.append(self.OUTPUT_FLAG)
@@ -281,7 +288,7 @@ class Controller:
 
     def SetAngleRelative(self, Axis, Angle):
         cmd_buffer = ([ Axis, Angle & 0xff ,  (Angle >>8) & 0xff])
-	print "SetAnlgeRelative: (" + str(Axis) + "," + str(Angle) + ")"
+        print("SetAnlgeRelative: (" + str(Axis) + "," + str(Angle) + ")")
         return self.SendCmdQBO(Command(self.SET_SERVO_ANGLE_REL, len(cmd_buffer), cmd_buffer))
 
     # Mounts protocol data to set QBO nose state color
@@ -297,7 +304,7 @@ class Controller:
     
     def SetPid(self, Axis, pid_p, pid_i, pid_d):
         cmd_buffer = ([Axis, pid_p, pid_i, pid_d])
-	print "SetPid " + str(cmd_buffer)
+        print("SetPid " + str(cmd_buffer))
         return self.SendCmdQBO(Command(self.SET_SERVO_PID, len(cmd_buffer), cmd_buffer)) 
     
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 from multiprocessing import Process, Queue
 import time
@@ -52,10 +52,10 @@ else:
 try:
         # Open serial port
         ser = serial.Serial(port, baudrate=115200, bytesize = serial.EIGHTBITS, stopbits = serial.STOPBITS_ONE, parity = serial.PARITY_NONE, rtscts = False, dsrdtr =False, timeout = 0)
-        print "Open serial port sucessfully."
+        print("Open serial port sucessfully.")
         print(ser.name)
 except:
-        print "Error opening serial port."
+        print("Error opening serial port.")
         sys.exit()
 
 
@@ -66,8 +66,8 @@ QBO.SetServo(2, Ycoor, 100)
 QBO.SetNoseColor(0)       #Off QBO nose brigth
 
 webcam = cv2.VideoCapture(0)				# Get ready to start getting images from the webcam
-webcam.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
-webcam.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)	# 	resolution you'll want to attempt on the pi
+webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
+webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)	# 	resolution you'll want to attempt on the pi
 
 frontalface = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")		# frontal face pattern detection
 profileface = cv2.CascadeClassifier("haarcascade_profileface.xml")		# side face pattern detection
@@ -75,10 +75,10 @@ profileface = cv2.CascadeClassifier("haarcascade_profileface.xml")		# side face 
 face = [0,0,0,0]	# This will hold the array that OpenCV returns when it finds a face: (makes a rectangle)
 Cface = [0,0]		# Center of the face: a point calculated from the above variable
 lastface = 0		# int 1-3 used to speed up detection. The script is looking for a right profile face,-
-			# a left profile face, or a frontal face; rather than searching for all three every time,-
-			# it uses this variable to remember which is last saw: and looks for that again. If it-
-			# doesn't find it, it's set back to zero and on the next loop it will search for all three.-
-			# This basically tripples the detect time so long as the face hasn't moved much.
+                        # a left profile face, or a frontal face; rather than searching for all three every time,-
+                        # it uses this variable to remember which is last saw: and looks for that again. If it-
+                        # doesn't find it, it's set back to zero and on the next loop it will search for all three.-
+                        # This basically tripples the detect time so long as the face hasn't moved much.
 
 time.sleep(1)		# Wait for them to start
 
@@ -152,8 +152,8 @@ def WaitTouchMove():
         return
 #============================================================================================================
 
-print" Face tracking running."
-print" QBO nose bright green when see your face"
+print(" Face tracking running.")
+print(" QBO nose bright green when see your face")
 
 Qbo.SpeechText("I am ready.")
 
@@ -171,8 +171,8 @@ while True:
                         aframe = webcam.read()[1]       #       there seems to be an issue in OpenCV or V4L or my webcam-
                         aframe = webcam.read()[1]       #       driver, I'm not sure which, but if you wait too long,
                         aframe = webcam.read()[1]       #       the webcam consistantly gets exactly five frames behind-
-                        fface = frontalface.detectMultiScale(aframe,1.3,4,(cv2.cv.CV_HAAR_DO_CANNY_PRUNING + cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT + cv2.cv.CV_HAAR_DO_ROUGH_SEARCH),(60,60))
-                        if fface != ():                 # if we found a frontal face...
+                        fface = frontalface.detectMultiScale(aframe,1.3,4,(cv2.CASCADE_DO_CANNY_PRUNING | cv2.CASCADE_FIND_BIGGEST_OBJECT | cv2.CASCADE_DO_ROUGH_SEARCH),(60,60))
+                        if len(fface) > 0:                 # if we found a frontal face...
                                 lastface = 1            # set lastface 1 (so next loop we will only look for a frontface)
                                 for f in fface:         # f in fface is an array with a rectangle representing a face
                                         faceFound = True
@@ -183,9 +183,9 @@ while True:
                         aframe = webcam.read()[1]       #       THIS method was the one who found it last loop
                         aframe = webcam.read()[1]
                         aframe = webcam.read()[1]       # again we grab some frames, things may have gotten stale-
-                        pfacer = profileface.detectMultiScale(aframe,1.3,4,(cv2.cv.CV_HAAR_DO_CANNY_PRUNING + cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT + cv2.cv.CV_HAAR_DO_ROUGH_SEARCH),(80,80))
+                        pfacer = profileface.detectMultiScale(aframe,1.3,4,(cv2.CASCADE_DO_CANNY_PRUNING | cv2.CASCADE_FIND_BIGGEST_OBJECT | cv2.CASCADE_DO_ROUGH_SEARCH),(80,80))
 
-                        if pfacer != ():                # if we found a profile face...
+                        if len(pfacer) > 0:                # if we found a profile face...
                                 lastface = 2
                                 for f in pfacer:
                                         faceFound = True
@@ -201,11 +201,11 @@ while True:
                         #print "No face.!"
                 elif(time.time() - no_face_tm > 10):
                         ServoHome()
-                        Cface[0] = [0,0]
+                        Cface = [0,0]
                         no_face_tm = time.time()
         else:
                 x,y,w,h = face
-                Cface = [(w/2+x),(h/2+y)]       # we are given an x,y corner point and a width and height, we need the center
+                Cface = [(w//2+x),(h//2+y)]       # we are given an x,y corner point and a width and height, we need the center
                 #print str(Cface[0]) + "," + str(Cface[1])
                 if Facedet == 0:
                         if Listenig == False:
@@ -213,7 +213,7 @@ while True:
                         Facedet = 1
                         face_det_tm = time.time()
                         #print "Face detected.!"
-                elif Listenig == False & (time.time() - face_det_tm > 2):
+                elif Listenig == False and (time.time() - face_det_tm > 2):
                         face_det_tm = time.time()       
                         if Listenig == False:
                            QBO.SetNoseColor(1)
@@ -271,6 +271,6 @@ while True:
                                 QBO.SetServo(2, Ymin - 5, 100)
                                 WaitTouchMove()
         if touch_tm != 0 and time.time() - touch_tm > touch_wait:
-                print "touch ready"
+                print("touch ready")
                 touch_tm = 0
                         
