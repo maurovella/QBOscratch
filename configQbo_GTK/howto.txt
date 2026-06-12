@@ -1,0 +1,19 @@
+Para instalar gtk-3:
+# sudo apt-get install libgtk-3-dev
+
+Para instalar Glade:
+# sudo apt-get install glade
+
+Tutorial de glade:
+# https://prognotes.net/2015/06/gtk-3-c-program-using-glade-3/
+# https://prognotes.net/2016/03/gtk-3-c-code-hello-world-tutorial-using-glade-3/
+
+Error retrieving accessibility bus address: org.freedesktop.DBus.Error.ServiceUnknown: 
+The name org.a11y.Bus was not provided by any .service files
+# sudo apt-get install at-spi2-core
+
+Libreria yaml
+# sudo apt-get install libyaml-dev
+
+PAra cambiar el password de pi:
+# sudo apt-get install expect

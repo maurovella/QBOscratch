@@ -1,0 +1,6 @@
+pico2wave -l "es-ES" -2 /home/pi/Documents/pico2wave.wav "La vida es muy compleja querido amigo" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav
+python PiCmd.py -c say -t "Hola"
+
+python listen.py
+
+python PiCmd.py -c nose -co blue
