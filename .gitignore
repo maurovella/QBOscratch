@@ -1,3 +1,14 @@
-__pycache__/
+*.ko
+*.mod.c
+*.o
+*.out
 *.pyc
+*.save
+*.swp
+*~
 .DS_Store
+Module.symvers
+__pycache__/
+microphone-results.wav
+modules.order
+pico2wave.wav

@@ -1,0 +1,24 @@
+
+
+
+wav
+
+python RightEye.py
+
+python PiCmd.py -c nose -co green
+
+
+
+pico2wave -l "es-ES" -w /home/pi/Documents/pico2wave.wav "Hola"  && aplay -D convertQBO /home/pi/Documents/pico2wave.wavPlaying WAVE '/home/pi/Documents/pico2wave.wav' : Signed 16 bit Little Endian, Rate 16000 Hz, Mono
+
+
+
+
+
+python findFace.py:
+
+libv4l2: error setting pixformat: Device or resource busy
+HIGHGUI ERROR: libv4l unable to ioctl S_FMT
+libv4l2: error setting pixformat: Device or resource busy
+libv4l1: error setting pixformat: Device or resource busy
+HIGHGUI ERROR: libv4l unable to ioctl VIDIOCSPICT

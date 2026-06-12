@@ -1,0 +1,37 @@
+#!/bin/bash
+
+#busca un proceso especifico
+DATO=`ps -aux | grep -v grep | grep PiFaceFast.py`
+if [ -z "$DATO" ]; then
+    	EXISTE=false
+else
+	EXISTE=true
+fi
+
+START="start"
+STOP="stop"
+
+# echo "EXISTE: " $EXISTE
+# start PiCmd
+if [[ $1 = $START ]]; then
+	if $EXISTE = true;
+	then
+		echo "PiFaceFast.py is already running"
+	else
+		echo "launching PiFaceFast"
+		/home/pi/Documents/Python\ projects/PiFaceFast.py &
+#		/home/pi/Documents/Python\ projects/PiFaceFast.py > /dev/null &
+	fi
+fi
+
+# stop PiCmd
+if [[ $1 = $STOP ]];
+then
+	if $EXISTE = true;
+	then
+		kill -9 `ps -ef |grep -v grep |grep PiFaceFast.py| awk '{print $2}'`
+		echo "PiFaceFast stoped"
+	else
+		echo "PiFaceFast was not running"
+	fi
+fi
