@@ -1,0 +1,6468 @@
+{
+ "PiCmd args: --help": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\ncommand param error\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c bailar": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong command\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c listen": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "EXC NameError"
+   }
+  ], 
+  "stdout": "Traceback (most recent call last):\n  File \"/w/tests/harness/run_app.py\", line 225, in main\n    runpy.run_path(script, run_name=\"__main__\")\n  File \"/usr/local/lib/python2.7/runpy.py\", line 252, in run_path\n    return _run_module_code(code, init_globals, run_name, path_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/w/py2/Python projects/PiCmd.py\", line 382, in <module>\n    CommandOK_Action()\n  File \"/w/py2/Python projects/PiCmd.py\", line 300, in CommandOK_Action\n    listen_thd = Qbo.StartBack()\nNameError: global name 'Qbo' is not defined\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\n"
+ }, 
+ "PiCmd args: -c mouth -e love": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 1B 1F 0E 04 25 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending mouth(love)\n"
+ }, 
+ "PiCmd args: -c mouth -e sad": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 00 0E 11 00 AE FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending mouth(sad)\n"
+ }, 
+ "PiCmd args: -c mouth -e serious": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 00 1F 1F 00 38 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending mouth(serious)\n"
+ }, 
+ "PiCmd args: -c mouth -e smile": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 00 11 0E 00 54 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending mouth(smile)\n"
+ }, 
+ "PiCmd args: -c mouth -e wink": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong expression value\nOpen serial port sucessfully.\n/dev/serial0\n"
+ }, 
+ "PiCmd args: -c mouth -m 0 17 14 0": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 00 11 0E 00 54 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nGET_MOUTH_MATRIX\nidx: 4\narg: 0\narg matrix: 0\narg: 17\narg matrix: 1114112\narg: 14\narg matrix: 1117696\narg: 0\narg matrix: 1117696\nOpen serial port sucessfully.\n/dev/serial0\nSending mouth(1117696)\n"
+ }, 
+ "PiCmd args: -c mouth -m 31 31": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 1F 1F 00 00 9F FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nGET_MOUTH_MATRIX\nidx: 4\narg: 31\narg matrix: 520093696\narg: 31\narg matrix: 522125312\nmouth matrix param error\nOpen serial port sucessfully.\n/dev/serial0\nSending mouth(522125312)\n"
+ }, 
+ "PiCmd args: -c move -a 100 -x 1": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 71 03 01 64 00 AB FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\n"
+ }, 
+ "PiCmd args: -c move_rel -a -40 -x 2": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 73 03 02 D8 FD FD 56 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSetAnlgeRelative: (2,-40)\n"
+ }, 
+ "PiCmd args: -c move_rel -a 40 -x 1": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 73 03 01 28 00 5A FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSetAnlgeRelative: (1,40)\n"
+ }, 
+ "PiCmd args: -c nose": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c nose -co blue": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 45 01 01 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: nose(blue)\n"
+ }, 
+ "PiCmd args: -c nose -co green": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: nose(green)\n"
+ }, 
+ "PiCmd args: -c nose -co none": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: nose(none)\n"
+ }, 
+ "PiCmd args: -c nose -co pink": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong color value\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c nose -co red": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: nose(red)\n"
+ }, 
+ "PiCmd args: -c nose -e smile": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c nose blue": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c pid -p 26 2 16 -x 1": {
+  "events": [
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "EXC IndexError"
+   }
+  ], 
+  "stdout": "Traceback (most recent call last):\n  File \"/w/tests/harness/run_app.py\", line 225, in main\n    runpy.run_path(script, run_name=\"__main__\")\n  File \"/usr/local/lib/python2.7/runpy.py\", line 252, in run_path\n    return _run_module_code(code, init_globals, run_name, path_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/w/py2/Python projects/PiCmd.py\", line 362, in <module>\n    options[arg]()\n  File \"/w/py2/Python projects/PiCmd.py\", line 125, in get_axis\n    arg = scan_argument(idx)\n  File \"/w/py2/Python projects/PiCmd.py\", line 43, in scan_argument\n    return sys.argv[index]\nIndexError: list index out of range\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nPID: [26, 2, 16]\n"
+ }, 
+ "PiCmd args: -c pid -x 1 -p 26 2 16": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nPID: [26, 2, 16]\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\n"
+ }, 
+ "PiCmd args: -c pid -x 2 -p 26": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 00 00 29 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nPID: [26, 0, 0]\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [2, 26, 0, 0]\n"
+ }, 
+ "PiCmd args: -c say": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c say -t": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c say -t Hola": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }, 
+   {
+    "data": " Hola", 
+    "k": "fifo_total", 
+    "pipe": "pipe_say"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nOpening FIFO...<QBO>/pipes/pipe_say\nSaying:  Hola\n"
+ }, 
+ "PiCmd args: -c say -t Hola -l spanish": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }, 
+   {
+    "data": " Hola", 
+    "k": "fifo_total", 
+    "pipe": "pipe_say"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nlaguage param error\nOpen serial port sucessfully.\n/dev/serial0\nOpening FIFO...<QBO>/pipes/pipe_say\nSaying:  Hola\n"
+ }, 
+ "PiCmd args: -c say -t Hola mundo cruel": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }, 
+   {
+    "data": " Hola mundo cruel", 
+    "k": "fifo_total", 
+    "pipe": "pipe_say"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nOpening FIFO...<QBO>/pipes/pipe_say\nSaying:  Hola mundo cruel\n"
+ }, 
+ "PiCmd args: -c say -t help me please": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\n \nOptions:\n-c [command] servo, nose, say, mouth, listen or voice\n-a [angle] from -180 to 180\n-x [axis] 1 or 2\n-s [speed] from 1 to 2000\n-co [color] none, red, green or blue\n-l [language] english or spanish\n-m [matrix] mouth leds matrix\n-e [expression] smile, sad or serious\n \nEXAMPLES: \n-c servo -a 30 -x 1 -s 200\n-c nose -co red\n \nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c servo -a": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong angle value\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c servo -a -90 -x 2 -s 200": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 02 A6 FD FD C8 00 34 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: servo(2,-90,200)\n"
+ }, 
+ "PiCmd args: -c servo -a 0 -x 1 -s 200": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c servo -a 120 -x 2 -s 1000": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 02 78 00 E8 03 68 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: servo(2,120,1000)\n"
+ }, 
+ "PiCmd args: -c servo -a 30 -x 0 -s 20": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong axis value\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c servo -a 30 -x 1 -s 200": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 1E 00 C8 00 A9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: servo(1,30,200)\n"
+ }, 
+ "PiCmd args: -c servo -a 30 -x 1 -s 2000": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 1E 00 00 00 29 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong speed value\nOpen serial port sucessfully.\n/dev/serial0\nSending: servo(1,30,0)\n"
+ }, 
+ "PiCmd args: -c servo -a 90 -x 2": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 02 5A 00 00 00 AC FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: servo(2,90,0)\n"
+ }, 
+ "PiCmd args: -c servo -a 900 -x 1 -s 100": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong angle value\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c servo -s 100 -x 1 -a -10": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 F6 FD FD 64 00 A5 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nSending: servo(1,-10,100)\n"
+ }, 
+ "PiCmd args: -c servo -s 100 -x 1 -a 0.4": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong angle value\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -c voice -l english": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nSetting: voice = english\n"
+ }, 
+ "PiCmd args: -c voice -l klingon": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nwrong language value\nOpen serial port sucessfully.\n/dev/serial0\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nSetting: voice = \n"
+ }, 
+ "PiCmd args: -c voice -l spanish": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nSetting: voice = spanish\n"
+ }, 
+ "PiCmd args: -e smile": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -h": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\n \nOptions:\n-c [command] servo, nose, say, mouth, listen or voice\n-a [angle] from -180 to 180\n-x [axis] 1 or 2\n-s [speed] from 1 to 2000\n-co [color] none, red, green or blue\n-l [language] english or spanish\n-m [matrix] mouth leds matrix\n-e [expression] smile, sad or serious\n \nEXAMPLES: \n-c servo -a 30 -x 1 -s 200\n-c nose -co red\n \nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: -s 100 -x 1 -a 90": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: ?": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\n \nOptions:\n-c [command] servo, nose, say, mouth, listen or voice\n-a [angle] from -180 to 180\n-x [axis] 1 or 2\n-s [speed] from 1 to 2000\n-co [color] none, red, green or blue\n-l [language] english or spanish\n-m [matrix] mouth leds matrix\n-e [expression] smile, sad or serious\n \nEXAMPLES: \n-c servo -a 30 -x 1 -s 200\n-c nose -co red\n \nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd args: help": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\n \nOptions:\n-c [command] servo, nose, say, mouth, listen or voice\n-a [angle] from -180 to 180\n-x [axis] 1 or 2\n-s [speed] from 1 to 2000\n-co [color] none, red, green or blue\n-l [language] english or spanish\n-m [matrix] mouth leds matrix\n-e [expression] smile, sad or serious\n \nEXAMPLES: \n-c servo -a 30 -x 1 -s 200\n-c nose -co red\n \nOpen serial port sucessfully.\n/dev/serial0\nCommand error. Type ? to help\n"
+ }, 
+ "PiCmd por FIFO": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 01 1E 00 C8 00 A9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 44 04 00 11 0E 00 54 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 73 03 02 D8 FD FD 56 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "sys.exit(None)"
+   }, 
+   {
+    "data": " Hola que tal", 
+    "k": "fifo_total", 
+    "pipe": "pipe_say"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c nose -co red\nSending: nose(red)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c servo -a 30 -x 1 -s 200\nSending: servo(1,30,200)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c mouth -e smile\nSending mouth(smile)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c say -t Hola que tal\nOpening FIFO...<QBO>/pipes/pipe_say\nSaying:  Hola que tal\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c pid -x 1 -p 26 2 16\nPID: [26, 2, 16]\nSetPid [1, 26, 2, 16]\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c nose -co\ncolor param error\nCommand error. Type ? to help\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c move_rel -a -40 -x 2\n\nSetAnlgeRelative: (2,-40)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: exit\n"
+ }, 
+ "feel: derecha, arriba, izquierda": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "block": [
+     {
+      "k": "sleep", 
+      "s": 1
+     }, 
+     {
+      "hex": "FF 46 00 60 FE", 
+      "k": "serial_tx"
+     }, 
+     {
+      "k": "sleep", 
+      "s": 0.25
+     }
+    ], 
+    "repeat": 7
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }, 
+   {
+    "data": "Touch: rightTouch: upTouch: left", 
+    "k": "fifo_total", 
+    "pipe": "pipe_feel"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nTouch: rightTO FIFO FEEL\nTouch: upTO FIFO FEEL\nTouch: leftTO FIFO FEEL\n"
+ }, 
+ "feel: valores fuera de rango": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "block": [
+     {
+      "k": "sleep", 
+      "s": 1
+     }, 
+     {
+      "hex": "FF 46 00 60 FE", 
+      "k": "serial_tx"
+     }, 
+     {
+      "k": "sleep", 
+      "s": 0.25
+     }
+    ], 
+    "repeat": 4
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }, 
+   {
+    "data": "Touch: right", 
+    "k": "fifo_total", 
+    "pipe": "pipe_feel"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nTouch: rightTO FIFO FEEL\n"
+ }, 
+ "findFace: frontal, perfil y nada": {
+  "events": [
+   {
+    "index": 0, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 0, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 0, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "exists": true, 
+    "k": "cascade_load", 
+    "path": "haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": true, 
+    "k": "cascade_load", 
+    "path": "haarcascade_profileface.xml"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      15, 
+      7, 
+      61, 
+      61
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      200, 
+      100, 
+      81, 
+      45
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "block": [
+     {
+      "k": "sleep", 
+      "s": 0.5
+     }, 
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }
+    ], 
+    "repeat": 4
+   }, 
+   {
+    "cascade": "haarcascade_profileface.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     80, 
+     80
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "cascade": "haarcascade_profileface.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     80, 
+     80
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      1, 
+      2, 
+      3, 
+      5
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "block": [
+     {
+      "k": "sleep", 
+      "s": 0.5
+     }, 
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "cascade": "haarcascade_profileface.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     80, 
+     80
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }, 
+   {
+    "data": "160,120\n45,37\n240,122\n2,4\n", 
+    "k": "fifo_total", 
+    "pipe": "pipe_findFace"
+   }
+  ], 
+  "stdout": ""
+ }, 
+ "repeat: repite lo que oye": {
+  "events": [
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "one two three"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>one two three"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "testing"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>testing"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Say something!\nLISTEN: one two three\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>one two three\" && aplay -D convertQBO <QBO>/pico2wave.wav\nSay something!\nLISTEN: testing\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>testing\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: acentos": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>\u00bfC\u00f3mo est\u00e1s, Jos\u00e9? Ma\u00f1ana llueve"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"\u00bfC\u00f3mo est\u00e1s, Jos\u00e9? Ma\u00f1ana llueve\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>\u00bfC\u00f3mo est\u00e1s, Jos\u00e9? Ma\u00f1ana llueve\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>\u00bfC\u00f3mo est\u00e1s, Jos\u00e9? Ma\u00f1ana llueve\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: apostrofo": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>it's a nice day"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"it's a nice day\"\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>it's a nice day\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>it's a nice day\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: ascii": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>Hola mundo"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"Hola mundo\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>Hola mundo\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>Hola mundo\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: backticks": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>hora cero"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"hora `echo cero`\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>hora `echo cero`\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>hora `echo cero`\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: comillas dobles": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>dijo hola y se fue"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"dijo \"hola\" y se fue\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>dijo \"hola\" y se fue\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>dijo \"hola\" y se fue\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: dos mensajes": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>first"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>second"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"first\"\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>first\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>first\" && aplay -D convertQBO <QBO>/pico2wave.wav\nRead: \"second\"\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>second\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>second\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: ingles": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>Hello dear friends"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"Hello dear friends\"\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>Hello dear friends\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='100'>Hello dear friends\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: largo 300 bytes": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>palabra00 palabra01 palabra02 palabra03 palabra04 palabra05 palabra06 palabra07 palabra08 palabra09 "
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"palabra00 palabra01 palabra02 palabra03 palabra04 palabra05 palabra06 palabra07 palabra08 palabra09 \"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>palabra00 palabra01 palabra02 palabra03 palabra04 palabra05 palabra06 palabra07 palabra08 palabra09 \" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>palabra00 palabra01 palabra02 palabra03 palabra04 palabra05 palabra06 palabra07 palabra08 palabra09 \" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: punto y coma": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>hola; echo chau"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"hola; echo chau\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>hola; echo chau\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>hola; echo chau\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: sustitucion de comandos": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>son cinco pesos"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"son $(echo cinco) pesos\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>son $(echo cinco) pesos\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>son $(echo cinco) pesos\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: variable de shell": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>cuesta  o /root"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"cuesta $5 o $HOME\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>cuesta $5 o $HOME\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='100'>cuesta $5 o $HOME\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "say: volumen 250": {
+  "events": [
+   {
+    "argv": [
+     "QBO_listen", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='250'>probando volumen"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_listen", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 250
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "Opening FIFO...\nRead: \"probando volumen\"\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='250'>probando volumen\" && aplay -D convertQBO <QBO>/pico2wave.wav\nsay.py: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='250'>probando volumen\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }, 
+ "tooly: caricia en la cabeza": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 44 04 1B 1F 0E 04 25 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "I pet you in your robot head"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>I like it when you pet me"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "thank you"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "thank you"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>You are welcome"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\nTouch: right TO FIFO FEEL\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>I like it when you pet me\" && aplay -D convertQBO <QBO>/pico2wave.wav\n300\n0.8\nSay something!\nLISTEN: thank you\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>You are welcome\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: cuatro horas de silencio y alerta por mail": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "hex": "FF 46 00 60 FE", 
+      "k": "serial_tx"
+     }, 
+     {
+      "got": "timeout", 
+      "k": "stt_listen", 
+      "timeout": 10
+     }, 
+     {
+      "hex": "FF 46 00 60 FE", 
+      "k": "serial_tx"
+     }, 
+     {
+      "k": "sleep", 
+      "s": 5
+     }
+    ], 
+    "repeat": 959
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "timeout", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Is everething okey? If you dont respond, I'm going to notify your relatives"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "got": "timeout", 
+    "k": "stt_listen", 
+    "timeout": 1000
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>I am notifying your relatives to check that you are well"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "host": "smtp.gmail.com", 
+    "k": "smtp_connect", 
+    "port": 465
+   }, 
+   {
+    "has_password": true, 
+    "k": "smtp_login", 
+    "user": "toolyrobot@gmail.com"
+   }, 
+   {
+    "body": "Hello, the Tooly robot notice a strange behavior, could you call your relative to make sure everything is ok?", 
+    "k": "smtp_sendmail", 
+    "sender": "toolyrobot@gmail.com", 
+    "subject": "Message of Tooly Robot", 
+    "to": [
+     "natutaylor@gmail.com"
+    ]
+   }, 
+   {
+    "got": "timeout", 
+    "k": "stt_listen", 
+    "timeout": 1000
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>I am notifying your relatives to check that you are well"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 1000
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "I am fine"
+   }, 
+   {
+    "host": "smtp.gmail.com", 
+    "k": "smtp_connect", 
+    "port": 465
+   }, 
+   {
+    "has_password": true, 
+    "k": "smtp_login", 
+    "user": "toolyrobot@gmail.com"
+   }, 
+   {
+    "body": "Hello, the Tooly robot listened to your family member again, don't worry", 
+    "k": "smtp_sendmail", 
+    "sender": "toolyrobot@gmail.com", 
+    "subject": "Message of Tooly Robot", 
+    "to": [
+     "natutaylor@gmail.com"
+    ]
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "I am fine"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Good to hear that"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nSay something!\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Is everething okey? If you dont respond, I'm going to notify your relatives\" && aplay -D convertQBO <QBO>/pico2wave.wav\nSay something!\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>I am notifying your relatives to check that you are well\" && aplay -D convertQBO <QBO>/pico2wave.wav\nemail send!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nSay something!\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>I am notifying your relatives to check that you are well\" && aplay -D convertQBO <QBO>/pico2wave.wav\nSay something!\nLISTEN: I am fine\nemail send!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Good to hear that\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: dos turnos de conversacion": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hi, I am Tooly"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "hello tooly"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "hello tooly"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Nice to meet you"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 50
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "what is your name"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "what is your name"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>My name is Tooly"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 9
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hi, I am Tooly\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nLISTEN: hello tooly\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Nice to meet you\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n300\n0.8\nSay something!\nLISTEN: what is your name\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>My name is Tooly\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: en castellano con acentos": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='120'>\u00a1Hola! Soy Tooly"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "es-ES", 
+    "result": "hola, \u00bfc\u00f3mo est\u00e1s?"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "hola, \u00bfc\u00f3mo est\u00e1s?"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='120'>Muy bien, \u00bfy vos? Ma\u00f1ana ser\u00e1 otro d\u00eda"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 120
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 120, 'op_question': True}\nQBOtalk: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='120'>\u00a1Hola! Soy Tooly\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nLISTEN: hola, \u00bfc\u00f3mo est\u00e1s?\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 120, 'op_question': True}\nQBOtalk: pico2wave -l \"es-ES\" -w <QBO>/pico2wave.wav \"<volume level='120'>Muy bien, \u00bfy vos? Ma\u00f1ana ser\u00e1 otro d\u00eda\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: falla el reconocimiento de voz": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": {
+     "raise": "UnknownValueError"
+    }
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 5
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": {
+     "raise": "RequestError"
+    }
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Could not request results from Speech Recognition service"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Sorry?"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nSay something!\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Sorry?\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: la cabeza sigue la cara": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      200, 
+      100, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     200, 
+     100
+    ], 
+    "p2": [
+     260, 
+     160
+    ]
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 01 DD FD FD 92 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      15, 
+      7, 
+      61, 
+      61
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     15, 
+     7
+    ], 
+    "p2": [
+     76, 
+     68
+    ]
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 01 39 00 F7 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 02 D6 FD FD 68 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      250, 
+      180, 
+      45, 
+      45
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     250, 
+     180
+    ], 
+    "p2": [
+     295, 
+     225
+    ]
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 01 C8 FD FD A1 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 02 29 00 00 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      0, 
+      0, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     0, 
+     0
+    ], 
+    "p2": [
+     60, 
+     60
+    ]
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 01 41 00 7B FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 02 D3 FD FD 38 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      259, 
+      179, 
+      61, 
+      61
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     259, 
+     179
+    ], 
+    "p2": [
+     320, 
+     240
+    ]
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 01 BF FD FD DD FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.002
+   }, 
+   {
+    "hex": "FF 73 03 02 2C 00 50 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.05
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      141, 
+      101, 
+      59, 
+      59
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     141, 
+     101
+    ], 
+    "p2": [
+     200, 
+     160
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "hi"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "hi"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hi there"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      100, 
+      90, 
+      61, 
+      61
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     100, 
+     90
+    ], 
+    "p2": [
+     161, 
+     151
+    ]
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[230, 130]\nSetAnlgeRelative: (1,-35)\n[45, 37]\nSetAnlgeRelative: (1,57)\nSetAnlgeRelative: (2,-42)\n[272, 202]\nSetAnlgeRelative: (1,-56)\nSetAnlgeRelative: (2,41)\n[30, 30]\nSetAnlgeRelative: (1,65)\nSetAnlgeRelative: (2,-45)\n[289, 209]\nSetAnlgeRelative: (1,-65)\nSetAnlgeRelative: (2,44)\n[170, 130]\n300\n0.8\nSay something!\nLISTEN: hi\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hi there\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[130, 120]\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: pide ayuda": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "help"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Is everething okey? If you dont respond, I'm going to notify your relatives"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 1000
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "false alarm"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "false alarm"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Glad you are ok"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nLISTEN: help\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Is everething okey? If you dont respond, I'm going to notify your relatives\" && aplay -D convertQBO <QBO>/pico2wave.wav\nSay something!\nLISTEN: false alarm\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Glad you are ok\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: respuesta con caracteres de shell": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "how much is it"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "how much is it"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>It costs  boo and more; ok"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nLISTEN: how much is it\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>It costs $5 `echo boo` and $(echo more); ok\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: respuesta con comillas dobles": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "tell me a quote"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "tell me a quote"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>She said carpe", 
+     "diem to me"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n300\n0.8\nSay something!\nLISTEN: tell me a quote\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>She said \"carpe diem\" to me\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: servidor LLM caido, modo repetir": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello ! My mind is not ready, I will repeat whatever you say."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "repeat after me"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>repeat after me"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello ! My mind is not ready, I will repeat whatever you say.\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\nSay something!\nLISTEN: repeat after me\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>repeat after me\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly: servidor LLM responde 503": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 53 05 01 FD FD 01 64 00 47 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "hex": "FF 53 05 02 C2 01 64 00 3C FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 01 1A 02 10 84 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 50 04 02 1A 02 10 73 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 1
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_frontalface_alt2.xml"
+   }, 
+   {
+    "exists": false, 
+    "k": "cascade_load", 
+    "path": "<QBO>/Python projects/haarcascade_profileface.xml"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_open"
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 3, 
+    "value": 320
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_set", 
+    "prop": 4, 
+    "value": 240
+   }, 
+   {
+    "k": "sleep", 
+    "s": 10
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": null, 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello ! My mind is not ready, I will repeat whatever you say."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "cascade": "haarcascade_frontalface_alt2.xml", 
+    "faces": [
+     [
+      130, 
+      90, 
+      60, 
+      60
+     ]
+    ], 
+    "flags": 13, 
+    "k": "detect", 
+    "min_size": [
+     60, 
+     60
+    ], 
+    "neighbors": 4, 
+    "scale": 1.3
+   }, 
+   {
+    "k": "rectangle", 
+    "p1": [
+     130, 
+     90
+    ], 
+    "p2": [
+     190, 
+     150
+    ]
+   }, 
+   {
+    "hex": "FF 45 01 04 10 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "are you there"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>are you there"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 45 01 02 F9 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "block": [
+     {
+      "cascade": "haarcascade_frontalface_alt2.xml", 
+      "faces": [], 
+      "flags": 13, 
+      "k": "detect", 
+      "min_size": [
+       60, 
+       60
+      ], 
+      "neighbors": 4, 
+      "scale": 1.3
+     }, 
+     {
+      "k": "rectangle", 
+      "p1": [
+       130, 
+       90
+      ], 
+      "p2": [
+       190, 
+       150
+      ]
+     }
+    ], 
+    "repeat": 3
+   }, 
+   {
+    "index": 1, 
+    "k": "cam_release"
+   }, 
+   {
+    "k": "destroy_windows"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nSetPid [1, 26, 2, 16]\nSetPid [2, 26, 2, 16]\nllamaaaaaa2Connect\nNone\n<Response [503]>\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello ! My mind is not ready, I will repeat whatever you say.\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\nSay something!\nLISTEN: are you there\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>are you there\" && aplay -D convertQBO <QBO>/pico2wave.wav\n[160, 120]\n[160, 120]\n[160, 120]\n"
+ }, 
+ "tooly_audio: un turno": {
+  "events": [
+   {
+    "baudrate": 115200, 
+    "k": "serial_open", 
+    "port": "/dev/serial0"
+   }, 
+   {
+    "hex": "FF 44 04 00 00 00 00 C2 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 45 01 00 17 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.1
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "device_index": 1, 
+    "k": "mic_open"
+   }, 
+   {
+    "k": "stt_adjust"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "ckpt_dir": "llama-2-7b-chat", 
+     "tokenizer_path": "tokenizer.model"
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly_hello/"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "Hello"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Hello"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "hex": "FF 46 00 60 FE", 
+    "k": "serial_tx"
+   }, 
+   {
+    "got": "audio", 
+    "k": "stt_listen", 
+    "timeout": 10
+   }, 
+   {
+    "k": "stt_recognize", 
+    "language": "en-US", 
+    "result": "good morning"
+   }, 
+   {
+    "extra": [], 
+    "json": {
+     "conversation_id": "conv-1", 
+     "message": {
+      "content": "good morning"
+     }
+    }, 
+    "k": "http_post", 
+    "url": "http://pf-2023a-tooly.it.itba.edu.ar/tooly/"
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='40'>Good morning to you"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "stop"
+   }
+  ], 
+  "stdout": "/dev/serial0\nOpen serial port sucessfully.\n/dev/serial0\nllamaaaaaa2Connect\n{u'conversation_id': u'conv-1'}\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Hello\" && aplay -D convertQBO <QBO>/pico2wave.wav\n300\n0.8\nSay something!\nLISTEN: good morning\nconfig:{'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nQBOtalk: pico2wave -l \"en-US\" -w <QBO>/pico2wave.wav \"<volume level='40'>Good morning to you\" && aplay -D convertQBO <QBO>/pico2wave.wav\n"
+ }
+}

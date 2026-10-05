@@ -19,3 +19,6 @@ run_py2() {
 
 echo "protocolo: QboCmd.py de $REF"
 run_py2 python tests/golden/gen_protocol.py "/w/py2/Python projects" > tests/golden/protocol_py2.json
+
+echo "apps: scripts de $REF contra el robot de mentira"
+run_py2 python tests/golden/gen_apps.py /w/py2 /home/pi/Documents > tests/golden/apps_py2.json
