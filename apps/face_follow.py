@@ -13,6 +13,7 @@ import serial
 import binascii
 from qbo import protocol as QboCmd
 from qbo import paths
+from qbo import tts
 import sys
 import time
 from qbo.legacy import qbotalk as QBOtalk
@@ -137,14 +138,13 @@ def SpeechText_2(text_to_speech, text_spain):
         config = yaml.safe_load(open(paths.CONFIG))
         print("config:" + str(config))
         if (config["language"] == "spanish"):
-                tts_arg = shlex.quote("<volume level='" + str(config["volume"]) + "'>" + text_spain)
-                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+                text = text_spain
         else:
-                tts_arg = shlex.quote("<volume level='" + str(config["volume"]) + "'>" + text_to_speech)
-                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+                text = text_to_speech
+        speak = " && ".join(shlex.join(c) for c in tts.commands(text, config["language"], config["volume"]))
 
         print("QBOtalk_2: " + speak)
-        result = subprocess.call(speak, shell = True)
+        result = tts.speak(text, config["language"], config["volume"])
 
 def WaitForSpeech():
         global WaitingSpeech, Listenig, listen_thd

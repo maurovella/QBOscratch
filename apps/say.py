@@ -18,6 +18,7 @@ import time
 import yaml
 import shlex
 from qbo import paths
+from qbo import tts
 
 
 def SayFromFile():
@@ -39,13 +40,8 @@ def SayFromFile():
                         config = yaml.safe_load(open(paths.CONFIG))
  
                         print('Read: "{0}"'.format(data))
-                        # shlex.quote: el texto viene del FIFO; sin escapar,
-                        # una comilla rompe el comando (inyeccion de shell)
-                        tts_arg = shlex.quote("<volume level='" + str(config["volume"]) + "'>" + data)
-                        if (config["language"] == "spanish"):
-                                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-                        else:
-                                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+                        # el texto viene del FIFO: va a pico2wave como argumento, sin shell
+                        speak = " && ".join(shlex.join(c) for c in tts.commands(data, config["language"], config["volume"]))
 
                         print("say.py: " + speak)
 #
@@ -56,7 +52,7 @@ def SayFromFile():
                         print("say.py: " + speak)
                         
                         result = subprocess.call([paths.daemon("QBO_listen"), "stop"])
-                        result = subprocess.call(speak, shell = True)
+                        result = tts.speak(data, config["language"], config["volume"])
                         result = subprocess.call([paths.daemon("QBO_listen"), "start"])
 
 #============================================================================================================

@@ -16,6 +16,7 @@ import wave
 import shlex
 
 from qbo import paths
+from qbo import tts
 # from gtts import gTTS
 
 class QBOtalk:
@@ -132,13 +133,8 @@ class QBOtalk:
         self.config = yaml.safe_load(open(paths.CONFIG))
         print("config:" + str(self.config))
 
-        # shlex.quote: el texto viene del reconocimiento de voz; sin escapar,
-        # una comilla rompe el comando (inyeccion de shell)
-        tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech)
-        if (self.config["language"] == "spanish"):
-                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-        else:
-                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        # el texto viene del reconocimiento de voz: va a pico2wave como argumento, sin shell
+        speak = " && ".join(shlex.join(c) for c in tts.commands(text_to_speech, self.config["language"], self.config["volume"]))
 
 #        speak = "espeak -ven+f3 \"" + text_to_speech + "\" --stdout  | aplay -D convertQBO"
 
@@ -151,21 +147,20 @@ class QBOtalk:
 # hasta aqui
 
         print("QBOtalk: " + speak)
-        result = subprocess.call(speak, shell = True)
+        result = tts.speak(text_to_speech, self.config["language"], self.config["volume"])
     
 
     def SpeechText_2(self, text_to_speech, text_spain):
         self.config = yaml.safe_load(open(paths.CONFIG))
         print("config:" + str(self.config))
         if (self.config["language"] == "spanish"):
-                tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_spain)
-                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+                text = text_spain
         else:
-                tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech)
-                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav " + tts_arg + " && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+                text = text_to_speech
+        speak = " && ".join(shlex.join(c) for c in tts.commands(text, self.config["language"], self.config["volume"]))
 
         print("QBOtalk_2: " + speak)
-        result = subprocess.call(speak, shell = True)
+        result = tts.speak(text, self.config["language"], self.config["volume"])
     
     def callback(self, recognizer, audio):
         try:
