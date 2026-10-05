@@ -6,6 +6,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from qbo import paths
 from qbo import tts
+from qbo import redact
 
 import time
 import fileinput
@@ -17,7 +18,7 @@ import subprocess
 
 # fichero config, contiene languaje
 config = yaml.safe_load(open(paths.CONFIG))
-print("CONFIG " + str(config))
+print("CONFIG " + redact.summary(config))
 
 if (config["language"] == "spanish"):
         text = "Adíos"

@@ -260,7 +260,7 @@ def test_show_config_muestra_la_config_del_repo(tmp_path):
     assert "llm_host: http://10.16.1.190:11434" in out
     assert "llm_model: qwen2.5:7b-instruct" in out
     assert "startWith: interactive-dialogflow" in out
-    assert "<oculto: valor" not in out
+    assert "llm_host: <oculto>" not in out and "llm_model: <oculto>" not in out
 
 
 # Formas de esconder una clave en llm_host que un recorte a mano deja pasar.
@@ -296,6 +296,8 @@ def test_show_config_no_recorta_urls_las_oculta_enteras(tmp_path, url):
     "camera_index: [1, S3CRETO]\n",
     "llm_host: {url: http://h:1, token: S3CRETO}\n",    # mapa anidado bajo una clave publica
     "llm_model: \"modelo S3CRETO\"\n",
+    "llm_model: S3CRETOtoken123\n",                     # con forma de nombre, pero no es un modelo
+    "llm_backend: S3CRETO\n",
     "{language: english, S3CRETO}\n",                   # el secreto queda como nombre de clave
     "S3CRETO: 1\n",
     "? S3CRETO\n: valor\n",
@@ -322,12 +324,68 @@ def test_show_config_los_errores_no_citan_el_archivo(tmp_path, texto):
     assert "No se muestra el contenido" in salida
 
 
-def test_show_config_llm_url_es_solo_para_curl(tmp_path):
-    """--llm-url devuelve la URL sin tocar: relevar.sh la pasa a curl por el
-    entorno y nunca la escribe en el informe."""
-    url = "http://usuario:S3CRETO@127.0.0.1:9"
-    assert _show_config(tmp_path, "llm_host: %s\n" % url, "--llm-url").stdout.strip() == url
-    assert _show_config(tmp_path, "llm_host: [1, 2]\n", "--llm-url").stdout.strip() == ""
+class _Tags(object):
+    """Servidor local que contesta /api/tags como Ollama."""
+
+    def __init__(self, models, status=200):
+        import json
+        import threading
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+        outer = self
+        self.paths = []
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                outer.paths.append(self.path)
+                data = json.dumps({"models": [{"name": m} for m in models]}).encode()
+                self.send_response(status)
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+
+            def log_message(self, *args):
+                pass
+
+        self.httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        self.port = self.httpd.server_address[1]
+        threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
+
+    def close(self):
+        self.httpd.shutdown()
+        self.httpd.server_close()
+
+
+def test_check_llm_consulta_el_servidor_sin_mostrar_la_url(tmp_path):
+    server = _Tags(["qwen2.5:7b-instruct", "nombre raro S3CRETO"])
+    try:
+        url = "http://usuario:S3CRETO@127.0.0.1:%d" % server.port
+        result = _show_config(tmp_path, "llm_host: %s\n" % url, "--check-llm")
+    finally:
+        server.close()
+    salida = result.stdout + result.stderr
+    assert result.returncode == 0, salida
+    assert server.paths == ["/api/tags"]
+    assert "responde, HTTP 200, 2 modelos: qwen2.5:7b-instruct" in salida
+    assert "S3CRETO" not in salida and "usuario" not in salida
+
+
+def test_check_llm_sin_servidor_falla_sin_mostrar_la_url(tmp_path):
+    for url in ("http://usuario:S3CRETO@127.0.0.1:9", "http://127.0.0.1:9/?api_key=S3CRETO", "no es una url S3CRETO"):
+        result = _show_config(tmp_path, "llm_host: \"%s\"\n" % url, "--check-llm")
+        salida = result.stdout + result.stderr
+        assert result.returncode == 1
+        assert "no responde (" in salida
+        assert "S3CRETO" not in salida
+
+
+def test_check_llm_muestra_el_servidor_si_es_solo_host_y_puerto(tmp_path):
+    result = _show_config(tmp_path, "llm_host: http://127.0.0.1:9\n", "--check-llm")
+    assert "LLM: servidor http://127.0.0.1:9" in result.stdout
+
+
+def test_show_config_ya_no_tiene_un_modo_que_imprima_la_url(tmp_path):
+    result = _show_config(tmp_path, "llm_host: http://usuario:S3CRETO@h:1\n", "--llm-url")
+    assert "S3CRETO" not in result.stdout + result.stderr
 
 
 def test_relevar_con_python_real_no_filtra_ningun_secreto(tmp_path):
@@ -346,3 +404,20 @@ def test_relevar_con_python_real_no_filtra_ningun_secreto(tmp_path):
     assert "otras claves: 4 (nombres y valores ocultos)" in informe
     # el informe describe el sistema: solo lo lee su dueno
     assert stat.S_IMODE(informe_path.stat().st_mode) == 0o600
+
+
+def test_el_registro_de_smoke_es_privado(tmp_path):
+    env = _python_falso(tmp_path)
+    smoke("--only", "2", env=env)
+    registro = sorted(tmp_path.glob("qbo-smoke-*.log"))[-1]
+    assert stat.S_IMODE(registro.stat().st_mode) == 0o600
+
+
+def test_llm_once_no_muestra_la_clave_de_la_url(tmp_path):
+    config = {"llm_backend": "ollama", "llm_host": "http://usuario:S3CRETO@ollama.test:11434", "llm_retries": 0}
+    http = [{"status": 200, "json": {"message": {"role": "assistant", "content": "Hi"}}}]
+    for carpeta, guion in (("ok", http), ("falla", [{"raise": "Timeout"}]), ("500", [{"status": 500, "json": None}])):
+        _got, out = ar.run_script("scripts/smoke/llm_once.py", tmp_path / carpeta, args=["Hello"],
+                                  scenario={"config": config, "http": guion}, extra_env={"QBO_LLM_HOST": ""})
+        assert "S3CRETO" not in out and "usuario" not in out, out
+        assert "servidor: <oculto>" in out

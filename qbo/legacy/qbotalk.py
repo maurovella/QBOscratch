@@ -22,6 +22,7 @@ import shlex
 
 from qbo import paths
 from qbo import tts
+from qbo import redact
 # from gtts import gTTS
 
 class QBOtalk:
@@ -85,7 +86,7 @@ class QBOtalk:
 
     def SpeechText(self, text_to_speech):
         self.config = yaml.safe_load(open(paths.CONFIG))
-        print("config:" + str(self.config))
+        print("config:" + redact.summary(self.config))
 
         # el texto viene del reconocimiento de voz: va a pico2wave como argumento, sin shell
         speak = " && ".join(shlex.join(c) for c in tts.commands(text_to_speech, self.config["language"], self.config["volume"]))
@@ -106,7 +107,7 @@ class QBOtalk:
 
     def SpeechText_2(self, text_to_speech, text_spain):
         self.config = yaml.safe_load(open(paths.CONFIG))
-        print("config:" + str(self.config))
+        print("config:" + redact.summary(self.config))
         if (self.config["language"] == "spanish"):
                 text = text_spain
         else:

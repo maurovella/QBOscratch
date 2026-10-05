@@ -13,17 +13,18 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspa
 
 import yaml  # noqa: E402
 
-from qbo import llm, paths  # noqa: E402
+from qbo import llm, paths, redact  # noqa: E402
 
 
 def main(argv):
     message = " ".join(argv) or "Hello"
     with open(paths.CONFIG) as fh:
         config = yaml.safe_load(fh)
-    print("backend: %s" % config.get("llm_backend", "tooly_legacy (default)"))
+    print("backend: %s" % (redact.value("llm_backend", config["llm_backend"])
+                           if "llm_backend" in config else "tooly_legacy (default)"))
     try:
         client = llm.from_config(config)
-        print("servidor: %s" % getattr(client, "url", getattr(client, "host", "?")))
+        print("servidor: %s" % redact.safe_url(client.host))
         client.start()
         started = time.time()
         answer = client.chat(message)

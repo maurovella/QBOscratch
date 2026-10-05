@@ -14,6 +14,7 @@ import binascii
 from qbo import protocol as QboCmd
 from qbo import paths
 from qbo import tts
+from qbo import redact
 import sys
 import time
 from qbo.legacy import qbotalk as QBOtalk
@@ -138,7 +139,7 @@ def ServoHome():
     
 def SpeechText_2(text_to_speech, text_spain):
         config = yaml.safe_load(open(paths.CONFIG))
-        print("config:" + str(config))
+        print("config:" + redact.summary(config))
         if (config["language"] == "spanish"):
                 text = text_spain
         else:

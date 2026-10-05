@@ -10,6 +10,7 @@ historico respondia 503 en octubre de 2026.
 """
 import requests
 
+from qbo import redact
 from qbo.llm.base import ChatClient, LLMError, with_retries
 
 
@@ -26,7 +27,8 @@ class ToolyLegacyClient(ChatClient):
         try:
             return requests.post(self.host + path, json=payload, timeout=self.timeout)
         except requests.exceptions.RequestException as exc:
-            raise LLMError("%s: %s" % (type(exc).__name__, exc))
+            # solo el tipo: el texto de requests cita la URL, que puede traer una clave
+            raise LLMError("%s al conectar con %s" % (type(exc).__name__, redact.safe_url(self.host)))
 
     def start(self):
         data_requests = {
@@ -39,7 +41,7 @@ class ToolyLegacyClient(ChatClient):
             try:
                 self.conversation_id = response.json()["conversation_id"]
             except (ValueError, KeyError, TypeError) as exc:
-                raise LLMError("respuesta de /tooly_hello/ sin conversation_id: %s" % exc)
+                raise LLMError("respuesta de /tooly_hello/ sin conversation_id (%s)" % type(exc).__name__)
         else:
             # igual que el original: avisa y sigue con conversation_id None
             print(response)
@@ -58,6 +60,6 @@ class ToolyLegacyClient(ChatClient):
             try:
                 return response.json()["response"]
             except (ValueError, KeyError, TypeError) as exc:
-                raise LLMError("HTTP %s sin campo response: %s" % (response.status_code, exc))
+                raise LLMError("HTTP %s sin campo response (%s)" % (response.status_code, type(exc).__name__))
 
         return with_retries(call, self.retries)

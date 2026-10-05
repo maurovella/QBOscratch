@@ -31,6 +31,7 @@ from qbo import protocol as QboCmd
 from qbo import paths
 from qbo import tts
 from qbo import llm
+from qbo import redact
 import shlex
 import sys
 
@@ -79,7 +80,7 @@ class QBOtalk:
     def SpeechText(self, text_to_speech):
         with self.lock:
             self.config = yaml.safe_load(open(paths.CONFIG))
-            print("config:" + str(self.config))
+            print("config:" + redact.summary(self.config))
 
             if (self.config["language"] == "spanish"):
                 text, volume = text_to_speech, self.config["volume"]
@@ -103,7 +104,7 @@ class QBOtalk:
 
     def SpeechText_2(self, text_to_speech, text_spain):
         self.config = yaml.safe_load(open(paths.CONFIG))
-        print("config:" + str(self.config))
+        print("config:" + redact.summary(self.config))
         if (self.config["language"] == "spanish"):
             text, volume = text_spain, self.config["volume"]
         else:

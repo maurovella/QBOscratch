@@ -67,4 +67,4 @@ def from_config(config):
         from qbo.llm.tooly_legacy import ToolyLegacyClient
         return ToolyLegacyClient(host=host or ToolyLegacyClient.DEFAULT_HOST,
                                  timeout=timeout, retries=config.get("llm_retries", 0))
-    raise LLMError("llm_backend desconocido en config.yml: %r" % (backend,))
+    raise LLMError("llm_backend desconocido en config.yml (valores validos: ollama, tooly_legacy)")

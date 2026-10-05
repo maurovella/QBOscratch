@@ -16,6 +16,7 @@ import serial
 #import binascii
 from qbo import protocol as QboCmd
 from qbo import paths
+from qbo import redact
 import sys
 import os
 import errno
@@ -278,7 +279,7 @@ def CommandOK_Action():
                 print("Saying: " + text)
         elif cmd == "voice":
                 config = yaml.safe_load(open(paths.CONFIG))
-                print("CONFIG " + str(config))
+                print("CONFIG " + redact.summary(config))
 
                 # actualizacion del fichero config
                 config["language"] = lang
@@ -365,7 +366,7 @@ color = ""
 
 # fichero config, contiene language
 config = yaml.safe_load(open(paths.CONFIG))
-print("CONFIG " + str(config))
+print("CONFIG " + redact.summary(config))
 
 # escanea los argumentos del ejecutable
 # (while en vez de for: los handlers multi-argumento como get_text/get_pid

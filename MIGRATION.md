@@ -11,7 +11,7 @@ el robot esté disponible.
 ## Cómo verificar sin el robot
 
 ```sh
-scripts/check.sh          # gate sintáctico + 1008 tests, unos 2 minutos
+scripts/check.sh          # gate sintáctico + 1038 tests, unos 2 minutos
 scripts/check.sh --fast   # solo el gate sintáctico
 ```
 
@@ -144,6 +144,14 @@ say." y repite lo que oyó. Antes el programa terminaba con un traceback.
 entorno. La cuenta, la contraseña y la dirección personal del destinatario ya no
 están en el código. Sin esas variables el robot avisa por pantalla y no manda el
 mail. `QBOtalk` dejó de imprimir el token de Dialogflow.
+
+Los scripts originales imprimían `config.yml` entero al arrancar y en cada
+frase. Eso terminaba en `interactiveMode.log` y ahora terminaría también en el
+journal de systemd y en los registros del smoke test. Pasan a imprimir un
+resumen armado por `qbo/redact.py`: solo las claves conocidas, y solo si el
+valor tiene la forma esperada. Los mensajes de error del cliente LLM ya no
+citan la URL del servidor, que puede traer una clave. Los registros de
+`smoke.sh` y `relevar.sh` quedan en modo 0600.
 
 ## Decisiones tomadas
 

@@ -1,76 +1,28 @@
 #!/usr/bin/env python3
-"""Muestra config.yml sin secretos, para el informe de relevar.sh.
+"""config.yml y el estado del LLM, sin secretos, para el informe de relevar.sh.
 
-    show_config.py <config.yml>             imprime las claves conocidas
-    show_config.py <config.yml> --llm-url   imprime la URL del LLM TAL CUAL, para
-                                            pasarsela a curl. Puede traer una
-                                            clave: no mandar esa salida a un log.
+    show_config.py <config.yml>               imprime las claves conocidas
+    show_config.py <config.yml> --check-llm   consulta /api/tags del servidor del
+                                              LLM. Sale con 0 si responde.
 
-El informe de relevar.sh se copia fuera del robot, asi que este script decide
-que se puede mostrar y no al reves:
+El informe de relevar.sh se copia fuera del robot, asi que nada de lo que
+imprime este script puede llevar un secreto. Las reglas estan en qbo/redact.py:
+solo se muestran valores con la forma esperada, y de las claves desconocidas
+no sale ni el nombre.
 
-- solo se imprimen las claves de VALIDADORES, y solo si el valor tiene la forma
-  esperada (un idioma conocido, un entero, http://host:puerto). Un valor con
-  otra forma sale como <oculto>, sin intentar "limpiarlo": recortar una URL o un
-  texto a mano es justo lo que falla cuando el secreto trae un caracter raro;
-- de las demas claves no se muestra ni el nombre, solo cuantas hay. Un secreto
-  mal pegado puede terminar siendo el nombre de una clave;
-- si el archivo no se puede leer, se informa el tipo de error y nada mas. El
-  mensaje de PyYAML puede citar texto del archivo.
+La URL del LLM nunca sale de este proceso. Antes habia un modo que la imprimia
+para pasarsela a curl; como puede traer usuario y clave, la consulta se hace
+aca adentro y afuera solo va el resultado.
 """
 import os
 import re
 import sys
 
-OCULTO = "<oculto: valor con forma no esperada>"
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-# http://host:puerto y nada mas: sin usuario, clave, ruta ni parametros
-URL_SIMPLE = re.compile(r"https?://[A-Za-z0-9.\-]{1,253}(:[0-9]{1,5})?/?")
-NOMBRE_DE_MODELO = re.compile(r"[A-Za-z0-9_.:\-/]{1,80}")
+from qbo import redact  # noqa: E402
 
-
-def una_de(*opciones):
-    return lambda v: isinstance(v, str) and v in opciones
-
-
-def numero(v):
-    return isinstance(v, (int, float)) and not isinstance(v, bool)
-
-
-def booleano(v):
-    return isinstance(v, bool)
-
-
-def url_simple(v):
-    return isinstance(v, str) and URL_SIMPLE.fullmatch(v) is not None
-
-
-def modelo(v):
-    return isinstance(v, str) and NOMBRE_DE_MODELO.fullmatch(v) is not None
-
-
-VALIDADORES = {
-    "age": numero,
-    "language": una_de("english", "spanish"),
-    "volume": numero,
-    "startWith": una_de("scratch", "interactive-dialogflow", "interactive-gassistant", "tooly"),
-    "op_question": booleano,
-    "llm_backend": una_de("ollama", "tooly_legacy"),
-    "llm_host": url_simple,
-    "llm_model": modelo,
-    "llm_timeout_s": numero,
-    "llm_retries": numero,
-    "camera_index": numero,
-}
-
-# claves que se sabe que guardan un secreto: se informa solo si tienen valor
-SECRETAS = ("tokenAPIai", "gassistant_proyectid")
-
-
-def mostrar(key, value):
-    if value is None or value == "":
-        return "(vacio)"
-    return str(value) if VALIDADORES[key](value) else OCULTO
+NOMBRE_SEGURO = re.compile(r"[A-Za-z0-9._:\-/]{1,60}")
 
 
 def load(path):
@@ -84,32 +36,55 @@ def load(path):
     return config
 
 
+def llm_url(config):
+    """La misma precedencia que qbo/llm: QBO_LLM_HOST pisa a config.yml."""
+    url = os.environ.get("QBO_LLM_HOST") or config.get("llm_host") or ""
+    return url if isinstance(url, str) else ""
+
+
+def check_llm(config):
+    url = llm_url(config)
+    if not url:
+        print("LLM: config.yml no tiene llm_host")
+        return 1
+    print("LLM: servidor %s" % redact.safe_url(url))
+    try:
+        # requests, como el cliente del robot: entiende usuario:clave@host
+        import requests
+        response = requests.get(url.rstrip("/") + "/api/tags", timeout=8)
+        status = response.status_code
+        body = response.json()
+    except Exception as exc:
+        # solo el tipo: el mensaje de requests cita la URL
+        print("LLM: no responde (%s)" % type(exc).__name__)
+        return 1
+    if status != 200:
+        print("LLM: el servidor contesta HTTP %s" % status)
+        return 1
+    models = body.get("models", []) if isinstance(body, dict) else []
+    names = [m.get("name") for m in models if isinstance(m, dict)]
+    names = [n for n in names if isinstance(n, str) and NOMBRE_SEGURO.fullmatch(n)]
+    print("LLM: responde, HTTP %s, %d modelos: %s" % (status, len(models), ", ".join(names[:20]) or "ninguno"))
+    return 0
+
+
 def main(argv):
     path = argv[0]
     try:
         config = load(path)
     except Exception as exc:
-        # solo el tipo: el mensaje puede citar el contenido del archivo
+        # solo el tipo: el mensaje de PyYAML puede citar el contenido del archivo
         print("no se pudo leer config.yml (%s). No se muestra el contenido." % type(exc).__name__)
         return 1
 
-    if "--llm-url" in argv:
-        # la misma precedencia que qbo/llm: QBO_LLM_HOST pisa a config.yml
-        url = os.environ.get("QBO_LLM_HOST") or config.get("llm_host") or ""
-        print(url if isinstance(url, str) else "")
-        return 0
+    if "--check-llm" in argv:
+        return check_llm(config)
 
-    for key in sorted(VALIDADORES):
-        print("%s: %s" % (key, mostrar(key, config[key]) if key in config else "(falta)"))
-    for key in SECRETAS:
-        if key in config:
-            print("%s: %s" % (key, "(vacio)" if config[key] in (None, "") else "<oculto>"))
-    otras = [k for k in config if k not in VALIDADORES and k not in SECRETAS]
-    if otras:
-        print("otras claves: %d (nombres y valores ocultos)" % len(otras))
+    for line in redact.lines(config, missing=True):
+        print(line)
     env_host = os.environ.get("QBO_LLM_HOST")
     if env_host:
-        print("QBO_LLM_HOST (entorno, pisa a llm_host): %s" % (env_host if url_simple(env_host) else OCULTO))
+        print("QBO_LLM_HOST (entorno, pisa a llm_host): %s" % redact.safe_url(env_host))
     return 0
 
 

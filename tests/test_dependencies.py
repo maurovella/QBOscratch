@@ -31,5 +31,5 @@ def test_listen_escucha_sin_apiai(tmp_path):
 def test_qbotalk_no_imprime_el_token(tmp_path):
     scenario = {"background": [], "stop": {"kind": "sleep", "count": 2}}
     _got, out = ar.run_script("apps/listen.py", tmp_path, scenario=scenario)
-    assert "TOKEN_DE_PRUEBA" not in out.split("CONFIG")[0]
+    assert "TOKEN_DE_PRUEBA" not in out
     assert "TOKEN:" not in out

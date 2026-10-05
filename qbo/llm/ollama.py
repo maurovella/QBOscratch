@@ -11,6 +11,7 @@ import time
 
 import requests
 
+from qbo import redact
 from qbo.llm.base import ChatClient, LLMError, with_retries
 from qbo.llm.prompt import TOOLY_ASSISTANT_TEXT
 from qbo.llm.text import clean_text
@@ -28,7 +29,8 @@ class OllamaClient(ChatClient):
 
     def __init__(self, host=DEFAULT_HOST, model=DEFAULT_MODEL, timeout=60, retries=2,
                  system_prompt=TOOLY_ASSISTANT_TEXT):
-        self.url = host.rstrip("/") + "/api/chat"
+        self.host = host.rstrip("/")
+        self.url = self.host + "/api/chat"
         self.model = model
         self.timeout = timeout
         self.retries = retries
@@ -52,13 +54,14 @@ class OllamaClient(ChatClient):
         try:
             response = requests.post(self.url, json=payload, timeout=self.timeout)
         except requests.exceptions.RequestException as exc:
-            raise LLMError("%s: %s" % (type(exc).__name__, exc))
+            # solo el tipo: el texto de requests cita la URL, que puede traer una clave
+            raise LLMError("%s al conectar con %s" % (type(exc).__name__, redact.safe_url(self.host)))
         if response.status_code != 200:
-            raise LLMError("HTTP %s de %s" % (response.status_code, self.url))
+            raise LLMError("HTTP %s de %s" % (response.status_code, redact.safe_url(self.host)))
         try:
             content = response.json()["message"]["content"]
         except (ValueError, KeyError, TypeError) as exc:
-            raise LLMError("respuesta de Ollama sin message.content: %s" % exc)
+            raise LLMError("respuesta de Ollama sin message.content (%s)" % type(exc).__name__)
         text = clean_text(content)
         if not text:
             raise LLMError("respuesta vacia despues de limpiarla: %r" % (content,))

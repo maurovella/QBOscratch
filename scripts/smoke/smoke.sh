@@ -40,6 +40,7 @@ while [ $# -gt 0 ]; do
 done
 
 LOG="$HOME/qbo-smoke-$(date +%Y%m%d-%H%M).log"
+umask 077       # el registro guarda la salida de cada paso: que lo lea solo su dueno
 [ "$MODE" = run ] || LOG=/dev/null
 N=0; PASSED=0; FAILED=0; RESULTS=""
 
