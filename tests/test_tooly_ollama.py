@@ -96,3 +96,14 @@ def test_tooly_audio_con_ollama(tmp_path):
     got, out = run(tmp_path, scenario, script="apps/tooly_audio.py")
     assert reason(got) == "stop", out
     assert tts_text(got) == ["Hello", "Good morning"]
+
+
+def test_sin_microfono_el_error_dice_que_falta(tmp_path):
+    """Sin la tarjeta I2S no existe dmicQBO_sv. Tooly no puede arrancar, pero
+    tiene que decir por que."""
+    for script in ("apps/tooly.py", "apps/tooly_audio.py", "apps/repeat.py"):
+        got, out = run(tmp_path / script.replace("/", "_"), {"microphones": ["bcm2835 Headphones", "vc4-hdmi"]},
+                       script=script)
+        assert reason(got) == "EXC RuntimeError", out
+        assert "Microfono 'dmicQBO_sv' no encontrado" in out
+        assert "vc4-hdmi" in out

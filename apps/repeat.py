@@ -34,9 +34,15 @@ class QBOtalk:
         self.strAudio = ""
         self.config = config
         
+        self.m = None
         for i, mic_name in enumerate (sr.Microphone.list_microphone_names()):
             if(mic_name == "dmicQBO_sv"):
                 self.m = sr.Microphone(i)
+        if self.m is None:
+            # sin esto el error era "AttributeError: ... has no attribute 'm'"
+            raise RuntimeError("Microfono 'dmicQBO_sv' no encontrado. Lo define /etc/asound.conf y necesita "
+                               "la tarjeta I2S (modulo my_loader). PortAudio ve: "
+                               + str(sr.Microphone.list_microphone_names()))
         with self.m as source:        
             self.r.adjust_for_ambient_noise(source)
 
