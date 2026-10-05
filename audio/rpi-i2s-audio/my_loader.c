@@ -21,6 +21,22 @@
 #include <linux/platform_device.h>
 #include <sound/simple_card.h>
 #include <linux/delay.h>
+#include <linux/version.h>
+
+/*
+ * Compatibilidad con kernels nuevos (Raspbian 13). Sin esto no compila.
+ * - Linux 6.7 renombro struct asoc_simple_card_info a simple_util_info,
+ *   con los mismos campos.
+ * - SND_SOC_DAIFMT_CBS_CFS (el codec es esclavo de reloj: la Pi genera BCLK y
+ *   LRCLK) paso a llamarse SND_SOC_DAIFMT_CBC_CFC. Hasta 6.12 el nombre viejo
+ *   era un alias del nuevo; despues se elimino.
+ */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 7, 0)
+#define asoc_simple_card_info simple_util_info
+#endif
+#ifndef SND_SOC_DAIFMT_CBS_CFS
+#define SND_SOC_DAIFMT_CBS_CFS SND_SOC_DAIFMT_CBC_CFC
+#endif
 /*
  * modified for linux 4.1.5
  * inspired by https://github.com/msperl/spi-config

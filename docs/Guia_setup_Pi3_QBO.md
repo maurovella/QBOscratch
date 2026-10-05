@@ -199,7 +199,7 @@ Eso te ahorra todo el bloque 2.4. Si no la tenés, seguí el camino de overlays 
 El robot original no usaba un overlay. La tarjeta de sonido la crea un módulo de kernel, `my_loader` (`audio/rpi-i2s-audio/`), y está explicado en `docs/QBO-AUDIO-sndrpisimplecar.md`. Para recompilarlo en el kernel nuevo:
 
 - Headers: en una Pi 3 con kernel de 32 bits el paquete es `linux-headers-rpi-v7`. Mirá `uname -r` antes. `raspberrypi-kernel-headers` y `linux-headers-rpi-v7l` no existen ahí.
-- `my_loader.c` usa `struct asoc_simple_card_info`. El kernel 6.12 lo renombró a `struct simple_util_info` (`include/sound/simple_card.h`). Hay que cambiar ese nombre para que compile. **Sin probar:** no se pudo cargar el módulo.
+- `my_loader.c` ya compila para los kernels 6.12 y 6.18 de Raspberry Pi. Los pasos para compilarlo e instalarlo están en `audio/rpi-i2s-audio/README.md`. **Sin probar:** nunca se cargó en un kernel 6.x.
 - Hay que recompilarlo en cada actualización de kernel.
 
 El overlay de 2.4 es la alternativa que no necesita headers. Tampoco está probado.

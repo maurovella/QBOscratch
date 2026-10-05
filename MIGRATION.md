@@ -255,10 +255,13 @@ bits porque `onnxruntime` no tiene wheel `armv7l`.
 Es el punto sin camino verificado. Micrófono y parlante dependen de la tarjeta
 `sndrpisimplecar`, que crea el módulo de kernel `my_loader`.
 
-- `audio/rpi-i2s-audio/my_loader.c` usa `struct asoc_simple_card_info`. El
-  kernel `rpi-6.12.y` lo renombró a `struct simple_util_info`. No compila sin
-  ese cambio. No se tocó el archivo: sin poder cargarlo no hay forma de saber si
-  el arreglo alcanza.
+- `audio/rpi-i2s-audio/my_loader.c` no compilaba en el kernel nuevo por dos
+  nombres que cambiaron: `struct asoc_simple_card_info` pasó a
+  `struct simple_util_info` en Linux 6.7, y `SND_SOC_DAIFMT_CBS_CFS` pasó a
+  `SND_SOC_DAIFMT_CBC_CFC`. Con dos definiciones de compatibilidad compila
+  para los kernels 6.12.75 y 6.18.50 de Raspberry Pi (`rpi-v7`), verificado en
+  un contenedor armhf con los headers oficiales. **Nunca se cargó**: eso solo
+  se puede hacer en la Pi. Los pasos están en `audio/rpi-i2s-audio/README.md`.
 - Los headers existen. El paquete para una Pi 3 con kernel de 32 bits es
   `linux-headers-rpi-v7`. La documentación anterior había probado
   `raspberrypi-kernel-headers` y `linux-headers-rpi-v7l`, que no existen ahí.
@@ -308,7 +311,8 @@ la cabeza se mueva hacia el lado correcto, que la voz se entienda.
 ## Riesgos abiertos
 
 1. **Audio.** Sin `my_loader` no hay parlante ni micrófono, y Tooly no sirve.
-   Es el primer problema a resolver con el robot delante.
+   El módulo ya compila para el kernel nuevo, pero falta cargarlo y ver que
+   aparezca la tarjeta. Es lo primero a probar con el robot delante.
 2. **`camera_index: 2` y `llm_host`** en `config.yml` salen de la documentación,
    no de una prueba. Si la cámara no abre, `tooly.py` falla al arrancar.
 3. **Reconocimiento de voz.** Depende de internet y de un servicio que Google no
