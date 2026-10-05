@@ -1,6 +1,0 @@
-# claves que lee el codigo: language (say.py, QBOtalk.py, listAndSay.py, PiFaceFast.py),
-# volume (TTS pico2wave, 0-500, default 100), tokenAPIai (QBOtalk.py),
-# startWith y gassistant_proyectid (PiFaceFast.py)
-age: 1
-language: spanish
-volume: 100
