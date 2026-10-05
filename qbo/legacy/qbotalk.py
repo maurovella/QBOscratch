@@ -14,11 +14,13 @@ import yaml
 import os
 import wave
 import shlex
+
+from qbo import paths
 # from gtts import gTTS
 
 class QBOtalk:
     def __init__(self):
-        config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        config = yaml.safe_load(open(paths.CONFIG))
 
         CLIENT_ACCESS_TOKEN = config["tokenAPIai"]
         print("TOKEN: " + CLIENT_ACCESS_TOKEN)
@@ -127,7 +129,7 @@ class QBOtalk:
         return True
 
     def SpeechText(self, text_to_speech):
-        self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        self.config = yaml.safe_load(open(paths.CONFIG))
         print("config:" + str(self.config))
 
         # shlex.quote: el texto viene del reconocimiento de voz; sin escapar,
@@ -153,7 +155,7 @@ class QBOtalk:
     
 
     def SpeechText_2(self, text_to_speech, text_spain):
-        self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        self.config = yaml.safe_load(open(paths.CONFIG))
         print("config:" + str(self.config))
         if (self.config["language"] == "spanish"):
                 tts_arg = shlex.quote("<volume level='" + str(self.config["volume"]) + "'>" + text_spain)

@@ -11,6 +11,7 @@ import cv2
 import serial
 import binascii
 from qbo import protocol as QboCmd
+from qbo import paths
 import sys
 import time
 from qbo.legacy import qbotalk as QBOtalk
@@ -74,8 +75,8 @@ webcam = cv2.VideoCapture(0)				# Get ready to start getting images from the web
 webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
 webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)	# 	resolution you'll want to attempt on the pi
 
-frontalface = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")		# frontal face pattern detection
-profileface = cv2.CascadeClassifier("haarcascade_profileface.xml")		# side face pattern detection
+frontalface = cv2.CascadeClassifier(paths.HAAR_FRONTAL)		# frontal face pattern detection
+profileface = cv2.CascadeClassifier(paths.HAAR_PROFILE)		# side face pattern detection
 
 face = [0,0,0,0]	# This will hold the array that OpenCV returns when it finds a face: (makes a rectangle)
 Cface = [0,0]		# Center of the face: a point calculated from the above variable

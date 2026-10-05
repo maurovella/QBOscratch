@@ -18,6 +18,7 @@ import time
 import yaml
 import shlex
 from qbo.legacy import qbotalk as QBOtalk
+from qbo import paths
 
 Qbo = QBOtalk.QBOtalk()
 
@@ -45,7 +46,7 @@ def SayFromFifo():
         data = raw.decode("utf-8", errors="replace")
 
         if data:
-                config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+                config = yaml.safe_load(open(paths.CONFIG))
 
                 print('Read: "{0}"'.format(data))
                 # shlex.quote: el texto viene del FIFO; sin escapar,
@@ -80,9 +81,9 @@ def WaitForSpeech():
 
 #Qbo.SpeechText("I am ready.")
 # FIFO init.
-FIFO_listen = '/home/pi/Documents/pipes/pipe_listen'
-FIFO_say = '/home/pi/Documents/pipes/pipe_say'
-FIFO_cmd = '/home/pi/Documents/pipes/pipe_cmd'
+FIFO_listen = paths.pipe("pipe_listen")
+FIFO_say = paths.pipe("pipe_say")
+FIFO_cmd = paths.pipe("pipe_cmd")
 
 try:
     os.mkfifo(FIFO_listen)

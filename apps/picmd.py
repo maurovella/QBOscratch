@@ -15,6 +15,7 @@ import serial
 #import cv2
 #import binascii
 from qbo import protocol as QboCmd
+from qbo import paths
 import sys
 import os
 import errno
@@ -240,7 +241,7 @@ def CommandOK_Action():
         global HeadServo
         global color
 
-        FIFO_say = '/home/pi/Documents/pipes/pipe_say';
+        FIFO_say = paths.pipe("pipe_say")
 
 #    /* create the FIFO (named pipe) */
 #    mkfifo(myfifo, 0666);
@@ -277,12 +278,12 @@ def CommandOK_Action():
 #			fifo.close()
                 print("Saying: " + text)
         elif cmd == "voice":
-                config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+                config = yaml.safe_load(open(paths.CONFIG))
                 print("CONFIG " + str(config))
 
                 # actualizacion del fichero config
                 config["language"] = lang
-                with open('/home/pi/Documents/config.yml', 'w') as f:
+                with open(paths.CONFIG, 'w') as f:
                         yaml.dump(config, f)
                 print("Setting: " + cmd + " = " + str(lang))
                 f.close()
@@ -364,7 +365,7 @@ speed = 0
 color = ""
 
 # fichero config, contiene language
-config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+config = yaml.safe_load(open(paths.CONFIG))
 print("CONFIG " + str(config))
 
 # escanea los argumentos del ejecutable
@@ -398,7 +399,7 @@ if len(sys.argv) > 1:
 
 
 # FIFO init.
-FIFO_cmd = '/home/pi/Documents/pipes/pipe_cmd'
+FIFO_cmd = paths.pipe("pipe_cmd")
 
 try:
     os.mkfifo(FIFO_cmd)

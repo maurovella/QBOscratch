@@ -15,6 +15,7 @@ import serial
 #import cv2
 #import binascii
 from qbo import protocol as QboCmd
+from qbo import paths
 import sys
 import os
 import errno
@@ -22,7 +23,7 @@ import yaml
 import pdb
 
 # FIFO init.
-FIFO_cmd = '/home/pi/Documents/pipes/pipe_cmd'
+FIFO_cmd = paths.pipe("pipe_cmd")
 
 # scan stdin and send to pipe_cmd
 if len(sys.argv) == 1: 

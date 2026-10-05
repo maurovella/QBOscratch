@@ -12,6 +12,7 @@ import cv2
 import serial
 import binascii
 from qbo import protocol as QboCmd
+from qbo import paths
 import sys
 import time
 from qbo.legacy import qbotalk as QBOtalk
@@ -20,7 +21,7 @@ import yaml
 import shlex
 from qbo.legacy.gassistant import GAssistant
 
-config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+config = yaml.safe_load(open(paths.CONFIG))
 
 if config["startWith"] == "interactive-dialogflow":
     interactiveTypeGAssistant = False
@@ -108,8 +109,8 @@ if not webcam.isOpened():
 #for i in range(0,24):
 #   print webcam.get(i)
 
-frontalface = cv2.CascadeClassifier("/home/pi/Documents/Python projects/haarcascade_frontalface_alt2.xml")		# frontal face pattern detection
-profileface = cv2.CascadeClassifier("/home/pi/Documents/Python projects/haarcascade_profileface.xml")		# side face pattern detection
+frontalface = cv2.CascadeClassifier(paths.HAAR_FRONTAL)		# frontal face pattern detection
+profileface = cv2.CascadeClassifier(paths.HAAR_PROFILE)		# side face pattern detection
 
 face = [0,0,0,0]	# This will hold the array that OpenCV returns when it finds a face: (makes a rectangle)
 Cface = [0,0]		# Center of the face: a point calculated from the above variable
@@ -133,7 +134,7 @@ def ServoHome():
         return
     
 def SpeechText_2(text_to_speech, text_spain):
-        config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        config = yaml.safe_load(open(paths.CONFIG))
         print("config:" + str(config))
         if (config["language"] == "spanish"):
                 tts_arg = shlex.quote("<volume level='" + str(config["volume"]) + "'>" + text_spain)

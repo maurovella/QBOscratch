@@ -13,6 +13,7 @@ import time
 import serial
 import binascii
 from qbo import protocol as QboCmd
+from qbo import paths
 import sys
 import time
 import yaml
@@ -54,7 +55,7 @@ def WaitForTouch():
 #============================================================================================================
 
 # FIFO init.
-FIFO_feel = '/home/pi/Documents/pipes/pipe_feel'
+FIFO_feel = paths.pipe("pipe_feel")
 
 try:
     os.mkfifo(FIFO_feel)

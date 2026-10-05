@@ -11,6 +11,7 @@ import cv2
 import serial
 import binascii
 from qbo import protocol as QboCmd
+from qbo import paths
 import sys
 import time
 import os
@@ -36,8 +37,8 @@ if not webcam.isOpened():
         print("Error opening WebCAM")
         sys.exit(1)
 
-frontalface = cv2.CascadeClassifier("haarcascade_frontalface_alt2.xml")		# frontal face pattern detection
-profileface = cv2.CascadeClassifier("haarcascade_profileface.xml")		# side face pattern detection
+frontalface = cv2.CascadeClassifier(paths.HAAR_FRONTAL)		# frontal face pattern detection
+profileface = cv2.CascadeClassifier(paths.HAAR_PROFILE)		# side face pattern detection
 
 face = [0,0,0,0]	# This will hold the array that OpenCV returns when it finds a face: (makes a rectangle)
 Cface = [0,0]		# Center of the face: a point calculated from the above variable
@@ -50,7 +51,7 @@ lastface = 0		# int 1-3 used to speed up detection. The script is looking for a 
 time.sleep(1)		# Wait for them to start
 
 
-FIFO_findFace = '/home/pi/Documents/pipes/pipe_findFace'
+FIFO_findFace = paths.pipe("pipe_findFace")
 
 try:
     os.mkfifo(FIFO_findFace)

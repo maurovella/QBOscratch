@@ -17,6 +17,7 @@ import sys
 import time
 import yaml
 from qbo.legacy import qbotalk as QBOtalk
+from qbo import paths
 
 Qbo = QBOtalk.QBOtalk()
 
@@ -45,8 +46,8 @@ def WaitForSpeech():
 
 #Qbo.SpeechText("I am ready.")
 # FIFO init.
-FIFO_listen = '/home/pi/Documents/pipes/pipe_listen'
-FIFO_cmd = '/home/pi/Documents/pipes/pipe_cmd'
+FIFO_listen = paths.pipe("pipe_listen")
+FIFO_cmd = paths.pipe("pipe_cmd")
 
 try:
     os.mkfifo(FIFO_listen)

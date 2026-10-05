@@ -5,6 +5,8 @@ import json
 import threading
 import subprocess
 
+from qbo import paths
+
 import google.oauth2.credentials
 from google.assistant.library import Assistant
 from google.assistant.library.event import EventType
@@ -60,8 +62,7 @@ class GAssistant:
     def process_event(self, event):
         if event.type == EventType.ON_CONVERSATION_TURN_STARTED:
             if self.doBlip:
-                blip = "aplay /home/pi/Documents/blip.wav"
-                result = subprocess.call(blip, shell = True)
+                result = subprocess.call(["aplay", paths.BLIP])
             # rearmar siempre: si la conversacion vino de la cara (doBlip=False),
             # el reset dentro del if dejaba el blip apagado para siempre
             self.doBlip = True

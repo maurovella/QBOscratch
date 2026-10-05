@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from multiprocessing import Process, Queue
 import subprocess
 import os
@@ -12,6 +17,7 @@ import sys
 import time
 import yaml
 import shlex
+from qbo import paths
 
 
 def SayFromFile():
@@ -30,7 +36,7 @@ def SayFromFile():
                 data = raw.decode("utf-8", errors="replace")
 
                 if data:
-                        config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+                        config = yaml.safe_load(open(paths.CONFIG))
  
                         print('Read: "{0}"'.format(data))
                         # shlex.quote: el texto viene del FIFO; sin escapar,
@@ -49,13 +55,13 @@ def SayFromFile():
 #		        	speak = "espeak -v mb-es2 -s 120 \"" + data + "\" --stdout  | aplay -D convertQBO"
                         print("say.py: " + speak)
                         
-                        result = subprocess.call("/home/pi/Documents/deamonsScripts/QBO_listen stop", shell = True)
+                        result = subprocess.call([paths.daemon("QBO_listen"), "stop"])
                         result = subprocess.call(speak, shell = True)
-                        result = subprocess.call("/home/pi/Documents/deamonsScripts/QBO_listen start", shell = True)
+                        result = subprocess.call([paths.daemon("QBO_listen"), "start"])
 
 #============================================================================================================
 
-FIFO_say = '/home/pi/Documents/pipes/pipe_say'
+FIFO_say = paths.pipe("pipe_say")
 
 #
 #try:
