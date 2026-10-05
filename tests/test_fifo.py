@@ -65,7 +65,7 @@ def test_say_no_pierde_descriptores(tmp_path):
     def corrida(carpeta, n):
         writes = [{"pipe": "pipe_say", "data": "frase %d" % i, "pause": 0.05} for i in range(n)]
         return run("apps/say.py", tmp_path / carpeta,
-                   {"fifo_writes": writes, "stop": {"kind": "exec", "count": 4 * n, "max_real_seconds": 15}})
+                   {"fifo_writes": writes, "stop": {"kind": "exec", "count": 4 * n, "max_real_seconds": 120}})
     pocos, _ = corrida("a", 2)
     muchos, out = corrida("b", 25)
     assert tts_text(muchos) == ["frase %d" % i for i in range(25)], out

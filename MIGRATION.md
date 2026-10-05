@@ -11,7 +11,7 @@ el robot esté disponible.
 ## Cómo verificar sin el robot
 
 ```sh
-scripts/check.sh          # gate sintáctico + 949 tests, unos 2 minutos
+scripts/check.sh          # gate sintáctico + 974 tests, unos 2 minutos
 scripts/check.sh --fast   # solo el gate sintáctico
 ```
 
@@ -26,6 +26,7 @@ Qué comprueba:
 | El protocolo UART emite los mismos bytes que en Python 2.7 | 461 casos ejecutados sobre el `QboCmd.py` original en Docker `python:2.7-slim` y guardados en `tests/golden/protocol_py2.json` | `tests/test_protocol.py` |
 | Cada script hace lo mismo que en Python 2.7 | 94 escenarios contra un robot de mentira. Se compara el registro de bytes por la UART, argumentos que recibe `pico2wave`, pedidos HTTP, mails y datos en los FIFOs | `tests/test_apps_golden.py` |
 | El cliente LLM | `requests` real contra un servidor HTTP local con guion | `tests/test_llm.py`, `tests/test_tooly_ollama.py` |
+| Los puentes de `Python projects/` que lanzan los daemons, y sus permisos | Se ejecuta cada puente y se mira el modo en el índice de git | `tests/test_bridges.py` |
 | FIFOs, `config.yml`, alertas por mail, dependencias, smoke test | | `tests/test_fifo.py` y siguientes |
 
 El golden master se regenera con `tests/golden/generate.sh`. Necesita Docker y la
@@ -171,6 +172,7 @@ Arreglados, cada uno en su commit y con test:
 - `downsampleWav()` y `downsampleWave_2()`: código muerto con `NameError`.
 - `PiCmd.py` importaba `QBOtalk` sin usarlo y no arrancaba sin `apiai`.
 - `QBOtalk` exigía `apiai` e imprimía el token.
+- `PiFaceFast.py` importaba Google Assistant aunque el modo pedido fuera Dialogflow, y no arrancaba sin esa librería.
 - `websocket_server.c` no incluía `fcntl.h` ni `sys/stat.h` y no compilaba con gcc 14.
 - Inyección de shell en el TTS y en `RTQR.py`.
 
@@ -218,6 +220,12 @@ Verificado en un contenedor `debian:trixie` `linux/arm/v7`:
 En ese contenedor todos importan, OpenCV 4.10 carga las dos cascadas Haar del
 repo y el `pico2wave` real genera un WAV de 16 kHz mono con los argumentos de
 `qbo/tts.py`.
+
+La suite completa corrió ahí, con los paquetes de apt y el venv, bajo emulación:
+973 de 974 tests pasaron. El que falló agotaba un límite de 15 segundos reales
+que la emulación no cumple; con el límite ampliado pasa, verificado en una
+corrida aparte de `tests/test_fifo.py`. También corre en `python:3.13-slim`
+(Linux arm64) con las versiones de `requirements.txt`.
 
 No usar `opencv-python` 5.x: no tiene `cv2.CascadeClassifier`. `requirements.txt`
 lo fija en 4.10.
@@ -286,7 +294,7 @@ original.
 | `recognize_google` | Usa un servicio gratuito de Google con una clave embebida que puede dejar de andar | Paso 12 |
 | Ollama real | `10.16.1.190` no es alcanzable desde donde se hizo la migración | Paso 13 |
 | Tooly completo | Depende de todo lo anterior | Paso 14 |
-| `apps/face_follow.py` (modo interactivo) | Usa hilos y Dialogflow. No tiene golden contra Python 2 | No hay servicio contra el cual probarlo |
+| `apps/face_follow.py` (modo interactivo) | Usa hilos y Dialogflow. No tiene golden contra Python 2. Solo se comprobó que arranca, abre la cámara y busca caras | No hay servicio contra el cual probarlo |
 | `tools/list_and_say.py`, `piface*.py`, `listen_background.py` | Dependen de `QBOtalk` | Idem |
 | `websocket_server` en ejecución | Compila contra libwebsockets 4.3.5. No se probó con un cliente | Solo si se usa el modo Scratch |
 | `RTQR.py` | Necesita el binding de `zbar` para Python 3. `writeWiFi.sh` escribe en `wpa_supplicant.conf`, y trixie usa NetworkManager | Solo si se usa el WiFi por QR |
