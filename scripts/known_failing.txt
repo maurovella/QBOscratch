@@ -1,9 +1,5 @@
 # Fallas conocidas del gate. Esta lista solo puede achicarse.
 # Formato: compile:<ruta>  o  undefined:<ruta>:<nombre>
-compile:apps/tooly.py
-compile:apps/tooly_audio.py
-compile:qbo/touch.py
-compile:apps/repeat.py
 compile:deamonsScripts/RTQR.py
 compile:deamonsScripts/autoStart.py
 compile:deamonsScripts/autoStop.py

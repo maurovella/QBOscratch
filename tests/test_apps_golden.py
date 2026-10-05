@@ -15,7 +15,7 @@ import pytest
 import apps_runner as ar
 
 # scripts que todavia no se portaron: sus escenarios se saltean
-PENDIENTES = {"TrackAndTalk", "llama2Connection", "repeat"}
+PENDIENTES = set()
 
 
 def tts_text(evts):
@@ -61,6 +61,12 @@ def _texto_literal(texto):
     return check
 
 
+def _ultimo_tts(evts, texto):
+    assert tts_text(evts)[-1] == texto
+    assert reason(evts) == "end"
+    assert {e["argv"][0] for e in kinds(evts, "exec")} == {"pico2wave", "aplay"}
+
+
 _INYECCION = ("py2 armaba el comando con comillas dobles y shell=True: la shell "
               "interpretaba el texto. Ahora llega literal a pico2wave")
 _SAY = {name: text for name, text, _lang in ar.app_cases.SAY_TEXTS}
@@ -79,6 +85,12 @@ DIVERGENCIAS = {
     "say: sustitucion de comandos": (_INYECCION, _texto_literal(_SAY["sustitucion de comandos"])),
     "say: backticks": (_INYECCION, _texto_literal(_SAY["backticks"])),
     "say: variable de shell": (_INYECCION, _texto_literal(_SAY["variable de shell"])),
+    "tooly: respuesta con caracteres de shell": (
+        _INYECCION + ". En py2 la respuesta del LLM ejecutaba `echo boo` en el robot",
+        lambda evts, out: _ultimo_tts(evts, "It costs $5 `echo boo` and $(echo more); ok")),
+    "tooly: respuesta con comillas dobles": (
+        _INYECCION + ". En py2 pico2wave recibia la frase partida en dos argumentos",
+        lambda evts, out: _ultimo_tts(evts, 'She said "carpe diem" to me')),
     "say: largo 300 bytes": (
         "py2 leia 100 bytes del FIFO y tiraba el resto",
         _texto_literal(_SAY["largo 300 bytes"])),

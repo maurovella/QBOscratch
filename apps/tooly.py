@@ -1,22 +1,25 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 # NOTE: this example requires PyAudio because it uses the Microphone class
 
 # install TTs google
 # sudo pip install gTTS 
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import speech_recognition as sr
 import subprocess
-import pipes
 import json
-import apiai
 import time
 import yaml
 import os
 import wave
 import requests
-import pet
-import emailSender as es
+from qbo import touch as pet
+from qbo import notify as es
 import multiprocessing
 import threading
 from email.mime.text import MIMEText
@@ -25,26 +28,28 @@ import subprocess
 import cv2
 import serial
 import binascii
-import QboCmd
+from qbo import protocol as QboCmd
+from qbo import paths
+from qbo import tts
+import shlex
 import sys
-import thread
 
-config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+config = yaml.safe_load(open(paths.CONFIG))
 
 url = "http://pf-2023a-tooly.it.itba.edu.ar"
 class QBOtalk:
     def __init__(self):
-	config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
+        config = yaml.safe_load(open(paths.CONFIG))
         # obtain audio from the microphone
         self.r = sr.Recognizer()
         self.Response = "hello"
         self.GetResponse = False
         self.GetAudio = False
         self.strAudio = ""
-	self.config = config
-	self.email = False
-	self.touch = False
-	self.lock = threading.Lock()
+        self.config = config
+        self.email = False
+        self.touch = False
+        self.lock = threading.Lock()
         
         for i, mic_name in enumerate (sr.Microphone.list_microphone_names()):
             if(mic_name == "dmicQBO_sv"):
@@ -59,7 +64,7 @@ class QBOtalk:
                     str = self.r.recognize_google(audio, language="es-ES")
                 else:
                     str = self.r.recognize_google(audio)
-                print "LISTEN: " + str
+                print("LISTEN: " + str)
         except sr.UnknownValueError:
             str = ""
         except sr.RequestError as e:
@@ -68,15 +73,14 @@ class QBOtalk:
 
     def SpeechText(self, text_to_speech):
         with self.lock:
-            self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-            print "config:" + str(self.config)
+            self.config = yaml.safe_load(open(paths.CONFIG))
+            print("config:" + str(self.config))
 
             if (self.config["language"] == "spanish"):
-                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-    #               speak = "pico2wave -l \"es-ES\" -w /var/local/pico2wave.wav \"" + text_to_speech + "\" | aplay -D convertQBO"
+                text, volume = text_to_speech, self.config["volume"]
             else:
-                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(40) + "'>" + text_to_speech + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-    #               speak = "pico2wave -l \"en-US\" -w /var/local/pico2wave.wav \"" + text_to_speech + "\" | aplay -D convertQBO"
+                text, volume = text_to_speech, 40     # fijo en el original: en ingles no lee el volumen de config.yml
+            speak = " && ".join(shlex.join(c) for c in tts.commands(text, self.config["language"], volume))
 
 #        speak = "espeak -ven+f3 \"" + text_to_speech + "\" --stdout  | aplay -D convertQBO"
 
@@ -88,20 +92,21 @@ class QBOtalk:
 #       os.system("aplay -D convertQBO say16.wav")
 # hasta aqui
 
-            print "QBOtalk: " + speak.encode('utf-8')
-            result = subprocess.call(speak, shell = True)
+            print("QBOtalk: " + speak)
+            result = tts.speak(text, self.config["language"], volume)
     
 
     def SpeechText_2(self, text_to_speech, text_spain):
-	self.config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-	print "config:" + str(self.config)
-	if (self.config["language"] == "spanish"):
-	    speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_spain + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-	else:
-            speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(self.config["volume"]) + "'>" + text_to_speech + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        self.config = yaml.safe_load(open(paths.CONFIG))
+        print("config:" + str(self.config))
+        if (self.config["language"] == "spanish"):
+            text, volume = text_spain, self.config["volume"]
+        else:
+            text, volume = text_to_speech, self.config["volume"]
+        speak = " && ".join(shlex.join(c) for c in tts.commands(text, self.config["language"], volume))
 
-        print "QBOtalk_2: " + speak.encode('utf-8')
-	result = subprocess.call(speak, shell = True)
+        print("QBOtalk_2: " + speak)
+        result = tts.speak(text, self.config["language"], volume)
     
     def callback(self, recognizer, audio):
         try:
@@ -116,15 +121,15 @@ class QBOtalk:
         print("callback listen")
         try:
             #strSpanish = self.r.recognize_google(audio,language="es-ES")
-#	    with open("microphone-results.wav", "wb") as f:
-#    		f.write(audio.get_wav_data())
+#           with open("microphone-results.wav", "wb") as f:
+#               f.write(audio.get_wav_data())
             if (self.config["language"] == "spanish"):
                 self.strAudio = self.r.recognize_google(audio, language="es-ES")
             else:
                 self.strAudio = self.r.recognize_google(audio)
 
             self.strAudio = self.r.recognize_google(audio)
-	    self.GetAudio = True
+            self.GetAudio = True
             print("listen: " + self.strAudio)
             #print("listenSpanish: ", strSpanish)
             #self.SpeechText(self.Response)
@@ -295,10 +300,10 @@ else:
 try:
         # Open serial port
         ser = serial.Serial(port, baudrate=115200, bytesize = serial.EIGHTBITS, stopbits = serial.STOPBITS_ONE, parity = serial.PARITY_NONE, rtscts = False, dsrdtr =False, timeout = 0)
-        print "Open serial port sucessfully."
+        print("Open serial port sucessfully.")
         print(ser.name)
 except:
-        print "Error opening serial port."
+        print("Error opening serial port.")
         sys.exit()
 
 
@@ -316,22 +321,22 @@ time.sleep(1)
 QBO.SetNoseColor(2)       #Off QBO nose brigth
 
 
-frontalface = cv2.CascadeClassifier("/home/pi/Documents/Python projects/haarcascade_frontalface_alt2.xml")		# frontal face pattern detection
-profileface = cv2.CascadeClassifier("/home/pi/Documents/Python projects/haarcascade_profileface.xml")		# side face pattern detection
+frontalface = cv2.CascadeClassifier(paths.HAAR_FRONTAL)              # frontal face pattern detection
+profileface = cv2.CascadeClassifier(paths.HAAR_PROFILE)           # side face pattern detection
 
-face = [0,0,320,240]	# This will hold the array that OpenCV returns when it finds a face: (makes a rectangle)
-Cface = [0,0]		# Center of the face: a point calculated from the above variable
+face = [0,0,320,240]    # This will hold the array that OpenCV returns when it finds a face: (makes a rectangle)
+Cface = [0,0]           # Center of the face: a point calculated from the above variable
 
 x,y,w,h = face
-Cface = [(w/2+x),(h/2+y)]       # we are given an x,y corner point and a width and height, we need the center
+Cface = [(w//2+x),(h//2+y)]       # we are given an x,y corner point and a width and height, we need the center
 
 
 
 cap = cv2.VideoCapture(1)
-cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
-cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 240)	# resolution you'll want to attempt on the pi
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)            # I have found this to be about the highest-
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)   # resolution you'll want to attempt on the pi
 
-time.sleep(10)		# Wait for them to start
+time.sleep(10)          # Wait for them to start
 
 face = 150,110,20,20
 Cface = [ 160, 120 ]
@@ -362,9 +367,9 @@ while (True):
 
     move = False
     
-    fface = frontalface.detectMultiScale(frame,1.3,4,(cv2.cv.CV_HAAR_DO_CANNY_PRUNING + cv2.cv.CV_HAAR_FIND_BIGGEST_OBJECT + cv2.cv.CV_HAAR_DO_ROUGH_SEARCH),(60,60))
-    if fface != ():                 # if we found a frontal face...
-	face_not_found_idx = 0
+    fface = frontalface.detectMultiScale(frame,1.3,4,(cv2.CASCADE_DO_CANNY_PRUNING | cv2.CASCADE_FIND_BIGGEST_OBJECT | cv2.CASCADE_DO_ROUGH_SEARCH),(60,60))
+    if len(fface) > 0:              # if we found a frontal face...
+        face_not_found_idx = 0
         lastface = 1            # set lastface 1 (so next loop we will only look for a frontface)
         for f in fface:         # f in fface is an array with a rectangle representing a face
             faceFound = True
@@ -373,7 +378,7 @@ while (True):
     cv2.rectangle(frame, (face[0],face[1]),(face[0]+face[2], face[1]+face[3]),(255,0,0),2) 
     
     x,y,w,h = face
-    Cface = [(w/2+x),(h/2+y)] 
+    Cface = [(w//2+x),(h//2+y)] 
     
     print(Cface)
     

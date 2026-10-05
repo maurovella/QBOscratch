@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 
 from multiprocessing import Process, Queue
 import subprocess
@@ -7,7 +7,7 @@ import errno
 import time
 import serial
 import binascii
-import QboCmd
+from qbo import protocol as QboCmd
 import sys
 import time
 import yaml
@@ -18,10 +18,10 @@ try:
         print(port)
         # Open serial port
         ser = serial.Serial(port, baudrate=115200, bytesize = serial.EIGHTBITS, stopbits = serial.STOPBITS_ONE, parity = serial.PARITY_NONE, rtscts = False, dsrdtr =False, timeout = 0)
-        print "Open serial port sucessfully."
+        print("Open serial port sucessfully.")
         print(ser.name)
 except:
-        print "Error opening serial port."
+        print("Error opening serial port.")
         sys.exit()
 
 HeadServo = QboCmd.Controller(ser)
@@ -38,10 +38,10 @@ def WaitForTouch():
                     touch_str = "Touch: left"
 
                 if touch == [1] or touch == [2] or touch == [3]:
-	                print(touch_str + " TO FIFO FEEL" )
-	                HeadServo.SetMouth(0x1B1F0E04)
-	                time.sleep(0.1)
-	                HeadServo.SetNoseColor(4)
+                        print(touch_str + " TO FIFO FEEL" )
+                        HeadServo.SetMouth(0x1B1F0E04)
+                        time.sleep(0.1)
+                        HeadServo.SetNoseColor(4)
         return touch_str
 
 def TurnOffEmotion():
