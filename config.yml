@@ -1,1 +1,17 @@
-{age: 0, language: english, startWith: interactive-dialogflow, tokenAPIai: REEMPLAZAR_TOKEN, op_question: true, volume: 100, gassistant_proyectid: null}
+# Configuracion del robot. En el robot vive en /home/pi/Documents/config.yml.
+# PiCmd.py -c voice reescribe este archivo y pierde los comentarios.
+age: 0
+language: english          # english o spanish: voz del TTS e idioma del reconocimiento
+volume: 100                # volumen de pico2wave, 0 a 500
+startWith: interactive-dialogflow
+op_question: true
+tokenAPIai: REEMPLAZAR_TOKEN   # Dialogflow V1, apagado por Google. Ya no se usa
+gassistant_proyectid: null
+
+# --- Tooly (apps/tooly.py) ---
+llm_backend: ollama            # ollama, o tooly_legacy para el servidor FastAPI original
+llm_host: http://10.16.1.190:11434
+llm_model: qwen2.5:7b-instruct
+llm_timeout_s: 60
+llm_retries: 2
+camera_index: 2                # camara que sigue la cara. 1 en Raspbian 9, 2 en Raspbian 13
