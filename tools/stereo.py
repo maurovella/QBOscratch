@@ -1,13 +1,15 @@
 #coding: latin-1
 
 import cv2
+import sys
 import time,datetime
 
-capl = cv2.VideoCapture(1)
+# indices V4L2 opcionales: python3 stereo.py <izquierda> <derecha>
+capl = cv2.VideoCapture(int(sys.argv[1]) if len(sys.argv) > 1 else 1)
 capl.set(cv2.CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
 capl.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)	# resolution you'll want to attempt on the pi
 
-capr = cv2.VideoCapture(0)
+capr = cv2.VideoCapture(int(sys.argv[2]) if len(sys.argv) > 2 else 0)
 capr.set(cv2.CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
 capr.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)	# resolution you'll want to attempt on the pi
 

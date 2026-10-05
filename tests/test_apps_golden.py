@@ -163,3 +163,12 @@ def test_pendientes_al_dia():
             except SyntaxError:
                 continue
         pytest.fail("%s ya compila en Python 3: sacarlo de PENDIENTES" % script)
+
+
+def test_tooly_usa_camera_index_de_config(tmp_path):
+    """En Raspbian 13 la segunda camara USB es el indice 2, no el 1."""
+    name = "tooly: servidor LLM caido, modo repetir"
+    scenario = dict(ar.CASES[name]["scenario"], config={"camera_index": 2})
+    got, out = ar.run(name, tmp_path, scenario=scenario)
+    assert [e["index"] for e in kinds(got, "cam_open")] == [2], out
+    assert [e["index"] for e in kinds(ar.golden(name)[0], "cam_open")] == [1]

@@ -332,7 +332,9 @@ Cface = [(w//2+x),(h//2+y)]       # we are given an x,y corner point and a width
 
 
 
-cap = cv2.VideoCapture(1)
+# camera_index en config.yml: 1 en el kernel 4.9 del robot original. En kernels
+# nuevos cada camara USB ocupa dos nodos V4L2 y la segunda pasa a ser la 2.
+cap = cv2.VideoCapture(config.get("camera_index", 1))
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)            # I have found this to be about the highest-
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)   # resolution you'll want to attempt on the pi
 

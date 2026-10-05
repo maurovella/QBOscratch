@@ -1,9 +1,11 @@
 #coding: latin-1
 
 import cv2
+import sys
 import time,datetime
 
-cap = cv2.VideoCapture(0)
+# indice V4L2 opcional: python3 left_eye.py 0
+cap = cv2.VideoCapture(int(sys.argv[1]) if len(sys.argv) > 1 else 0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)		# I have found this to be about the highest-
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)	# resolution you'll want to attempt on the pi
 
