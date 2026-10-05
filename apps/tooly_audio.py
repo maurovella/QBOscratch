@@ -17,22 +17,20 @@ import time
 import yaml
 import os
 import wave
-import requests
 from qbo import touch as pet
 from qbo import notify as es
 from qbo import paths
 from qbo import tts
+from qbo import llm
 import shlex
 import multiprocessing
 import threading
 from email.mime.text import MIMEText
 # from gtts import gTTS
 
-#url_requests = "http://pf-2023a-tooly.it.itba.edu.ar"
 
 
 
-url = "http://pf-2023a-tooly.it.itba.edu.ar"
 class QBOtalk:
     def __init__(self):
         config = yaml.safe_load(open(paths.CONFIG))
@@ -137,30 +135,13 @@ class QBOtalk:
 
     def Llama2Connect(self):
         print("llamaaaaaa2Connect")
-        data_requests = {
-            "ckpt_dir": "llama-2-7b-chat",
-            "tokenizer_path": "tokenizer.model"
-        }
-        url_hello = url + "/tooly_hello/"
-        response = requests.post(url_hello, json=data_requests)
-        print(response.text)
-        if response.status_code == 200:
-            conv_id = response.json()["conversation_id"]
-            
-            return conv_id
-        else:
-            print(response)
+        # el backend (servidor original u Ollama) se elige en config.yml: ver qbo/llm
+        self.llm = llm.from_config(self.config)
+        return self.llm.start()
 
     def Llama2(self, conv_id, msg):
-        url_tooly = url + "/tooly/"
-        data_requests = {
-            "conversation_id": conv_id,
-            "message": {
-                "content": msg
-            }
-        }
-        response = requests.post(url_tooly, json=data_requests)
-        return response.json()["response"]
+        # conv_id queda por compatibilidad: la conversacion la lleva el cliente
+        return self.llm.chat(msg)
     
     def pet_detection(self, conv_id):
             if not self.touch:
