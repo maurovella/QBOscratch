@@ -143,7 +143,7 @@ def install_stop(fakelog, stop, home):
 _finishing = threading.Lock()
 
 
-def finish(fakelog, home, reason):
+def finish(fakelog, home, reason, code=0):
     if not _finishing.acquire(False):
         real_sleep(60)      # otro hilo ya esta cerrando la corrida
     real_sleep(fakelog.scenario().get("settle", 0.15))   # que los lectores de FIFO terminen
@@ -154,7 +154,7 @@ def finish(fakelog, home, reason):
         fakelog.emit("open_fds", n=len(os.listdir("/dev/fd")))
     fakelog.emit("exit", reason=reason)
     sys.stdout.flush()
-    os._exit(0)
+    os._exit(code)      # el codigo de salida del script, para quien lo llame desde la shell
 
 
 def emit_config(fakelog, home):
@@ -228,15 +228,16 @@ def main():
 
     sys.argv = [script] + script_args
     sys.path.insert(0, os.path.dirname(os.path.abspath(script)))
-    reason = "end"
+    reason, code = "end", 0
     try:
         runpy.run_path(script, run_name="__main__")
     except SystemExit as exc:
         reason = "sys.exit(%r)" % (exc.code,)
+        code = exc.code if isinstance(exc.code, int) else (0 if exc.code is None else 1)
     except BaseException as exc:
         traceback.print_exc()
-        reason = "EXC " + type(exc).__name__
-    finish(fakelog, home, reason)
+        reason, code = "EXC " + type(exc).__name__, 1
+    finish(fakelog, home, reason, code)
 
 
 if __name__ == "__main__":

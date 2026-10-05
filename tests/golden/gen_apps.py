@@ -6,6 +6,7 @@ Uso (dentro de Docker python:2.7-slim, ver generate.sh):
 from __future__ import print_function
 
 import io
+import re
 import json
 import os
 import shutil
@@ -45,7 +46,10 @@ def run_case(case, python, script, home, extra_env=None, timeout_note=None):
             [python, os.path.join(TESTS, "harness", "run_app.py"), "--home", home, script] + case["args"],
             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, cwd=cwd)
         out, _ = proc.communicate()
-        return {"events": events.load(events_path), "stdout": out.decode("utf-8", "replace")}
+        text = out.decode("utf-8", "replace")
+        # el numero de linea del arnes en los tracebacks cambia al editar el arnes
+        text = re.sub(r'(run_app\.py", line )\d+', r'\1N', text)
+        return {"events": events.load(events_path), "stdout": text, "returncode": proc.returncode}
     finally:
         shutil.rmtree(work, ignore_errors=True)
 

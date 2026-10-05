@@ -97,6 +97,7 @@ class QBoard(object):
     """Simulador minimo de la placa: contesta ACK, y GET_TOUCH con un guion."""
 
     GET_TOUCH = 0x46
+    GET_VERSION = 0x40
 
     def __init__(self):
         script = os.environ.get("FAKE_TOUCH", "")
@@ -110,6 +111,8 @@ class QBoard(object):
         if cmd == self.GET_TOUCH:
             value = self.touch_script.pop(0) if self.touch_script else 0
             return encode_frame(cmd, [value])
+        if cmd == self.GET_VERSION:
+            return encode_frame(cmd, [1])
         return encode_frame(cmd, [])
 
 
