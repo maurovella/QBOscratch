@@ -15,6 +15,7 @@ if [ -z "$QBO_PYTHON" ]; then
     if [ -x "$HOME/qbo-venv/bin/python" ]; then QBO_PYTHON="$HOME/qbo-venv/bin/python"; else QBO_PYTHON=python3; fi
 fi
 OUT="$HOME/qbo-relevamiento-$(date +%Y%m%d-%H%M).txt"
+umask 077       # el informe describe el sistema: que lo lea solo su dueno
 SUMMARY=""
 
 have() { command -v "$1" >/dev/null 2>&1; }
@@ -85,16 +86,19 @@ for mod in serial yaml requests numpy cv2 pyaudio speech_recognition; do
 done
 
 section "Red y servicios externos"
-LLM_HOST="$("$QBO_PYTHON" -c "import sys, yaml; print(yaml.safe_load(open(sys.argv[1])).get('llm_host', ''))" "$QBO_HOME/config.yml" 2>/dev/null)"
+# La URL del LLM puede traer usuario y clave. Va a curl por una variable de
+# entorno y no se escribe en el informe; lo que se muestra sale de show_config.py.
+QBO_RELEVAR_LLM_URL="$("$QBO_PYTHON" "$ROOT/scripts/smoke/show_config.py" "$QBO_HOME/config.yml" --llm-url 2>/dev/null)"
+export QBO_RELEVAR_LLM_URL
 run "hostname -I; ip route | head -3"
 run "ping -c 1 -W 3 8.8.8.8"
 run "curl -s -m 8 -o /dev/null -w 'google: HTTP %{http_code}\\n' https://www.google.com"
-run "echo 'llm_host: $LLM_HOST'; curl -s -m 8 '$LLM_HOST/api/tags' | head -c 600"
+run 'test -n "$QBO_RELEVAR_LLM_URL" && curl -s -m 8 "$QBO_RELEVAR_LLM_URL/api/tags" | head -c 600'
 
 section "Repo y configuracion"
 run "git -C $(printf '%q' "$ROOT") log --oneline -1; git -C $(printf '%q' "$ROOT") status --short | head -20"
-# el token de Dialogflow y cualquier clave no van al informe
-run "sed -E 's/((token|pass|clave|secret)[A-Za-z_]*\"?[[:space:]]*:[[:space:]]*)(\"[^\"]*\"|[^,}[:space:]]+)/\\1<oculto>/Ig' $(printf '%q' "$QBO_HOME/config.yml")"
+# show_config.py muestra solo las claves publicas; el resto sale como <oculto>
+run "$(printf '%q' "$QBO_PYTHON") $(printf '%q' "$ROOT/scripts/smoke/show_config.py") $(printf '%q' "$QBO_HOME/config.yml")"
 run "ls -l $(printf '%q' "$QBO_HOME/pipes")"
 run "ls -l $(printf '%q' "$QBO_HOME/deamonsScripts") | head -20"
 run "test -f \$HOME/.config/qbo/tooly.env && echo 'tooly.env existe (no se muestra)' || echo 'tooly.env no existe: sin alertas por mail'"
@@ -119,7 +123,7 @@ check "audio"    "dispositivo dmicQBO_sv (microfono)"       "aplay -L | grep -q 
 check "voz"      "pico2wave instalado"                      "command -v pico2wave"
 check "camaras"  "al menos una camara entrega imagen"       "$PYQ $(printf '%q' "$ROOT/tools/camera_probe.py")"
 check "red"      "internet (Google, para el reconocimiento de voz)" "curl -s -m 8 -o /dev/null https://www.google.com"
-check "LLM"      "servidor de config.yml responde"          "test -n '$LLM_HOST' && curl -s -f -m 8 -o /dev/null '$LLM_HOST/api/tags'"
+check "LLM"      "servidor de config.yml responde"          'test -n "$QBO_RELEVAR_LLM_URL" && curl -s -f -m 8 -o /dev/null "$QBO_RELEVAR_LLM_URL/api/tags"'
 check "Tooly"    "ventana grafica disponible (DISPLAY)"     "test -n \"\$DISPLAY\""
 check "mail"     "credenciales de alertas (tooly.env)"      "test -f \$HOME/.config/qbo/tooly.env"
 

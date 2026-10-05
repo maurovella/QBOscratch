@@ -204,3 +204,73 @@ def test_relevar_no_copia_secretos_al_informe(tmp_path):
     for secreto in ("SECRETO123", "TOKEN_DE_PRUEBA"):
         assert secreto not in informe and secreto not in result.stdout
     assert "tokenAPIai\": <oculto>" in informe or "tokenAPIai: <oculto>" in informe
+
+
+# --- relevar.sh no filtra secretos ---------------------------------------------------
+
+SHOW_CONFIG = os.path.join(ROOT, "scripts", "smoke", "show_config.py")
+
+CONFIG_CON_SECRETOS = """\
+language: spanish
+volume: 100
+camera_index: 2
+llm_backend: ollama
+llm_host: http://usuario:CLAVE_EN_URL@127.0.0.1:9
+tokenAPIai: TOKEN_REAL
+smtp_password: "CLAVE SMTP"
+api_key: KEY_REAL
+una_clave_que_nadie_previo: VALOR_RARO
+certificado: |
+  -----BEGIN PRIVATE KEY-----
+  LINEA_PRIVADA
+gassistant_proyectid: null
+"""
+SECRETOS = ["CLAVE_EN_URL", "TOKEN_REAL", "CLAVE SMTP", "KEY_REAL", "VALOR_RARO", "LINEA_PRIVADA", "PRIVATE KEY"]
+
+
+def _show_config(tmp_path, texto, *args, **env):
+    path = tmp_path / "config.yml"
+    path.write_text(texto)
+    full_env = dict(os.environ, **env)
+    full_env.pop("QBO_LLM_HOST", None) if "QBO_LLM_HOST" not in env else None
+    return subprocess.run([sys.executable, SHOW_CONFIG, str(path)] + list(args),
+                          capture_output=True, text=True, env=full_env)
+
+
+def test_show_config_solo_muestra_claves_publicas(tmp_path):
+    out = _show_config(tmp_path, CONFIG_CON_SECRETOS).stdout
+    for secreto in SECRETOS:
+        assert secreto not in out
+    assert "language: spanish" in out and "camera_index: 2" in out
+    assert "llm_host: http://<oculto>@127.0.0.1:9" in out
+    for clave in ("tokenAPIai", "smtp_password", "api_key", "una_clave_que_nadie_previo", "certificado"):
+        assert clave + ": <oculto>" in out
+    assert "gassistant_proyectid: (vacio)" in out
+
+
+def test_show_config_con_yaml_roto_no_muestra_nada(tmp_path):
+    result = _show_config(tmp_path, "tokenAPIai: TOKEN_REAL\n  : : [sin cerrar\n")
+    assert result.returncode == 1
+    assert "TOKEN_REAL" not in result.stdout + result.stderr
+
+
+def test_show_config_tapa_las_credenciales_de_QBO_LLM_HOST(tmp_path):
+    out = _show_config(tmp_path, "language: english\n", QBO_LLM_HOST="http://u:CLAVE_ENV@h:11434").stdout
+    assert "CLAVE_ENV" not in out and "http://<oculto>@h:11434" in out
+
+
+def test_relevar_con_python_real_no_filtra_ningun_secreto(tmp_path):
+    home = tmp_path / "Documents"
+    home.mkdir()
+    (home / "config.yml").write_text(CONFIG_CON_SECRETOS)
+    env = dict(os.environ, HOME=str(tmp_path), QBO_HOME=str(home), QBO_PYTHON=sys.executable,
+               QBO_LLM_HOST="")
+    result = subprocess.run(["bash", RELEVAR], capture_output=True, text=True, env=env)
+    assert result.returncode == 0, result.stderr
+    informe_path = sorted(tmp_path.glob("qbo-relevamiento-*.txt"))[-1]
+    informe = informe_path.read_text()
+    for secreto in SECRETOS:
+        assert secreto not in informe and secreto not in result.stdout and secreto not in result.stderr
+    assert "llm_host: http://<oculto>@127.0.0.1:9" in informe
+    # el informe describe el sistema: solo lo lee su dueno
+    assert stat.S_IMODE(informe_path.stat().st_mode) == 0o600
