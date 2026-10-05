@@ -6,6 +6,8 @@ import sys
 TESTS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TESTS)
 
+sys.path.insert(0, ROOT)     # paquete qbo
+
 # tests/fakes va primero: `import serial` resuelve al doble, no a pyserial.
 sys.path.insert(0, os.path.join(TESTS, "golden"))
 sys.path.insert(0, os.path.join(TESTS, "fakes"))

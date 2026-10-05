@@ -149,8 +149,11 @@ class QBOtalk:
                 touch = pet.WaitForTouch()
                 if touch:
                     self.touch = True
-                    petResponse = self.Llama2(conv_id, "I pet you in your robot head")
-                    self.SpeechText(petResponse)
+                    try:
+                        petResponse = self.Llama2(conv_id, "I pet you in your robot head")
+                        self.SpeechText(petResponse)
+                    except llm.LLMError as e:
+                        print("LLM sin respuesta a la caricia: " + str(e))
                     pet.TurnOffEmotion()
                     pet.CleanPet()
                     
@@ -212,7 +215,13 @@ class QBOtalk:
             if(email == True):
                 es.sendEmail(MIMEText("Hello, the Tooly robot listened to your family member again, don't worry"))
                 first = False
-        llama2Response = self.Llama2(conv_id,response)
+        try:
+            llama2Response = self.Llama2(conv_id,response)
+        except llm.LLMError as e:
+            # el LLM dejo de responder en medio de la charla: avisa y repite lo que oyo
+            print("LLM sin respuesta: " + str(e))
+            self.SpeechText(llm.FALLBACK_TEXT)
+            llama2Response = response
         self.SpeechText(llama2Response)
 
         
