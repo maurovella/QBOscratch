@@ -149,6 +149,9 @@ def finish(fakelog, home, reason):
     real_sleep(fakelog.scenario().get("settle", 0.15))   # que los lectores de FIFO terminen
     fakelog.on_emit = None
     emit_config(fakelog, home)
+    if os.environ.get("FAKE_COUNT_FDS") == "1":
+        # descriptores abiertos al terminar: sirve para detectar fugas en los FIFOs
+        fakelog.emit("open_fds", n=len(os.listdir("/dev/fd")))
     fakelog.emit("exit", reason=reason)
     sys.stdout.flush()
     os._exit(0)
