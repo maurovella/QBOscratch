@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from multiprocessing import Process, Queue
 import time
 import cv2
 import serial
 import binascii
-import QboCmd
+from qbo import protocol as QboCmd
 import sys
 import time
-import QBOtalk
-import os
+from qbo.legacy import qbotalk as QBOtalk
 
 Qbo = QBOtalk.QBOtalk()
 
@@ -63,13 +67,7 @@ except:
 QBO = QboCmd.Controller(ser)
 
 QBO.SetServo(1, Xcoor, 100)
-time.sleep(0.02)
 QBO.SetServo(2, Ycoor, 100)
-time.sleep(0.02)
-#QBO.SetPid(1, 32, 0, 0)
-time.sleep(0.02)
-#QBO.SetPid(2, 32, 0, 0)
-time.sleep(0.02)
 QBO.SetNoseColor(0)       #Off QBO nose brigth
 
 webcam = cv2.VideoCapture(0)				# Get ready to start getting images from the webcam
@@ -165,29 +163,14 @@ print(" QBO nose bright green when see your face")
 Qbo.SpeechText("I am ready.")
 
 touch_tm = time.time()
-t_ini = time.time()
-
-# create frame store directory
-dir_exist = True
-dir_idx = 1
-
-if not os.path.exists("../face_frames/"):
-        os.makedirs("../face_frames/")
-
-while dir_exist:
-        if not os.path.exists("../face_frames/" + str(dir_idx)):
-                os.makedirs("../face_frames/" + str(dir_idx))
-                dir_exist = False
-        else:
-                dir_idx += 1
 
 while True:
-
+        
         faceFound = False       # This variable is set to true if, on THIS loop a face has already been found
                                 # We search for a face three diffrent ways, and if we have found one already-
                                 # there is no reason to keep looking.
         WaitForSpeech()
-
+        
         if not faceFound:
                 if lastface == 0 or lastface == 1:
                         aframe = webcam.read()[1]       #       there seems to be an issue in OpenCV or V4L or my webcam-
@@ -214,9 +197,6 @@ while True:
                                         face = f
 
         if not faceFound:               # if no face was found...-
-                fr_time_ms = time.time() - t_ini
-                cv2.imwrite("../face_frames/" + str(dir_idx) + "/frm"+str(fr_time_ms)+".jpg", aframe)     # save frame as JPEG $
-
                 lastface = 0            #       the next loop needs to know
                 face = [0,0,0,0]        # so that it doesn't think the face is still where it was last loop
                 QBO.SetNoseColor(0)       #Off QBO nose brigth
@@ -231,12 +211,6 @@ while True:
         else:
                 x,y,w,h = face
                 Cface = [(w//2+x),(h//2+y)]       # we are given an x,y corner point and a width and height, we need the center
-
-                cv2.rectangle(aframe, (x,y), (x+w, y+h), (255,0,0), 3)
-                fr_time_ms = time.time() - t_ini
-                cv2.imwrite("../face_frames/" + str(dir_idx) + "/frm"+str(fr_time_ms)+".jpg", aframe)     # save frame as JPEG $
-
-
                 #print str(Cface[0]) + "," + str(Cface[1])
                 if Facedet == 0:
                         if Listenig == False:

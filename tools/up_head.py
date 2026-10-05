@@ -1,6 +1,11 @@
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import time
 import serial #handles the serial ports
-import QboCmd #holds some commands we can use for Qbo
+from qbo import protocol as QboCmd #holds some commands we can use for Qbo
 
 #set up ports for communicating with servos
 port = '/dev/serial0'

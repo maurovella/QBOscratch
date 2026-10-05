@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from multiprocessing import Process, Queue
 import subprocess
 import os
@@ -11,47 +16,12 @@ import binascii
 import sys
 import time
 import yaml
-import shlex
-import QBOtalk
+from qbo.legacy import qbotalk as QBOtalk
 
 Qbo = QBOtalk.QBOtalk()
 
 Listenig = True
 listen_thd = 0
-
-
-def SayFromFifo():
-        print("Opening FIFO...")
-        fifo = os.open(FIFO_say, os.O_RDONLY | os.O_NONBLOCK)
-        # leer hasta EOF/EAGAIN y decodificar al final: un solo read(100)
-        # podia truncar el mensaje o partir un caracter UTF-8
-        raw = b""
-        try:
-                while True:
-                        chunk = os.read(fifo, 4096)
-                        if not chunk:
-                                break
-                        raw += chunk
-        except OSError as oe:
-                if oe.errno != errno.EAGAIN:
-                        raise
-
-        os.close(fifo)
-        data = raw.decode("utf-8", errors="replace")
-
-        if data:
-                config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-
-                print('Read: "{0}"'.format(data))
-                # shlex.quote: el texto viene del FIFO; sin escapar,
-                # una comilla rompe el comando (inyeccion de shell)
-                if config["language"] == "spanish":
-                        speak = "espeak -v mb-es2 -s 120 " + shlex.quote(data) + " --stdout  | aplay -D convertQBO"
-                else:
-                        speak = "espeak -ven+f3 " + shlex.quote(data) + " --stdout  | aplay -D convertQBO"
-                print("Talk: " + speak)
-                result = subprocess.call(speak, shell = True)
-
 
 
 def WaitForSpeech():
@@ -76,7 +46,6 @@ def WaitForSpeech():
 #Qbo.SpeechText("I am ready.")
 # FIFO init.
 FIFO_listen = '/home/pi/Documents/pipes/pipe_listen'
-FIFO_say = '/home/pi/Documents/pipes/pipe_say'
 FIFO_cmd = '/home/pi/Documents/pipes/pipe_cmd'
 
 try:
@@ -98,7 +67,6 @@ os.close(fifo)
 
 
 while True:
-        SayFromFifo()
         WaitForSpeech()
         if Qbo.GetAudio == True:
             fifo = os.open(FIFO_cmd, os.O_WRONLY)

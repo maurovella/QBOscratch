@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import argparse
 import serial
 import time
-import QboCmd
+from qbo import protocol as QboCmd
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d","--device", help = "Servo number ID = 1:Left-Right servo 2:Up-Down Servo", type = int)

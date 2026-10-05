@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.join(TESTS, "golden"))
 sys.path.insert(0, os.path.join(TESTS, "fakes"))
 
 # Unico lugar que sabe donde vive el driver del protocolo.
-PROTOCOL_PATH = os.path.join(ROOT, "Python projects", "QboCmd.py")
+PROTOCOL_PATH = os.path.join(ROOT, "qbo", "protocol.py")
 
 
 def load_module(name, path):

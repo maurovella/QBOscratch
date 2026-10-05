@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from multiprocessing import Process, Queue
 import subprocess
 import os
@@ -11,28 +16,33 @@ import binascii
 import sys
 import time
 import yaml
-import QBOtalk
+from qbo.legacy import qbotalk as QBOtalk
 
 Qbo = QBOtalk.QBOtalk()
 
-Listenig = True
+Listening = True
 listen_thd = 0
 
 
 def WaitForSpeech():
-        global Listenig, listen_thd, FIFO_listen, FIFO_cmd
-        if Listenig == False:
+        global Listening, listen_thd, FIFO_listen, FIFO_cmd
+
+        print("WaitForSpeech: Listening=" + str(Listening) + "getAudio=" + str(Qbo.GetAudio))
+        if Listening == False:
+                print("Listening = False")
                 return
         elif Qbo.GetAudio == True:
 #                HeadServo.SetNoseColor(0)       #Off QBO nose brigth
-                fifo = os.open(FIFO_cmd, os.O_WRONLY)
-                os.write(fifo, b"-c nose -co red")
-                os.close(fifo)
+#		fifo = os.open(FIFO_cmd, os.O_WRONLY)
+#                os.write(fifo, b"-c nose -co red")
+#		os.close(fifo)
                 listen_thd(wait_for_stop = True)
                 print("Ha llegado algo al WaitForSpeech: " + Qbo.strAudio)
                 fifo = os.open(FIFO_listen, os.O_WRONLY)
                 os.write(fifo, Qbo.strAudio.encode())
                 os.close(fifo)
+                Qbo.GetAudio = False
+                Listening = False
         return
 
 
@@ -56,13 +66,15 @@ except OSError as oe:
 
 listen_thd = Qbo.StartBackListen()
 #HeadServo.SetNoseColor(1)       # Set QBO nose green
-fifo = os.open(FIFO_cmd, os.O_WRONLY)
-os.write(fifo, b"-c nose -co green")
-os.close(fifo)
+#fifo = os.open(FIFO_cmd, os.O_WRONLY)
+#os.write(fifo, "-c nose -co green")
+#os.close(fifo)
 
 
 while True:
+        time.sleep(1)
         WaitForSpeech()
+
         if Qbo.GetAudio == True:
             fifo = os.open(FIFO_cmd, os.O_WRONLY)
             os.write(fifo, b"-c nose -co red")
@@ -73,9 +85,13 @@ while True:
             try:
                 listen_thd = Qbo.StartBackListen()
 #                HeadServo.SetNoseColor(1)       # Set QBO nose green
-                fifo = os.open(FIFO_cmd, os.O_WRONLY)
-                os.write(fifo, b"-c nose -co green")
-                os.close(fifo)
+#		fifo = os.open(FIFO_cmd, os.O_WRONLY)
+#                os.write(fifo, "-c nose -co green")
+#	    	os.close(fifo)
                 Qbo.GetAudio = False
             except:
                 print("StartBackListe EXCEPTION")
+
+        if Listening == False:
+                listen_thd = Qbo.StartBackListen()
+                Listening = True

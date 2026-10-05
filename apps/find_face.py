@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from multiprocessing import Process, Queue
 import time
 import cv2
 import serial
 import binascii
-import QboCmd
+from qbo import protocol as QboCmd
 import sys
 import time
 import os
