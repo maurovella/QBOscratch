@@ -20,7 +20,6 @@ from qbo.legacy import qbotalk as QBOtalk
 import _thread as thread
 import yaml
 import shlex
-from qbo.legacy.gassistant import GAssistant
 
 config = yaml.safe_load(open(paths.CONFIG))
 
@@ -30,6 +29,9 @@ else:
     interactiveTypeGAssistant = True
 
 if interactiveTypeGAssistant == True:
+    # se importa solo en este modo: google.assistant.library fue discontinuada
+    # por Google y no se puede instalar en Python 3.13
+    from qbo.legacy.gassistant import GAssistant
     gassistant = GAssistant(config["gassistant_proyectid"], True)
     gassistant.start()
 else:

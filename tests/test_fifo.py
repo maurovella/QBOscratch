@@ -5,8 +5,6 @@ Los daemons del modo Scratch se hablan por FIFOs con nombre. En Python 3
 os.read/os.write manejan bytes, y un descriptor sin cerrar por mensaje agota
 el limite del proceso en unas horas.
 """
-import pytest
-
 import apps_runner as ar
 from test_apps_golden import kinds, reason, tts_text
 
