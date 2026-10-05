@@ -13,13 +13,18 @@
 # conteste s/n. El resultado queda en ~/qbo-smoke-<fecha>.log.
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-SMOKE="$ROOT/scripts/smoke"
 if [ -z "$QBO_PYTHON" ]; then
     if [ -x "$HOME/qbo-venv/bin/python" ]; then QBO_PYTHON="$HOME/qbo-venv/bin/python"; else QBO_PYTHON=python3; fi
 fi
-PY="$QBO_PYTHON"
 QBO_HOME="${QBO_HOME:-/home/pi/Documents}"
-CAMERA="$("$PY" -c "import yaml;print(yaml.safe_load(open('$QBO_HOME/config.yml')).get('camera_index', 1))" 2>/dev/null || echo 1)"
+CAMERA="$("$QBO_PYTHON" -c "import sys, yaml; print(yaml.safe_load(open(sys.argv[1])).get('camera_index', 1))" "$QBO_HOME/config.yml" 2>/dev/null || echo 1)"
+
+# Los comandos de cada paso se muestran y se ejecutan con eval: las rutas van
+# escapadas para que funcionen aunque tengan espacios.
+PY="$(printf '%q' "$QBO_PYTHON")"
+ROOT_Q="$(printf '%q' "$ROOT")"
+SMOKE="$ROOT_Q/scripts/smoke"
+HOME_Q="$(printf '%q' "$QBO_HOME")"
 
 MODE=run; FROM=1; ONLY=""
 while [ $# -gt 0 ]; do
@@ -116,12 +121,12 @@ step vos "El microfono graba" \
     "No existe dmicQBO_sv: /etc/asound.conf. Graba silencio: bus I2S de captura (mismo modulo my_loader que el parlante)."
 
 step vos "pico2wave habla" \
-    "command -v pico2wave && QBO_HOME=$QBO_HOME $PY -c \"import sys; sys.path.insert(0, '$ROOT'); from qbo import tts; sys.exit(tts.speak('Hola, soy Tooly', 'spanish', 100))\"" \
+    "command -v pico2wave && QBO_HOME=$HOME_Q $PY -c \"import sys; sys.path.insert(0, sys.argv[1]); from qbo import tts; sys.exit(tts.speak('Hola, soy Tooly', 'spanish', 100))\" $ROOT_Q" \
     "el robot dice 'Hola, soy Tooly'" \
     "Falta pico2wave: instalar libttspico-utils (deploy/install.sh explica como en 32 bits). Si pico2wave existe y no suena, el problema es el paso 7."
 
 step auto "Las camaras entregan imagen" \
-    "$PY $ROOT/tools/camera_probe.py" \
+    "$PY $ROOT_Q/tools/camera_probe.py" \
     "al menos una linea 'camara N: OK 320x240'. Anotar los indices que dan OK" \
     "Ninguna OK: v4l2-ctl --list-devices y lsusb. Si los indices OK no incluyen camera_index de config.yml ($CAMERA), corregir config.yml."
 
@@ -131,17 +136,17 @@ step auto "Detecta una cara (camara $CAMERA)" \
     "Si el paso 10 paso y este no: luz, distancia, o las cascadas Haar no cargan con el OpenCV instalado."
 
 step vos "Reconoce lo que decis (STT)" \
-    "QBO_HOME=$QBO_HOME $PY $SMOKE/stt_once.py 10" \
+    "QBO_HOME=$HOME_Q $PY $SMOKE/stt_once.py 10" \
     "'transcripcion: ...' con lo que dijiste" \
     "El mensaje dice cual de tres: no existe el microfono dmicQBO_sv, no se oyo nada, o Google no responde (internet, o el servicio gratuito de recognize_google dejo de andar)."
 
 step auto "El LLM responde" \
-    "QBO_HOME=$QBO_HOME $PY $SMOKE/llm_once.py Hello" \
+    "QBO_HOME=$HOME_Q $PY $SMOKE/llm_once.py Hello" \
     "'respuesta en N s: ...'" \
     "El robot no llega al servidor de config.yml (llm_host): revisar red o VPN con curl <llm_host>/api/tags. Si llega y falla, el modelo de llm_model no esta descargado (ollama list)."
 
 step vos "Tooly completo" \
-    "QBO_HOME=$QBO_HOME $PY $ROOT/apps/tooly.py" \
+    "QBO_HOME=$HOME_Q $PY $ROOT_Q/apps/tooly.py" \
     "saluda, la nariz pasa a verde al verte, te escucha, contesta y sigue tu cara. Cerrar con q en la ventana o Ctrl+C" \
     "Todos los pasos anteriores pasaron, asi que el problema es de integracion: mirar el traceback. Necesita escritorio grafico (abre una ventana con la camara)."
 
