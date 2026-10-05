@@ -1,0 +1,23 @@
+# Fallas conocidas del gate. Esta lista solo puede achicarse.
+# Formato: compile:<ruta>  o  undefined:<ruta>:<nombre>
+compile:Python projects/Stereo2.py
+compile:Python projects/Tooly/PiCmd.py
+compile:Python projects/Tooly/listen.py
+compile:Python projects/Tooly/say.py
+compile:Tooly/PiCmd.py
+compile:Tooly/PiFaceFast.py
+compile:Tooly/QBOtalk.py
+compile:Tooly/QboCmd.py
+compile:Tooly/QboGAssistant.py
+compile:Tooly/TrackAndTalk.py
+compile:Tooly/feel.py
+compile:Tooly/listen.py
+compile:Tooly/llama2Connection.py
+compile:Tooly/llama2ConnectionWS.py
+compile:Tooly/pet.py
+compile:Tooly/repeat.py
+compile:Tooly/say.py
+compile:deamonsScripts/RTQR.py
+compile:deamonsScripts/autoStart.py
+compile:deamonsScripts/autoStop.py
+undefined:Python projects/QBOtalk.py:audioop
