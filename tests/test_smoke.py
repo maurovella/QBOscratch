@@ -10,6 +10,8 @@ import stat
 import subprocess
 import sys
 
+import pytest
+
 import apps_runner as ar
 from conftest import ROOT, TESTS
 from test_apps_golden import kinds, reason
@@ -241,22 +243,91 @@ def test_show_config_solo_muestra_claves_publicas(tmp_path):
     out = _show_config(tmp_path, CONFIG_CON_SECRETOS).stdout
     for secreto in SECRETOS:
         assert secreto not in out
-    assert "language: spanish" in out and "camera_index: 2" in out
-    assert "llm_host: http://<oculto>@127.0.0.1:9" in out
-    for clave in ("tokenAPIai", "smtp_password", "api_key", "una_clave_que_nadie_previo", "certificado"):
-        assert clave + ": <oculto>" in out
+    assert "language: spanish" in out and "camera_index: 2" in out and "llm_backend: ollama" in out
+    assert "llm_host: <oculto" in out
+    assert "tokenAPIai: <oculto>" in out
     assert "gassistant_proyectid: (vacio)" in out
+    # de las claves desconocidas no sale ni el nombre
+    assert "otras claves: 4 (nombres y valores ocultos)" in out
+    for nombre in ("smtp_password", "api_key", "una_clave_que_nadie_previo", "certificado"):
+        assert nombre not in out
+    assert "llm_model: (falta)" in out
 
 
-def test_show_config_con_yaml_roto_no_muestra_nada(tmp_path):
-    result = _show_config(tmp_path, "tokenAPIai: TOKEN_REAL\n  : : [sin cerrar\n")
+def test_show_config_muestra_la_config_del_repo(tmp_path):
+    with open(os.path.join(ROOT, "config.yml")) as fh:
+        out = _show_config(tmp_path, fh.read()).stdout
+    assert "llm_host: http://10.16.1.190:11434" in out
+    assert "llm_model: qwen2.5:7b-instruct" in out
+    assert "startWith: interactive-dialogflow" in out
+    assert "<oculto: valor" not in out
+
+
+# Formas de esconder una clave en llm_host que un recorte a mano deja pasar.
+# Cada una se interpreta distinto segun quien la lea (regex, curl, requests).
+URLS_TRAMPOSAS = [
+    "http://usuario:S3CRETO@host:11434",
+    "http://usuario:S3/CRETO@host:11434",            # barra dentro de la clave
+    "http://usuario:S3@CRETO@host:11434",            # mas de una arroba
+    "usuario:S3CRETO@host:11434",                    # sin esquema
+    "http://host:11434/?api_key=S3CRETO",            # clave en los parametros
+    "http://host:11434/S3CRETO/api",                 # clave en la ruta
+    "http://host:11434#S3CRETO",
+    "http://usuario:S3CRETO@host:11434\\@otro",
+    "http://host:11434 S3CRETO",
+    "HTTP://usuario:S3CRETO@host",
+    "http://[::1]:11434/S3CRETO",
+]
+
+
+@pytest.mark.parametrize("url", URLS_TRAMPOSAS)
+def test_show_config_no_recorta_urls_las_oculta_enteras(tmp_path, url):
+    import json
+    out = _show_config(tmp_path, "llm_host: %s\nlanguage: english\n" % json.dumps(url)).stdout
+    assert "S3" not in out and "CRETO" not in out
+    assert "llm_host: <oculto" in out
+    out = _show_config(tmp_path, "language: english\n", QBO_LLM_HOST=url).stdout
+    assert "S3" not in out and "CRETO" not in out
+
+
+@pytest.mark.parametrize("texto", [
+    "language: S3CRETO\n",                              # secreto pegado en una clave publica
+    "volume: S3CRETO\n",
+    "camera_index: [1, S3CRETO]\n",
+    "llm_host: {url: http://h:1, token: S3CRETO}\n",    # mapa anidado bajo una clave publica
+    "llm_model: \"modelo S3CRETO\"\n",
+    "{language: english, S3CRETO}\n",                   # el secreto queda como nombre de clave
+    "S3CRETO: 1\n",
+    "? S3CRETO\n: valor\n",
+    "startWith: |\n  linea\n  S3CRETO\n",
+])
+def test_show_config_valores_y_nombres_inesperados_no_salen(tmp_path, texto):
+    result = _show_config(tmp_path, texto)
+    assert "S3CRETO" not in result.stdout + result.stderr
+
+
+@pytest.mark.parametrize("texto", [
+    "tokenAPIai: TOKEN_REAL\n  : : [sin cerrar\n",
+    "tokenAPIai: !S3CRETO_EN_UN_TAG valor\n",              # PyYAML cita el tag en el error
+    "S3CRETO_SUELTO\n",                                     # un escalar, no un mapa
+    "- S3CRETO_EN_LISTA\n",
+    "a: &S3CRETO_ANCLA 1\nb: *S3CRETO_OTRA\n",             # alias inexistente: el error lo nombra
+    "clave: \"S3CRETO sin cerrar\n",
+])
+def test_show_config_los_errores_no_citan_el_archivo(tmp_path, texto):
+    result = _show_config(tmp_path, texto)
+    salida = result.stdout + result.stderr
+    assert "S3CRETO" not in salida and "TOKEN_REAL" not in salida
     assert result.returncode == 1
-    assert "TOKEN_REAL" not in result.stdout + result.stderr
+    assert "No se muestra el contenido" in salida
 
 
-def test_show_config_tapa_las_credenciales_de_QBO_LLM_HOST(tmp_path):
-    out = _show_config(tmp_path, "language: english\n", QBO_LLM_HOST="http://u:CLAVE_ENV@h:11434").stdout
-    assert "CLAVE_ENV" not in out and "http://<oculto>@h:11434" in out
+def test_show_config_llm_url_es_solo_para_curl(tmp_path):
+    """--llm-url devuelve la URL sin tocar: relevar.sh la pasa a curl por el
+    entorno y nunca la escribe en el informe."""
+    url = "http://usuario:S3CRETO@127.0.0.1:9"
+    assert _show_config(tmp_path, "llm_host: %s\n" % url, "--llm-url").stdout.strip() == url
+    assert _show_config(tmp_path, "llm_host: [1, 2]\n", "--llm-url").stdout.strip() == ""
 
 
 def test_relevar_con_python_real_no_filtra_ningun_secreto(tmp_path):
@@ -271,6 +342,7 @@ def test_relevar_con_python_real_no_filtra_ningun_secreto(tmp_path):
     informe = informe_path.read_text()
     for secreto in SECRETOS:
         assert secreto not in informe and secreto not in result.stdout and secreto not in result.stderr
-    assert "llm_host: http://<oculto>@127.0.0.1:9" in informe
+    assert "llm_host: <oculto" in informe
+    assert "otras claves: 4 (nombres y valores ocultos)" in informe
     # el informe describe el sistema: solo lo lee su dueno
     assert stat.S_IMODE(informe_path.stat().st_mode) == 0o600

@@ -11,7 +11,7 @@ el robot esté disponible.
 ## Cómo verificar sin el robot
 
 ```sh
-scripts/check.sh          # gate sintáctico + 978 tests, unos 2 minutos
+scripts/check.sh          # gate sintáctico + 1008 tests, unos 2 minutos
 scripts/check.sh --fast   # solo el gate sintáctico
 ```
 
