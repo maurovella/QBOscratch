@@ -1,0 +1,34 @@
+# Tooly: el asistente conversacional (apps/tooly.py, ex TrackAndTalk.py).
+#
+#   sudo cp deploy/systemd/qbo-tooly.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl start qbo-tooly      # probar
+#   sudo systemctl enable qbo-tooly     # que arranque solo, recien cuando ande
+#   journalctl -u qbo-tooly -f          # ver que dice
+#
+# Usa /dev/serial0, la camara y el microfono: no puede correr a la vez que el
+# modo Scratch.
+[Unit]
+Description=QBO Tooly (asistente conversacional)
+After=network-online.target sound.target graphical.target
+Wants=network-online.target
+Conflicts=qbo-scratch.service
+
+[Service]
+Type=simple
+User=pi
+SupplementaryGroups=dialout audio video
+WorkingDirectory=/home/pi/Documents
+Environment=PYTHONUNBUFFERED=1
+# apps/tooly.py abre una ventana con la camara (cv2.imshow): necesita el escritorio
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+# QBO_SMTP_USER, QBO_SMTP_PASSWORD y QBO_ALERT_TO para las alertas por mail.
+# El archivo no esta en el repo; el '-' permite arrancar si no existe.
+EnvironmentFile=-/home/pi/.config/qbo/tooly.env
+ExecStart=/home/pi/qbo-venv/bin/python /home/pi/Documents/apps/tooly.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target

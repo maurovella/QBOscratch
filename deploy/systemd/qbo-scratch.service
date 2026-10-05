@@ -1,0 +1,27 @@
+# Modo Scratch: envuelve al script original deamonsScripts/QBO_scratch, que
+# lanza websocket_server, PiCmd, say, listen, feel y findFace. No lo reemplaza:
+# './QBO_scratch start' a mano sigue funcionando igual.
+#
+#   sudo cp deploy/systemd/qbo-scratch.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl start qbo-scratch
+[Unit]
+Description=QBO modo Scratch (daemons originales)
+After=network-online.target sound.target
+Conflicts=qbo-tooly.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=pi
+SupplementaryGroups=dialout audio video
+WorkingDirectory=/home/pi/Documents/deamonsScripts
+Environment=PYTHONUNBUFFERED=1
+# los scripts usan '#!/usr/bin/env python3': con el venv primero en el PATH
+# listen.py encuentra SpeechRecognition
+Environment=PATH=/home/pi/qbo-venv/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/pi/Documents/deamonsScripts/QBO_scratch start
+ExecStop=/home/pi/Documents/deamonsScripts/QBO_scratch stop
+
+[Install]
+WantedBy=multi-user.target
