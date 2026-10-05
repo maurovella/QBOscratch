@@ -11,7 +11,7 @@ el robot esté disponible.
 ## Cómo verificar sin el robot
 
 ```sh
-scripts/check.sh          # gate sintáctico + 974 tests, unos 2 minutos
+scripts/check.sh          # gate sintáctico + 978 tests, unos 2 minutos
 scripts/check.sh --fast   # solo el gate sintáctico
 ```
 
@@ -328,10 +328,14 @@ la cabeza se mueva hacia el lado correcto, que la voz se entienda.
 
 ## En el robot, en orden
 
+El plan de la primera sesión, escenario por escenario y con qué hacer ante cada
+falla, está en `docs/Relevamiento_robot.md`.
+
 ```sh
 cd /home/pi/Documents            # el repo desplegado acá
 deploy/install.sh --dry-run      # ver qué va a hacer
 deploy/install.sh
+scripts/smoke/relevar.sh         # informe automático, no cambia nada
 scripts/smoke/smoke.sh --list    # los 14 pasos
 scripts/smoke/smoke.sh           # parar en el primero que falle
 ```

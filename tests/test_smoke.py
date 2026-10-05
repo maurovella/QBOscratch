@@ -163,3 +163,44 @@ def test_smoke_paso_2_falla_solo_si_la_placa_no_contesta(tmp_path):
     result = smoke("--only", "2", env=env)
     assert result.returncode == 1
     assert "consola serie" in result.stdout
+
+
+# --- relevar.sh ------------------------------------------------------------------
+
+RELEVAR = os.path.join(ROOT, "scripts", "smoke", "relevar.sh")
+
+
+def _relevar(tmp_path, board="1"):
+    env = _python_falso(tmp_path)
+    env["FAKE_QBOARD"] = board
+    home = tmp_path / "Documents"
+    home.mkdir(exist_ok=True)
+    (home / "config.yml").write_text("language: english\nvolume: 100\ntokenAPIai: SECRETO123\n"
+                                     "llm_host: http://127.0.0.1:9\ncamera_index: 2\n")
+    result = subprocess.run(["bash", RELEVAR], capture_output=True, text=True, env=env)
+    informes = sorted(tmp_path.glob("qbo-relevamiento-*.txt"))
+    return result, (informes[-1].read_text() if informes else "")
+
+
+def test_relevar_termina_bien_aunque_falte_todo(tmp_path):
+    result, informe = _relevar(tmp_path, board="0")
+    assert result.returncode == 0, result.stderr
+    for seccion in ("Sistema", "UART y Q-board", "Audio", "Camaras", "Python", "Red y servicios externos",
+                    "Repo y configuracion", "Procesos del robot", "Resumen"):
+        assert "######## " + seccion in informe, seccion
+    assert "FALTA  Q-board      la placa contesta GET_VERSION" in informe
+    assert "FALTA  audio        tarjeta sndrpisimplecar" in informe
+
+
+def test_relevar_detecta_la_placa(tmp_path):
+    _result, informe = _relevar(tmp_path, board="1")
+    assert "OK     Q-board      la placa contesta GET_VERSION" in informe
+
+
+def test_relevar_no_copia_secretos_al_informe(tmp_path):
+    # el python falso reescribe config.yml en una linea, con comillas, como JSON:
+    # el formato mas dificil de enmascarar
+    result, informe = _relevar(tmp_path)
+    for secreto in ("SECRETO123", "TOKEN_DE_PRUEBA"):
+        assert secreto not in informe and secreto not in result.stdout
+    assert "tokenAPIai\": <oculto>" in informe or "tokenAPIai: <oculto>" in informe

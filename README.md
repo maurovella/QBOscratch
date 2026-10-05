@@ -48,12 +48,17 @@ La UART, el audio I2S y ALSA se configuran a mano. Está en
 ## Probar el robot
 
 ```sh
+scripts/smoke/relevar.sh        # 1 minuto, no cambia nada: qué está OK y qué falta
 scripts/smoke/smoke.sh --list   # los 14 pasos
 scripts/smoke/smoke.sh          # corre todos, en orden
 scripts/smoke/smoke.sh --only 3
 ```
 
-Va de lo más barato a lo más caro: UART, nariz, boca, táctil, cabeza, parlante,
+`relevar.sh` junta el estado de cada módulo en un informe. Los escenarios de
+prueba, con qué hacer ante cada falla, están en
+[docs/Relevamiento_robot.md](docs/Relevamiento_robot.md).
+
+`smoke.sh` va de lo más barato a lo más caro: UART, nariz, boca, táctil, cabeza, parlante,
 micrófono, voz, cámaras, cara, reconocimiento de voz, LLM y Tooly completo. Cada
 paso prueba una sola cosa y dice qué significa si falla. Si uno falla, los de
 abajo no sirven hasta arreglarlo.
