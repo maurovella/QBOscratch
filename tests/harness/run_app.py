@@ -66,15 +66,28 @@ def text(data):
 
 
 def fifo_reader(fakelog, home, pipe):
-    path = os.path.join(home, "pipes", pipe)
+    """Lee todo lo que el script escriba en un FIFO.
+
+    Abre con O_RDWR para tener el FIFO siempre abierto. Con el reloj falso el
+    script escribe un mensaje tras otro sin pausa; si el lector cerrara y
+    reabriera entre mensajes, Linux descartaria lo escrito en ese hueco.
+    """
+    fd = os.open(os.path.join(home, "pipes", pipe), os.O_RDWR)
     while True:
-        fd = os.open(path, os.O_RDONLY)
-        while True:
-            chunk = os.read(fd, 4096)
-            if not chunk:
-                break
+        chunk = os.read(fd, 4096)
+        if chunk:
             fakelog.emit("fifo_rx", pipe=pipe, data=text(chunk))
-        os.close(fd)
+
+
+def pending_bytes(fd):
+    """Bytes escritos en el FIFO que el lector todavia no leyo (None si no se sabe)."""
+    try:
+        import fcntl
+        import struct
+        import termios
+        return struct.unpack("i", fcntl.ioctl(fd, termios.FIONREAD, b"\0\0\0\0"))[0]
+    except Exception:
+        return None
 
 
 def fifo_writer(home, writes):
@@ -83,6 +96,11 @@ def fifo_writer(home, writes):
         fd = os.open(os.path.join(home, "pipes", item["pipe"]), os.O_WRONLY)
         data = item["data"]
         os.write(fd, data if isinstance(data, bytes) else data.encode("utf-8"))
+        # No cerrar hasta que el script lo haya leido: si justo esta entre un EOF
+        # y su close(), cerrar ahora haria que Linux descarte el mensaje.
+        deadline = time_real() + 3
+        while pending_bytes(fd) and time_real() < deadline:
+            real_sleep(0.005)
         os.close(fd)
 
 
