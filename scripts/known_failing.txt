@@ -7,4 +7,3 @@ compile:apps/repeat.py
 compile:deamonsScripts/RTQR.py
 compile:deamonsScripts/autoStart.py
 compile:deamonsScripts/autoStop.py
-undefined:qbo/legacy/qbotalk.py:audioop
