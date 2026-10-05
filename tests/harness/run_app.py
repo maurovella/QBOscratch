@@ -197,6 +197,11 @@ def main():
         sys.path.insert(0, os.path.join(TESTS, "fakes_py2"))
     import fakelog
 
+    # FAKE_MISSING simula paquetes que no estan instalados en el robot
+    for name in os.environ.get("FAKE_MISSING", "").split(","):
+        if name:
+            sys.modules[name] = None
+
     scenario = fakelog.scenario()
     setup_home(home, scenario)
 

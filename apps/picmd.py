@@ -22,7 +22,6 @@ import errno
 import yaml
 import pdb
 
-from qbo.legacy import qbotalk as QBOtalk
 
 
 cmd = ""
@@ -391,7 +390,7 @@ except:
         sys.exit()
 
 # Qbo speak and voice recognition init.
-# Qbo = QBOtalk.QBOtalk()
+# Qbo = QBOtalk.QBOtalk()   (QBOtalk ya no se importa: ver comando 'listen')
 
 # if parameters in command then execute action
 if len(sys.argv) > 1: 
