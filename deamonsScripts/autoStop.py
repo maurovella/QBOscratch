@@ -1,5 +1,11 @@
-#!/usr/bin/env python2.7
-# -*- coding: latin-1 -*-
+#!/usr/bin/env python3
+
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from qbo import paths
+from qbo import tts
 
 import time
 import fileinput
@@ -10,17 +16,16 @@ import yaml
 import subprocess
 
 # fichero config, contiene languaje
-config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-print "CONFIG " + str(config)
+config = yaml.safe_load(open(paths.CONFIG))
+print("CONFIG " + str(config))
 
 if (config["language"] == "spanish"):
-	text = "Adíos"
-        speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        text = "Adíos"
 else:
-	text = "Good bye"
-        speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-result = subprocess.call(speak, shell = True)
+        text = "Good bye"
+result = tts.speak(text, config["language"], config["volume"])
 time.sleep(0.5)
 
-result = subprocess.call("/home/pi/Documents/deamonsScripts/QBO_scratch stop > /home/pi/sampleStop.log 2>&1", shell = True)
+with open(os.path.join(os.path.dirname(paths.HOME), "sampleStop.log"), "w") as log:
+    result = subprocess.call([paths.daemon("QBO_scratch"), "stop"], stdout=log, stderr=subprocess.STDOUT)
 

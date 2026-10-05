@@ -1,5 +1,3 @@
 # Fallas conocidas del gate. Esta lista solo puede achicarse.
 # Formato: compile:<ruta>  o  undefined:<ruta>:<nombre>
-compile:deamonsScripts/RTQR.py
-compile:deamonsScripts/autoStart.py
-compile:deamonsScripts/autoStop.py
+# Vacia: todos los .py del repo compilan con Python 3 y no tienen nombres indefinidos.

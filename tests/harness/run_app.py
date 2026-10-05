@@ -26,8 +26,8 @@ TESTS = os.path.dirname(HERE)
 PY2 = sys.version_info[0] == 2
 
 PIPES = ["pipe_cmd", "pipe_say", "pipe_listen", "pipe_feel", "pipe_findFace"]
-DAEMONS = ["QBO_listen", "QBO_scratch", "QBO_PiFaceFast", "QBO_say"]
-BINARIES = ["pico2wave", "aplay", "espeak"]
+DAEMONS = ["QBO_listen", "QBO_scratch", "QBO_PiFaceFast", "QBO_say", "writeWiFi.sh"]
+BINARIES = ["pico2wave", "aplay", "espeak", "sudo"]
 
 real_sleep = time.sleep
 

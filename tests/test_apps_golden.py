@@ -67,6 +67,13 @@ def _ultimo_tts(evts, texto):
     assert {e["argv"][0] for e in kinds(evts, "exec")} == {"pico2wave", "aplay"}
 
 
+def _wifi_literal(evts):
+    sudo = [e["argv"] for e in kinds(evts, "exec") if e["argv"][0] == "sudo"]
+    assert sudo == [["sudo", "bash", "<QBO>/deamonsScripts/writeWiFi.sh",
+                     "\"x'; echo pwn; '\"", "\"p\"", "WPA"]]
+    assert reason(evts) == "end"
+
+
 _INYECCION = ("py2 armaba el comando con comillas dobles y shell=True: la shell "
               "interpretaba el texto. Ahora llega literal a pico2wave")
 _SAY = {name: text for name, text, _lang in ar.app_cases.SAY_TEXTS}
@@ -91,6 +98,10 @@ DIVERGENCIAS = {
     "tooly: respuesta con comillas dobles": (
         _INYECCION + ". En py2 pico2wave recibia la frase partida en dos argumentos",
         lambda evts, out: _ultimo_tts(evts, 'She said "carpe diem" to me')),
+    "RTQR: comilla simple en el SSID": (
+        "py2 armaba 'sudo bash writeWiFi.sh ...' como texto: una comilla en el SSID del QR "
+        "cortaba el comando y lo que seguia lo ejecutaba la shell",
+        lambda evts, out: _wifi_literal(evts)),
     "say: largo 300 bytes": (
         "py2 leia 100 bytes del FIFO y tiraba el resto",
         _texto_literal(_SAY["largo 300 bytes"])),

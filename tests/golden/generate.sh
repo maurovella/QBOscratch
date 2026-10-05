@@ -10,7 +10,7 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
 mkdir -p "$WORK/py2"
-git archive "$REF" "Python projects" Tooly | tar -x -C "$WORK/py2"
+git archive "$REF" "Python projects" Tooly deamonsScripts | tar -x -C "$WORK/py2"
 cp -R tests "$WORK/tests"
 
 run_py2() {

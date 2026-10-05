@@ -1,4 +1,11 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
+
+import os
+import sys
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from qbo import paths
+from qbo import tts
 
 import time
 import fileinput
@@ -10,40 +17,35 @@ import subprocess
 
 
 # read config file
-config = yaml.safe_load(open("/home/pi/Documents/config.yml"))
-print "CONFIG " + str(config)
+config = yaml.safe_load(open(paths.CONFIG))
+print("CONFIG " + str(config))
 
 if (config["language"] == "spanish"):
-	text = "Hola"
-	speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        text = "Hola"
 else:
-	text = "Hello dear friends"
-        speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
-result = subprocess.call(speak, shell = True)
+        text = "Hello dear friends"
+result = tts.speak(text, config["language"], config["volume"])
 time.sleep(0.5)
 
 if config["startWith"] == "scratch":
-	if (config["language"] == "spanish"):
-		text = "estoy en modo scratch."
-        	speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+        if (config["language"] == "spanish"):
+                text = "estoy en modo scratch."
         else:
-        	text = "I'm in scratch mode."
-		speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
+                text = "I'm in scratch mode."
 
-        result = subprocess.call(speak, shell = True)
+        result = tts.speak(text, config["language"], config["volume"])
 
-	# User root
-	result = subprocess.call("/home/pi/Documents/deamonsScripts/QBO_scratch start > /home/pi/scratchMode.log 2>&1", shell = True)
+        # User root
+        with open(os.path.join(os.path.dirname(paths.HOME), "scratchMode.log"), "w") as log:
+                result = subprocess.call([paths.daemon("QBO_scratch"), "start"], stdout=log, stderr=subprocess.STDOUT)
 
 elif config["startWith"] == "interactive-dialogflow" or config["startWith"] == "interactive-gassistant":
         if (config["language"] == "spanish"):
                 text = "estoy en modo interactivo. Un momento, por favor."
-                speak = "pico2wave -l \"es-ES\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
         else:
                 text = "I'm in interactive mode. Please wait."
-                speak = "pico2wave -l \"en-US\" -w /home/pi/Documents/pico2wave.wav \"<volume level='" + str(config["volume"]) + "'>" + text + "\" && aplay -D convertQBO /home/pi/Documents/pico2wave.wav"
 
-        result = subprocess.call(speak, shell = True)
+        result = tts.speak(text, config["language"], config["volume"])
 
-	# User pi result = subprocess.call("/home/pi/Documents/deamonsScripts/QBO_PiFaceFast start > /home/pi/interactiveMode.log 2>&1", shell = True)
+        # User pi result = subprocess.call("/home/pi/Documents/deamonsScripts/QBO_PiFaceFast start > /home/pi/interactiveMode.log 2>&1", shell = True)
 

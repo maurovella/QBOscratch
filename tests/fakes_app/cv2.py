@@ -77,6 +77,10 @@ class CascadeClassifier(object):
         return [tuple(f) for f in faces]
 
 
+def cvtColor(frame, code):
+    return frame
+
+
 def rectangle(frame, p1, p2, color, thickness):
     fakelog.emit("rectangle", p1=[int(v) for v in p1], p2=[int(v) for v in p2])
 

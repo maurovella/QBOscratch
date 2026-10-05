@@ -19,6 +19,9 @@ SCRIPTS = {
     "TrackAndTalk": ("Tooly/TrackAndTalk.py", "apps/tooly.py"),
     "llama2Connection": ("Tooly/llama2Connection.py", "apps/tooly_audio.py"),
     "repeat": ("Tooly/repeat.py", "apps/repeat.py"),
+    "autoStart": ("deamonsScripts/autoStart.py", "deamonsScripts/autoStart.py"),
+    "autoStop": ("deamonsScripts/autoStop.py", "deamonsScripts/autoStop.py"),
+    "RTQR": ("deamonsScripts/RTQR.py", "deamonsScripts/RTQR.py"),
 }
 
 CASES = []
@@ -229,3 +232,24 @@ case("repeat: repite lo que oye", "repeat", [], scenario={
     "stt": ["one two three", "testing"],
     "stop": {"kind": "exec", "count": 4, "max_real_seconds": 5},
 })
+
+# --- arranque y apagado (deamonsScripts) ---------------------------------------------
+
+for _start in ("scratch", "interactive-dialogflow", "interactive-gassistant", "tooly"):
+    for _lang in ("english", "spanish"):
+        case("autoStart: %s en %s" % (_start, _lang), "autoStart", [],
+             scenario={"config": {"startWith": _start, "language": _lang, "volume": 80}})
+for _lang in ("english", "spanish"):
+    case("autoStop: en " + _lang, "autoStop", [], scenario={"config": {"language": _lang}})
+
+# --- WiFi por codigo QR ----------------------------------------------------------------
+
+QRS = [
+    ("WPA", "WIFI:S:MiRed;T:WPA;P:clave123;;"),
+    ("red oculta", "WIFI:S:Oculta;T:WPA;P:secreto;H:true;;"),
+    ("sin clave", "WIFI:S:Abierta;T:nopass;P:;;"),
+    ("con espacios", "WIFI:S:Casa de Ana;T:WPA;P:una clave larga;;"),
+    ("comilla simple en el SSID", "WIFI:S:x'; echo pwn; ';T:WPA;P:p;;"),
+]
+for _name, _qr in QRS:
+    case("RTQR: " + _name, "RTQR", [], scenario={"qr": [[], ["https://example.org"], [_qr]]})

@@ -1,4 +1,10 @@
+import os
+import sys
 import subprocess
+# raiz del repo en sys.path, para importar el paquete qbo sin instalarlo
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from qbo import paths
+
 import zbar
 from PIL import Image
 import cv2
@@ -54,12 +60,13 @@ def main():
                 type = info[indexEndName+3:indexEndType]
                 password = info[indexEndType+3:indexEndPass]
                 
-                blip = "aplay /home/pi/Documents/blip2.wav"
-	        result = subprocess.call(blip, shell = True)
+                result = subprocess.call(["aplay", os.path.join(paths.HOME, "blip2.wav")])
                 
-                wificonfig = "sudo bash /home/pi/Documents/deamonsScripts/writeWiFi.sh '\"%s\"' '\"%s\"' \"%s\""%(ssid, password, type)
+                # lista de argumentos, sin shell: el SSID y la clave salen de un QR
+                # que puede mostrar cualquiera, y esto corre con sudo
+                wificonfig = ["sudo", "bash", paths.daemon("writeWiFi.sh"), '"%s"' % ssid, '"%s"' % password, type]
                 print(wificonfig)
-                subprocess.call(wificonfig, shell = True)
+                subprocess.call(wificonfig)
                 
                 return
 

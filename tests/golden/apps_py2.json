@@ -1444,6 +1444,897 @@
   ], 
   "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c nose -co red\nSending: nose(red)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c servo -a 30 -x 1 -s 200\nSending: servo(1,30,200)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c mouth -e smile\nSending mouth(smile)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c say -t Hola que tal\nOpening FIFO...<QBO>/pipes/pipe_say\nSaying:  Hola que tal\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c pid -x 1 -p 26 2 16\nPID: [26, 2, 16]\nSetPid [1, 26, 2, 16]\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c nose -co\ncolor param error\nCommand error. Type ? to help\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: -c move_rel -a -40 -x 2\n\nSetAnlgeRelative: (2,-40)\nOpening FIFO...<QBO>/pipes/pipe_cmd\nFIFO opened<QBO>/pipes/pipe_cmd\nline_cmd: exit\n"
  }, 
+ "RTQR: WPA": {
+  "events": [
+   {
+    "index": 0, 
+    "k": "cam_open"
+   }, 
+   {
+    "found": [], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "https://example.org"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "WIFI:S:MiRed;T:WPA;P:clave123;;"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "<QBO>/blip2.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "sudo", 
+     "bash", 
+     "<QBO>/deamonsScripts/writeWiFi.sh", 
+     "\"MiRed\"", 
+     "\"clave123\"", 
+     "WPA"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "sudo bash <QBO>/deamonsScripts/writeWiFi.sh '\"MiRed\"' '\"clave123\"' \"WPA\"\n"
+ }, 
+ "RTQR: comilla simple en el SSID": {
+  "events": [
+   {
+    "index": 0, 
+    "k": "cam_open"
+   }, 
+   {
+    "found": [], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "https://example.org"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "WIFI:S:x'; echo pwn; ';T:WPA;P:p;;"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "<QBO>/blip2.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "sudo", 
+     "bash", 
+     "<QBO>/deamonsScripts/writeWiFi.sh", 
+     "\"x"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "pwn\n/bin/sh: 1: \": not found\nsudo bash <QBO>/deamonsScripts/writeWiFi.sh '\"x'; echo pwn; '\"' '\"p\"' \"WPA\"\n"
+ }, 
+ "RTQR: con espacios": {
+  "events": [
+   {
+    "index": 0, 
+    "k": "cam_open"
+   }, 
+   {
+    "found": [], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "https://example.org"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "WIFI:S:Casa de Ana;T:WPA;P:una clave larga;;"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "<QBO>/blip2.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "sudo", 
+     "bash", 
+     "<QBO>/deamonsScripts/writeWiFi.sh", 
+     "\"Casa de Ana\"", 
+     "\"una clave larga\"", 
+     "WPA"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "sudo bash <QBO>/deamonsScripts/writeWiFi.sh '\"Casa de Ana\"' '\"una clave larga\"' \"WPA\"\n"
+ }, 
+ "RTQR: red oculta": {
+  "events": [
+   {
+    "index": 0, 
+    "k": "cam_open"
+   }, 
+   {
+    "found": [], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "https://example.org"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "WIFI:S:Oculta;T:WPA;P:secreto;H:true;;"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "<QBO>/blip2.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "sudo", 
+     "bash", 
+     "<QBO>/deamonsScripts/writeWiFi.sh", 
+     "\"Oculta\"", 
+     "\"secreto\"", 
+     "WPA"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "sudo bash <QBO>/deamonsScripts/writeWiFi.sh '\"Oculta\"' '\"secreto\"' \"WPA\"\n"
+ }, 
+ "RTQR: sin clave": {
+  "events": [
+   {
+    "index": 0, 
+    "k": "cam_open"
+   }, 
+   {
+    "found": [], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "https://example.org"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "found": [
+     "WIFI:S:Abierta;T:nopass;P:;;"
+    ], 
+    "k": "qr_scan"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "<QBO>/blip2.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "sudo", 
+     "bash", 
+     "<QBO>/deamonsScripts/writeWiFi.sh", 
+     "\"Abierta\"", 
+     "\"\"", 
+     "nopass"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "sudo bash <QBO>/deamonsScripts/writeWiFi.sh '\"Abierta\"' '\"\"' \"nopass\"\n"
+ }, 
+ "autoStart: interactive-dialogflow en english": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hello dear friends"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>I'm in interactive mode. Please wait."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: interactive-dialogflow en spanish": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hola"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>estoy en modo interactivo. Un momento, por favor."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: interactive-gassistant en english": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hello dear friends"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>I'm in interactive mode. Please wait."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-gassistant", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-gassistant', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: interactive-gassistant en spanish": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hola"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>estoy en modo interactivo. Un momento, por favor."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-gassistant", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-gassistant', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: scratch en english": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hello dear friends"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>I'm in scratch mode."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_scratch", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "scratch", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'scratch', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: scratch en spanish": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hola"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>estoy en modo scratch."
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "QBO_scratch", 
+     "start"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "scratch", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'scratch', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: tooly en english": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hello dear friends"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "tooly", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'tooly', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStart: tooly en spanish": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='80'>Hola"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "tooly", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 80
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'tooly', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 80, 'op_question': True}\n"
+ }, 
+ "autoStop: en english": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "en-US", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>Good bye"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "QBO_scratch", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "english", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\n"
+ }, 
+ "autoStop: en spanish": {
+  "events": [
+   {
+    "argv": [
+     "pico2wave", 
+     "-l", 
+     "es-ES", 
+     "-w", 
+     "<QBO>/pico2wave.wav", 
+     "<volume level='100'>Ad\u00edos"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "argv": [
+     "aplay", 
+     "-D", 
+     "convertQBO", 
+     "<QBO>/pico2wave.wav"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "k": "sleep", 
+    "s": 0.5
+   }, 
+   {
+    "argv": [
+     "QBO_scratch", 
+     "stop"
+    ], 
+    "k": "exec"
+   }, 
+   {
+    "config": {
+     "age": 0, 
+     "gassistant_proyectid": null, 
+     "language": "spanish", 
+     "op_question": true, 
+     "startWith": "interactive-dialogflow", 
+     "tokenAPIai": "TOKEN_DE_PRUEBA", 
+     "volume": 100
+    }, 
+    "k": "config_after"
+   }, 
+   {
+    "k": "exit", 
+    "reason": "end"
+   }
+  ], 
+  "stdout": "CONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'spanish', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\n"
+ }, 
  "feel: derecha, arriba, izquierda": {
   "events": [
    {
