@@ -8,7 +8,12 @@
 import speech_recognition as sr
 import subprocess
 import json
-import apiai
+try:
+    import apiai
+except ImportError:
+    # Dialogflow V1 fue apagado por Google en 2021 y el paquete no se mantiene.
+    # Sin el, QBOtalk sigue sirviendo para escuchar (listen.py) pero no responde.
+    apiai = None
 import time
 import yaml
 import os
@@ -23,13 +28,12 @@ class QBOtalk:
     def __init__(self):
         config = yaml.safe_load(open(paths.CONFIG))
 
-        CLIENT_ACCESS_TOKEN = config["tokenAPIai"]
-        print("TOKEN: " + CLIENT_ACCESS_TOKEN)
+        CLIENT_ACCESS_TOKEN = config.get("tokenAPIai")
 #	You can enter your token in the next line
 #        CLIENT_ACCESS_TOKEN = 'YOUR_TOKEN'
         # obtain audio from the microphone
         self.r = sr.Recognizer()
-        self.ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
+        self.ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN) if apiai is not None else None
         self.Response = "hello"
         self.GetResponse = False
         self.GetAudio = False
@@ -55,6 +59,9 @@ class QBOtalk:
             else:
                     str = self.r.recognize_google(audio)
             print("LISTEN: " + str)
+            if self.ai is None:
+                print("Decode: apiai no esta instalado (Dialogflow V1 ya no existe), no hay respuesta")
+                return ""
             request = self.ai.text_request()
 #	    request.lang = 'es'
             request.query = str

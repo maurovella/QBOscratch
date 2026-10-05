@@ -77,6 +77,11 @@ class Recognizer(object):
 
     def listen_in_background(self, source, callback, phrase_time_limit=None):
         fakelog.emit("stt_background")
+        # guion "background": audios que llegan apenas se empieza a escuchar
+        while fakelog.scenario().get("background"):
+            fakelog.scenario()["background"].pop(0)
+            self._n += 1
+            callback(self, AudioData(self._n))
 
         def stopper(wait_for_stop=True):
             fakelog.emit("stt_background_stop")

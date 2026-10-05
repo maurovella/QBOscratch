@@ -41,8 +41,16 @@ def run(name, tmp_path, extra_env=None, scenario=None):
     case = dict(CASES[name])
     if scenario is not None:
         case["scenario"] = scenario
-    home = str(tmp_path / "Documents")
     script = os.path.join(ROOT, app_cases.SCRIPTS[case["script"]][1])
+    return run_script(script, tmp_path, case, extra_env)
+
+
+def run_script(script, tmp_path, case=None, extra_env=None, args=(), scenario=None):
+    """Como run(), para un script y un guion que no estan en app_cases."""
+    if case is None:
+        case = {"args": list(args), "scenario": scenario or {}, "env": {}, "cwd": None}
+    script = os.path.join(ROOT, script)
+    home = str(tmp_path / "Documents")
     env = {"QBO_HOME": home, "FAKE_NUMPY": "1"}
     env.update(extra_env or {})
     result = gen_apps.run_case(case, sys.executable, script, home, extra_env=env)
