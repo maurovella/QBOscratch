@@ -1,3 +1,16 @@
-# Agregar a /boot/firmware/config.txt (Trixie) o /boot/config.txt
+# Agregar a /boot/firmware/config.txt (Raspbian 13) o /boot/config.txt (Raspbian 9).
+# Es lo que tenia el config.txt de la SSD vieja del robot.
+
+# UART de la Q-board en /dev/serial0. Sacar ademas la consola serie de cmdline.txt:
+#   sudo raspi-config nonint do_serial_cons 1
+enable_uart=1
+
+# Bus I2S del audio (parlante y microfono de la cabeza)
 dtparam=i2s=on
 dtparam=audio=on
+
+# La SSD vieja tenia tambien 'dtoverlay=i2s-mmap'. Ese overlay no estaba en su
+# particion de boot, asi que la linea no hacia nada. No copiarla.
+
+# Solo si la placa no contesta con el mini-UART (ver docs/Guia_setup_Pi3_QBO.md, 1.2):
+#dtoverlay=disable-bt

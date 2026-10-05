@@ -4,6 +4,20 @@ Documento de contexto para continuar el diagnóstico en Cursor.
 
 ---
 
+## Actualización de octubre de 2026
+
+Tres datos nuevos, encontrados durante la migración a Python 3. Corrigen partes de este documento.
+
+1. **Los headers sí existen.** Los intentos de más abajo usaron `raspberrypi-kernel-headers` y `linux-headers-rpi-v7l`. El archivo trixie armhf de Raspberry Pi (`archive.raspberrypi.com`) tiene `linux-headers-rpi-v6` y `linux-headers-rpi-v7`. Para una Pi 3 con kernel de 32 bits corresponde **`linux-headers-rpi-v7`**. `armv7l` en `uname -m` es la arquitectura, no el sabor del kernel. Confirmar con `uname -r` antes de instalar. Verificado en el índice de paquetes, no en la Pi.
+2. **`my_loader.c` no compila tal cual en el kernel nuevo.** Usa `struct asoc_simple_card_info`. La rama `rpi-6.12.y` del kernel define `struct simple_util_info` en `include/sound/simple_card.h`. Hay que renombrar el struct. Verificado leyendo el header. No se compiló ni se cargó.
+3. **`convertQBO` no está en el `asound.conf` del repo.** `asound.conf` y `system/asound.conf` son el archivo de `/home/pi/Documents/`, que define `dmicQBO`, `dmicQBO_sv` y `speakerQBO`. La definición de `convertQBO` de más abajo es el fragmento de `/etc/asound.conf` pegado a mano. `system/asound-convertQBO.conf` la reconstruye nombrando la tarjeta (`hw:sndrpisimplecar,0`) en vez de `hw:1,0`, que en Raspbian 13 es el HDMI. ALSA la parsea; falta probarla con la tarjeta real.
+
+Además, la línea `dtoverlay=i2s-mmap` del `config.txt` viejo no hacía nada: el overlay no estaba en la partición de boot.
+
+Para probar el audio en el robot: pasos 7, 8 y 9 de `scripts/smoke/smoke.sh`.
+
+---
+
 ## Objetivo
 
 Hacer que el robot **QBO** hable por su **altavoz integrado** (Q-board vía I2S), no por el jack 3.5 mm ni HDMI del Raspberry Pi.

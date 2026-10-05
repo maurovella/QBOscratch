@@ -5,6 +5,8 @@
 
 > Leé primero el documento *Ingeniería inversa del firmware de la Q-board* — esta guía asume esa arquitectura (UART de control + I2S de audio).
 
+> **Actualizada en octubre de 2026 para Raspbian 13 (trixie).** Cambios respecto de la versión anterior: los archivos de arranque están en `/boot/firmware/`, el Bloque 4 usa `deploy/install.sh` y `scripts/smoke/smoke.sh`, y el Bloque 2 dice qué paquete de headers corresponde. Lo que sigue sin probarse en el robot está marcado.
+
 ---
 
 ## Resumen de los 4 bloques
@@ -24,6 +26,20 @@ En la Pi 3 hay un detalle importante: el **UART "bueno" (PL011)** está por defe
 
 ### 1.1 Habilitar el hardware serial y liberar la consola
 
+En Raspbian 13 los archivos de arranque están en **`/boot/firmware/`**: `/boot/firmware/config.txt` y `/boot/firmware/cmdline.txt`. En Raspbian 9 estaban en `/boot/`.
+
+Sin menús:
+
+```bash
+sudo raspi-config nonint do_serial_hw 0     # escribe enable_uart=1 en config.txt
+sudo raspi-config nonint do_serial_cons 1   # saca console=serial0,115200 de cmdline.txt
+sudo reboot
+```
+
+En `raspi-config nonint` el `0` habilita y el `1` deshabilita. Sale del código de `raspi-config` rama trixie; no aparece en la documentación oficial.
+
+Con menús es lo mismo de siempre:
+
 ```bash
 sudo raspi-config
 #   3 Interface Options  →  I6 Serial Port
@@ -31,36 +47,40 @@ sudo raspi-config
 #   "Would you like the serial port hardware enabled?"  →  YES
 ```
 
-Esto edita `/boot/cmdline.txt` (quita `console=serial0,115200`) y agrega `enable_uart=1` a `/boot/config.txt`.
+### 1.2 Qué UART queda en los GPIO
 
-### 1.2 Pasar el UART PL011 a los GPIO (recomendado en Pi 3)
+En la Pi 3 el UART primario, el que aparece como `/dev/serial0` en GPIO14/15, es por defecto el mini-UART (`ttyS0`). El PL011 (`ttyAMA0`) queda para el Bluetooth. `enable_uart=1` habilita el mini-UART y fija la frecuencia del núcleo para que el baudrate sea estable.
 
-Editá `/boot/config.txt` y agregá:
+**La SSD vieja del robot funcionaba así.** Su `config.txt` solo tenía `enable_uart=1`, sin ningún overlay de Bluetooth, y `cmdline.txt` no tenía consola serie. Empezá por esa configuración.
+
+Si la placa no contesta (paso 2 de `scripts/smoke/smoke.sh`), probá pasar el PL011 a los GPIO. Agregá a `/boot/firmware/config.txt`:
 
 ```ini
-# UART confiable en GPIO14/15 (mueve el PL011 fuera del Bluetooth)
 enable_uart=1
 dtoverlay=disable-bt
 ```
 
-Luego desactivá el servicio que usa el módem BT por serie:
+y desactivá el servicio que usa el módem BT por serie:
 
 ```bash
 sudo systemctl disable hciuart
 ```
 
-> Alternativa si querés conservar Bluetooth: `dtoverlay=miniuart-bt` (deja el mini-UART para BT y el PL011 en los GPIO). Para este proyecto, lo más simple y robusto es `disable-bt`.
+El overlay se llama `disable-bt`. En Raspbian 9 era `pi3-disable-bt`.
+
+> Alternativa si querés conservar Bluetooth: `dtoverlay=miniuart-bt`. Según la documentación de Raspberry Pi necesita además `force_turbo=1` o `core_freq=250`.
 
 ### 1.3 Verificación
 
 Reiniciá (`sudo reboot`) y comprobá:
 
 ```bash
-ls -l /dev/serial0          # debe apuntar a ttyAMA0 (PL011)
-# lrwxrwxrwx ... /dev/serial0 -> ttyAMA0
+ls -l /dev/serial0
+# lrwxrwxrwx ... /dev/serial0 -> ttyS0      mini-UART, como en la SSD vieja
+# lrwxrwxrwx ... /dev/serial0 -> ttyAMA0    PL011, con disable-bt
 ```
 
-Si `/dev/serial0 -> ttyAMA0`, quedó bien. (Si apunta a `ttyS0`, es el mini-UART: revisá `disable-bt`.)
+Las dos son válidas. La prueba real es `python3 scripts/smoke/qboard.py version`: si la placa contesta, la UART está bien.
 
 ### 1.4 Permisos
 
@@ -174,7 +194,21 @@ Eso te ahorra todo el bloque 2.4. Si no la tenés, seguí el camino de overlays 
 
 ---
 
+### 2.6 Estado en Raspbian 13
+
+El robot original no usaba un overlay. La tarjeta de sonido la crea un módulo de kernel, `my_loader` (`audio/rpi-i2s-audio/`), y está explicado en `docs/QBO-AUDIO-sndrpisimplecar.md`. Para recompilarlo en el kernel nuevo:
+
+- Headers: en una Pi 3 con kernel de 32 bits el paquete es `linux-headers-rpi-v7`. Mirá `uname -r` antes. `raspberrypi-kernel-headers` y `linux-headers-rpi-v7l` no existen ahí.
+- `my_loader.c` usa `struct asoc_simple_card_info`. El kernel 6.12 lo renombró a `struct simple_util_info` (`include/sound/simple_card.h`). Hay que cambiar ese nombre para que compile. **Sin probar:** no se pudo cargar el módulo.
+- Hay que recompilarlo en cada actualización de kernel.
+
+El overlay de 2.4 es la alternativa que no necesita headers. Tampoco está probado.
+
+---
+
 ## Bloque 3 — ALSA: el dispositivo `convertQBO`
+
+> `asound.conf` y `system/asound.conf` del repo **no definen `convertQBO`**. Definen `dmicQBO`, `dmicQBO_sv` y `speakerQBO`. La definición original estaba en el `/etc/asound.conf` de la SSD vieja, que no se conservó entero. `system/asound-convertQBO.conf` es una reconstrucción para agregar al final de `/etc/asound.conf`. Nombra la tarjeta (`sndrpisimplecar`) en vez de usar `hw:1,0`, porque en Raspbian 13 la tarjeta 1 es el HDMI. ALSA la acepta; no se probó con la tarjeta real.
 
 El código original reproduce con `aplay -D convertQBO`. `convertQBO` es un PCM "plug" que adapta el formato del archivo al que pide el codec I2S (sample rate, canales). Creá `/etc/asound.conf`:
 
@@ -218,16 +252,39 @@ arecord -D micQBO -f S16_LE -r 16000 -c 1 prueba.wav   # grabar
 ### 4.1 Dependencias
 
 ```bash
-sudo apt update
-sudo apt install -y python3-serial python3-pip alsa-utils libttspico-utils
-# pico2wave (TTS offline en español) viene en libttspico-utils
+cd /home/pi/Documents
+deploy/install.sh --dry-run    # muestra lo que va a hacer
+deploy/install.sh
 ```
 
-### 4.2 Portar `QboCmd.py` a Python 3
+En Raspbian 13 `pip install` global está bloqueado (PEP 668). El script instala por apt todo lo compilado (`deploy/apt-packages.txt`: pyserial, OpenCV 4.10, numpy, PyAudio, PyYAML, requests), crea `~/qbo-venv` con `--system-site-packages` e instala ahí con pip lo único que apt no tiene, `SpeechRecognition`.
 
-El `QboCmd.py` del repo es Python 2.7. Para Python 3 hay que cambiar pocas cosas: `print x` → `print(x)`, `dict.has_key(k)` → `k in dict`, y manejar bytes con `int` directamente (en Py3 iterar `bytes` ya da `int`, así que `ord(i)` se reemplaza por `i`). Puedo generarte el `qbo.py` ya portado y limpio si querés — avisame.
+`pico2wave` viene en `libttspico-utils`, que está en Debian (sección non-free) pero **no en Raspbian de 32 bits**. Ahí hay que bajar de <https://packages.debian.org/trixie/libttspico-utils> los `.deb` armhf de `libttspico-data`, `libttspico0t64` y `libttspico-utils` e instalarlos con `sudo apt-get install ./*.deb`. El script avisa si falta.
 
-### 4.3 Prueba rápida de control (display, nariz, táctil) — Python 3
+### 4.2 La librería ya está portada
+
+`qbo/protocol.py` es `QboCmd.py` en Python 3. Un golden master de 461 casos comprueba que emite los mismos bytes que el original (ver `MIGRATION.md`).
+
+Para probar el robot paso a paso, de la UART a Tooly completo:
+
+```bash
+scripts/smoke/smoke.sh --list
+scripts/smoke/smoke.sh
+```
+
+Y para hablar con la placa directamente:
+
+```bash
+python3 scripts/smoke/qboard.py version      # GET_VERSION
+python3 scripts/smoke/qboard.py nose blue
+python3 scripts/smoke/qboard.py mouth smile
+python3 scripts/smoke/qboard.py touch 10     # 0=nada, 1=derecha, 2=arriba, 3=izquierda
+python3 scripts/smoke/qboard.py speaker on   # SET_ENABLE_SPEAKER
+```
+
+### 4.3 Prueba mínima sin el repo (display, nariz, táctil)
+
+Si `qboard.py` no anda y querés descartar al repo, este script solo necesita `pyserial`:
 
 ```python
 import serial, time
@@ -272,15 +329,13 @@ send(0x44, [0b00000, 0b10001, 0b01110, 0b00000])
 print("touch:", send(0x46))
 ```
 
-> Esto es solo para validar el enlace. Para producción usá la librería portada (`qbo.py`), que maneja checksum de respuesta, NACK y reintentos.
+> Esto es solo para validar el enlace. Para todo lo demás usá `qbo/protocol.py`, que maneja checksum de respuesta, NACK y reintentos.
 
 ### 4.4 Prueba de audio
 
 ```bash
 # 1) Encender el parlante por la UART (SET_ENABLE_SPEAKER=0x86, parámetro=1).
-#    Usá la función send() del ejemplo 4.3 (calcula el checksum correctamente):
-python3 -c "import qbo_test; qbo_test.send(0x86,[1])"
-#   o con la librería portada:  HeadServo.SendCmdQBO(Command(0x86,1,1))
+python3 scripts/smoke/qboard.py speaker on
 
 # 2) Reproducir:
 aplay -D convertQBO /usr/share/sounds/alsa/Front_Center.wav
@@ -289,7 +344,8 @@ aplay -D convertQBO /usr/share/sounds/alsa/Front_Center.wav
 pico2wave -l "es-ES" -w /tmp/tts.wav "Hola, soy Qbo" && aplay -D convertQBO /tmp/tts.wav
 
 # 4) Grabar del micrófono:
-arecord -D micQBO -f S16_LE -r 16000 -c 1 -d 3 /tmp/mic.wav && aplay -D convertQBO /tmp/mic.wav
+arecord -D dmicQBO_sv -f S16_LE -r 16000 -c 2 -d 3 /tmp/mic.wav && aplay -D convertQBO /tmp/mic.wav
+# dmicQBO_sv es el dispositivo que busca Tooly por nombre (system/asound.conf)
 ```
 
 ---
