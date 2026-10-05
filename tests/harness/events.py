@@ -30,6 +30,15 @@ def _replace(value, old, new):
     return value
 
 
+def _mask_mail(event):
+    """Las direcciones reales del codigo original no van al golden."""
+    if event["k"] == "smtp_login":
+        event = dict(event, user="<SMTP_USER>")
+    elif event["k"] == "smtp_sendmail":
+        event = dict(event, sender="<SMTP_USER>", to=["<ALERT_TO>"] * len(event["to"]))
+    return event
+
+
 def normalize(events, home, aliases=()):
     """Deja el registro comparable entre corridas.
 
@@ -44,6 +53,7 @@ def normalize(events, home, aliases=()):
         event = _replace(event, home, HOME_TOKEN)
         for old, new in aliases:
             event = _replace(event, old, new)
+        event = _mask_mail(event)
         if event["k"] == "fifo_rx":
             fifo[event["pipe"]] = fifo.get(event["pipe"], "") + event["data"]
             continue

@@ -101,7 +101,7 @@
     "reason": "EXC NameError"
    }
   ], 
-  "stdout": "Traceback (most recent call last):\n  File \"/w/tests/harness/run_app.py\", line 225, in main\n    runpy.run_path(script, run_name=\"__main__\")\n  File \"/usr/local/lib/python2.7/runpy.py\", line 252, in run_path\n    return _run_module_code(code, init_globals, run_name, path_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/w/py2/Python projects/PiCmd.py\", line 382, in <module>\n    CommandOK_Action()\n  File \"/w/py2/Python projects/PiCmd.py\", line 300, in CommandOK_Action\n    listen_thd = Qbo.StartBack()\nNameError: global name 'Qbo' is not defined\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\n"
+  "stdout": "Traceback (most recent call last):\n  File \"/w/tests/harness/run_app.py\", line 230, in main\n    runpy.run_path(script, run_name=\"__main__\")\n  File \"/usr/local/lib/python2.7/runpy.py\", line 252, in run_path\n    return _run_module_code(code, init_globals, run_name, path_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/w/py2/Python projects/PiCmd.py\", line 382, in <module>\n    CommandOK_Action()\n  File \"/w/py2/Python projects/PiCmd.py\", line 300, in CommandOK_Action\n    listen_thd = Qbo.StartBack()\nNameError: global name 'Qbo' is not defined\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nOpen serial port sucessfully.\n/dev/serial0\n"
  }, 
  "PiCmd args: -c mouth -e love": {
   "events": [
@@ -642,7 +642,7 @@
     "reason": "EXC IndexError"
    }
   ], 
-  "stdout": "Traceback (most recent call last):\n  File \"/w/tests/harness/run_app.py\", line 225, in main\n    runpy.run_path(script, run_name=\"__main__\")\n  File \"/usr/local/lib/python2.7/runpy.py\", line 252, in run_path\n    return _run_module_code(code, init_globals, run_name, path_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/w/py2/Python projects/PiCmd.py\", line 362, in <module>\n    options[arg]()\n  File \"/w/py2/Python projects/PiCmd.py\", line 125, in get_axis\n    arg = scan_argument(idx)\n  File \"/w/py2/Python projects/PiCmd.py\", line 43, in scan_argument\n    return sys.argv[index]\nIndexError: list index out of range\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nPID: [26, 2, 16]\n"
+  "stdout": "Traceback (most recent call last):\n  File \"/w/tests/harness/run_app.py\", line 230, in main\n    runpy.run_path(script, run_name=\"__main__\")\n  File \"/usr/local/lib/python2.7/runpy.py\", line 252, in run_path\n    return _run_module_code(code, init_globals, run_name, path_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/local/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/w/py2/Python projects/PiCmd.py\", line 362, in <module>\n    options[arg]()\n  File \"/w/py2/Python projects/PiCmd.py\", line 125, in get_axis\n    arg = scan_argument(idx)\n  File \"/w/py2/Python projects/PiCmd.py\", line 43, in scan_argument\n    return sys.argv[index]\nIndexError: list index out of range\nCONFIG {'tokenAPIai': 'TOKEN_DE_PRUEBA', 'startWith': 'interactive-dialogflow', 'language': 'english', 'age': 0, 'gassistant_proyectid': None, 'volume': 100, 'op_question': True}\nPID: [26, 2, 16]\n"
  }, 
  "PiCmd args: -c pid -x 1 -p 26 2 16": {
   "events": [
@@ -3204,15 +3204,15 @@
    {
     "has_password": true, 
     "k": "smtp_login", 
-    "user": "toolyrobot@gmail.com"
+    "user": "<SMTP_USER>"
    }, 
    {
     "body": "Hello, the Tooly robot notice a strange behavior, could you call your relative to make sure everything is ok?", 
     "k": "smtp_sendmail", 
-    "sender": "toolyrobot@gmail.com", 
+    "sender": "<SMTP_USER>", 
     "subject": "Message of Tooly Robot", 
     "to": [
-     "natutaylor@gmail.com"
+     "<ALERT_TO>"
     ]
    }, 
    {
@@ -3258,15 +3258,15 @@
    {
     "has_password": true, 
     "k": "smtp_login", 
-    "user": "toolyrobot@gmail.com"
+    "user": "<SMTP_USER>"
    }, 
    {
     "body": "Hello, the Tooly robot listened to your family member again, don't worry", 
     "k": "smtp_sendmail", 
-    "sender": "toolyrobot@gmail.com", 
+    "sender": "<SMTP_USER>", 
     "subject": "Message of Tooly Robot", 
     "to": [
-     "natutaylor@gmail.com"
+     "<ALERT_TO>"
     ]
    }, 
    {

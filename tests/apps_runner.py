@@ -51,7 +51,9 @@ def run_script(script, tmp_path, case=None, extra_env=None, args=(), scenario=No
         case = {"args": list(args), "scenario": scenario or {}, "env": {}, "cwd": None}
     script = os.path.join(ROOT, script)
     home = str(tmp_path / "Documents")
-    env = {"QBO_HOME": home, "FAKE_NUMPY": "1"}
+    env = {"QBO_HOME": home, "FAKE_NUMPY": "1",
+           "QBO_SMTP_USER": "robot@example.org", "QBO_SMTP_PASSWORD": "clave-de-prueba",
+           "QBO_ALERT_TO": "familia@example.org"}
     env.update(extra_env or {})
     result = gen_apps.run_case(case, sys.executable, script, home, extra_env=env)
     return canon(events.normalize(result["events"], home)), result["stdout"].replace(home, events.HOME_TOKEN)
