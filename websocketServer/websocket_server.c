@@ -3,6 +3,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
+#include <fcntl.h>      /* O_RDONLY, O_WRONLY, O_NONBLOCK */
+#include <sys/stat.h>   /* mkfifo */
 #include <libwebsockets.h>
 
 #include<pthread.h>
