@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulador QBO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: banco de pruebas — cabeza 3D grande, panel a la derecha, mensajes del WebSocket debajo */
+:root {
+  --bg: #e9edf1; --panel: #ffffff; --sunk: #f3f5f8; --ink: #16202b; --muted: #5a6776; --line: #d3dae2;
+  --accent: #0a737c; --accent-soft: #d5ecee; --on-accent: #ffffff; --ok: #2c7d47; --err: #b93d27; --warn: #a8650a;
+  --stage-a: #dde4ea; --stage-b: #c3cdd7; --k-key: #7b4fb0; --k-str: #2c7d47; --k-num: #a8650a;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --r: 8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1319; --panel: #151c24; --sunk: #10161d; --ink: #e2e8ee; --muted: #8e9bab; --line: #263240;
+    --accent: #45c2ca; --accent-soft: #143238; --on-accent: #06272a; --ok: #5cc27e; --err: #f07a62; --warn: #e6a54a;
+    --stage-a: #1b2530; --stage-b: #0b1015; --k-key: #b994e8; --k-str: #5cc27e; --k-num: #e6a54a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1319; --panel: #151c24; --sunk: #10161d; --ink: #e2e8ee; --muted: #8e9bab; --line: #263240;
+  --accent: #45c2ca; --accent-soft: #143238; --on-accent: #06272a; --ok: #5cc27e; --err: #f07a62; --warn: #e6a54a;
+  --stage-a: #1b2530; --stage-b: #0b1015; --k-key: #b994e8; --k-str: #5cc27e; --k-num: #e6a54a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+html, body { background: var(--bg); color: var(--ink); }
+body { font-family: var(--font-body); font-size: 14px; line-height: 1.45; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 16px 20px 40px; display: grid; gap: 16px; }
+
+header.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; justify-content: space-between; }
+.brand { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.brand h1 { font-family: var(--font-head); font-weight: 600; font-size: 22px; margin: 0; }
+.brand span { color: var(--muted); font-family: var(--font-mono); font-size: 12px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--panel); font-size: 13px; font-weight: 500; }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.chip[data-mode="on"] i { background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent); }
+.chip[data-mode="connecting"] i { background: var(--warn); }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 16px; align-items: start; }
+.left { display: grid; gap: 16px; min-width: 0; }
+.stage { position: relative; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line);
+  background: radial-gradient(120% 90% at 50% 30%, var(--stage-a), var(--stage-b)); height: min(64vh, 600px); min-height: 380px; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+.stage canvas.dragging { cursor: grabbing; }
+.stage canvas.hover { cursor: pointer; }
+.hud { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.hud div { background: color-mix(in srgb, var(--panel) 86%, transparent); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 9px; font-family: var(--font-mono); font-size: 12px; font-variant-numeric: tabular-nums; }
+.hud b { font-weight: 500; color: var(--muted); margin-right: 6px; font-family: var(--font-body); }
+.hint { position: absolute; top: 12px; left: 12px; font-size: 12px; color: var(--muted); pointer-events: none; }
+.bubble { position: absolute; transform: translate(-50%, -100%); max-width: min(320px, 70%); background: var(--panel); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 12px; padding: 9px 13px; font-size: 15px; box-shadow: 0 6px 20px rgb(0 0 0 / .15); pointer-events: none; }
+.bubble::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 12px; height: 12px; background: var(--panel);
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transform: translateX(-50%) rotate(45deg); }
+.toast { position: absolute; top: 12px; right: 12px; background: var(--accent); color: var(--on-accent); padding: 6px 12px;
+  border-radius: 6px; font-weight: 500; font-size: 13px; pointer-events: none; }
+
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); }
+.panel { display: grid; }
+.panel section, details.try > div { padding: 14px 16px; display: grid; gap: 10px; }
+.panel section + section, details.try { border-top: 1px solid var(--line); }
+h2 { font-family: var(--font-head); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+h2 code { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 400; }
+p.note { margin: 0; color: var(--muted); font-size: 13px; }
+p.note code, .tag { font-family: var(--font-mono); font-size: 12px; background: var(--sunk); padding: 1px 4px; border-radius: 4px; }
+.row { display: flex; flex-wrap: wrap; gap: 6px; }
+button { font: inherit; font-size: 13px; color: var(--ink); background: var(--sunk); border: 1px solid var(--line); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); font-weight: 500; }
+.touch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.touch button { padding: 10px 6px; font-weight: 500; }
+label.field { display: grid; gap: 4px; font-size: 12px; color: var(--muted); }
+input.text, select, textarea { font: inherit; font-size: 13px; padding: 6px 9px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--sunk); color: var(--ink); width: 100%; min-width: 0; }
+input.text, textarea { font-family: var(--font-mono); font-size: 12px; }
+textarea { resize: vertical; min-height: 64px; }
+.status-line { font-size: 12.5px; color: var(--muted); }
+.status-line.ok { color: var(--ok); } .status-line.bad { color: var(--err); }
+.state { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; }
+.state dt { color: var(--muted); } .state dd { margin: 0; font-family: var(--font-mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+details.try > summary { padding: 14px 16px; cursor: pointer; font-family: var(--font-head); font-weight: 600; font-size: 12px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+details.try > summary span { text-transform: none; letter-spacing: 0; font-family: var(--font-body); font-weight: 400; margin-left: 6px; }
+details.try > div { padding-top: 0; }
+
+.log { display: grid; }
+.log-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.entries { max-height: 320px; overflow: auto; font-family: var(--font-mono); font-size: 12.5px; }
+.entry { display: grid; grid-template-columns: 74px 64px minmax(0, 1fr); gap: 4px 12px; padding: 7px 16px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.entry:last-child { border-bottom: 0; }
+.entry .t { color: var(--muted); font-variant-numeric: tabular-nums; }
+.entry .tool { font-weight: 500; color: var(--accent); }
+.entry .tool.out { color: var(--warn); } .entry .tool.bad { color: var(--err); } .entry .tool.sys { color: var(--muted); font-weight: 400; }
+.entry .json { overflow-wrap: anywhere; }
+.entry .json.plain { font-family: var(--font-body); }
+.k { color: var(--k-key); } .s { color: var(--k-str); } .n { color: var(--k-num); }
+.empty { padding: 16px; color: var(--muted); }
+
+@media (max-width: 920px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .left { display: contents; }
+  .stage { order: 1; } .panel { order: 2; } .log { order: 3; }
+  .stage { height: min(58vh, 460px); min-height: 320px; }
+}
+@media (max-width: 520px) {
+  .wrap { padding: 12px 16px 32px; }
+  .entry { grid-template-columns: 62px 52px minmax(0, 1fr); gap: 4px 8px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <div class="brand">
+      <h1>Simulador QBO</h1>
+      <span>arnés → API de herramientas → cabeza 3D</span>
+    </div>
+    <div class="chip" id="chip"><i></i><span id="chipText">Sin servidor</span></div>
+  </header>
+
+  <div class="layout">
+    <div class="left">
+      <div class="stage" id="stage">
+        <canvas id="gl" aria-label="Cabeza 3D del robot QBO"></canvas>
+        <div class="hint">Arrastrá para girar la vista · los círculos de la cabeza son los sensores de tacto</div>
+        <div class="bubble" id="bubble" hidden></div>
+        <div class="toast" id="toast" hidden></div>
+        <div class="hud">
+          <div><b>Giro</b><span id="hAxis1">0°</span></div>
+          <div><b>Inclinación</b><span id="hAxis2">0°</span></div>
+          <div><b>Nariz</b><span id="hNose">none</span></div>
+          <div><b>Boca</b><span id="hMouth">smile</span></div>
+        </div>
+      </div>
+
+      <div class="card log">
+        <div class="log-head">
+          <h2>Mensajes <code id="wsLabel">ws://…/ws</code></h2>
+          <button id="clearLog">Limpiar</button>
+        </div>
+        <div class="entries" id="entries"><div class="empty">Todavía no llegó ningún mensaje. Cada POST a /tools/… aparece acá tal cual llega por el WebSocket.</div></div>
+      </div>
+    </div>
+
+    <aside class="card panel">
+      <section>
+        <h2>Conexión <code>/ws</code></h2>
+        <p class="note" id="connNote"></p>
+        <label class="field" for="wsHost">Servidor de la API
+          <input class="text" id="wsHost" placeholder="localhost:8000" autocomplete="off">
+        </label>
+      </section>
+
+      <section>
+        <h2>Tacto <code>→ arnés</code></h2>
+        <div class="touch">
+          <button data-zone="left">Izquierda</button>
+          <button data-zone="up">Arriba</button>
+          <button data-zone="right">Derecha</button>
+        </div>
+        <label class="field" for="touchUrl">URL de input del arnés
+          <input class="text" id="touchUrl" autocomplete="off">
+        </label>
+        <p class="note">Cada botón hace <code>POST</code> con <code id="touchBody">{"zone": "left"}</code>. URL y JSON son provisorios hasta que el arnés publique los suyos.</p>
+        <div class="status-line" id="touchStatus"></div>
+      </section>
+
+      <section>
+        <h2>Estado de la cabeza</h2>
+        <dl class="state">
+          <dt>Nariz</dt><dd id="sNose">none</dd>
+          <dt>Boca</dt><dd id="sMouth">smile</dd>
+          <dt>Eje 1 (giro)</dt><dd id="sAxis1">0°</dd>
+          <dt>Eje 2 (inclinación)</dt><dd id="sAxis2">0°</dd>
+          <dt>Último say</dt><dd id="sSay">—</dd>
+        </dl>
+        <label class="check" style="display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)"><input type="checkbox" id="useVoice" checked> Voz del navegador para say</label>
+      </section>
+
+      <details class="try" id="tryBox">
+        <summary>Probar mensajes <span>sin servidor</span></summary>
+        <div>
+          <p class="note">Aplica un JSON como si hubiera llegado por el WebSocket. Sirve para probar la página sola.</p>
+          <label class="field" for="tryPreset">Ejemplos del contrato
+            <select id="tryPreset"></select>
+          </label>
+          <textarea id="tryJson" aria-label="Mensaje JSON"></textarea>
+          <div class="row"><button class="primary" id="tryApply">Aplicar</button></div>
+          <div class="status-line" id="tryStatus"></div>
+        </div>
+      </details>
+    </aside>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+"use strict";
+
+/* ===================== Contrato ===================== */
+const COLORS = ["none", "red", "blue", "green"];
+const EXPRESSIONS = ["smile", "sad", "serious", "love"];
+// Mismos patrones que PiCmd.py (SetMouth 0x110E00, ...), una fila por byte, la de arriba primero
+const MOUTH = {
+  smile:   [0x00, 0x11, 0x0E, 0x00],
+  sad:     [0x00, 0x0E, 0x11, 0x00],
+  serious: [0x00, 0x1F, 0x1F, 0x00],
+  love:    [0x1B, 0x1F, 0x0E, 0x04],
+};
+const NOSE_RGB = { none: [0, 0, 0], red: [1, 0, 0], blue: [0, 0.35, 1], green: [0, 1, 0.2] };
+const LIMITS = { 1: [-90, 90], 2: [-40, 40] };
+const DEG_PER_SEC = 120;
+
+const state = { nose: "none", expression: "smile", angle: { 1: 0, 2: 0 }, pos: { 1: 0, 2: 0 } };
+
+/* El mensaje es el mismo JSON del POST: la herramienta se reconoce por sus campos. */
+function toolOf(m) {
+  if (m && typeof m === "object") {
+    if (typeof m.tool === "string") return m.tool;
+    if ("text" in m) return "say";
+    if ("color" in m) return "nose";
+    if ("expression" in m) return "mouth";
+    if ("axis" in m && "angle" in m) return "head";
+  }
+  return null;
+}
+function apply(m, source = "ws") {
+  const tool = toolOf(m);
+  if (tool === "say" && typeof m.text === "string" && m.text.trim()) {
+    showBubble(m.text.trim()); document.getElementById("sSay").textContent = m.text.trim();
+  } else if (tool === "nose" && COLORS.includes(m.color)) {
+    state.nose = m.color;
+  } else if (tool === "mouth" && EXPRESSIONS.includes(m.expression)) {
+    state.expression = m.expression;
+  } else if (tool === "head" && (m.axis === 1 || m.axis === 2) && typeof m.angle === "number") {
+    const [lo, hi] = LIMITS[m.axis]; state.angle[m.axis] = Math.max(lo, Math.min(hi, m.angle));
+  } else {
+    log("?", m, "bad"); return false;
+  }
+  log(tool, m, source === "prueba" ? "out" : "");
+  refresh(); return true;
+}
+
+/* ===================== WebSocket ===================== */
+let ws = null, retry = 0;
+const chip = document.getElementById("chip"), chipText = document.getElementById("chipText");
+const wsHost = document.getElementById("wsHost"), connNote = document.getElementById("connNote");
+const store = { get(k) { try { return localStorage.getItem(k); } catch (_) { return null; } },
+                set(k, v) { try { localStorage.setItem(k, v); } catch (_) {} } };
+const params = new URLSearchParams(location.search);
+const servedByApi = location.protocol === "http:" && !!location.host;
+const defaultHost = params.get("ws") || (servedByApi ? location.host : "localhost:8000");
+wsHost.value = store.get("qbo.wsHost") || defaultHost;
+const canConnect = location.protocol === "http:" || location.protocol === "file:";
+
+function setChip(mode, text) { chip.dataset.mode = mode; chipText.textContent = text; }
+function connect() {
+  clearTimeout(retry);
+  const host = wsHost.value.trim() || "localhost:8000";
+  const url = `ws://${host}/ws`;
+  document.getElementById("wsLabel").textContent = url;
+  if (!canConnect) {
+    setChip("off", "Sin servidor");
+    connNote.innerHTML = "Esta copia publicada no puede conectarse a tu compu. Corré <code>apps/tools_api.py</code> en el repo y abrí <code>http://localhost:8000</code>. Mientras tanto, probá los mensajes a mano abajo.";
+    document.getElementById("tryBox").open = true;
+    return;
+  }
+  setChip("connecting", "Conectando…");
+  try { ws = new WebSocket(url); } catch (_) { onClose(); return; }
+  ws.onopen = () => {
+    setChip("on", "Conectado a la API");
+    connNote.innerHTML = `Recibiendo de <code>${esc(url)}</code>. Cada <code>POST /tools/…</code> que reciba la API se dibuja acá.`;
+    log("sys", "Conectado a " + url, "sys");
+  };
+  ws.onmessage = ev => { let m; try { m = JSON.parse(ev.data); } catch (_) { log("?", ev.data, "bad"); return; } apply(m); };
+  ws.onclose = onClose;
+  ws.onerror = () => {};
+}
+function onClose() {
+  if (ws) log("sys", "Se cortó la conexión con la API", "sys");
+  ws = null; setChip("connecting", "Reintentando…");
+  connNote.innerHTML = `No hay API en <code>ws://${esc(wsHost.value.trim() || "localhost:8000")}/ws</code>. ¿Está corriendo <code>apps/tools_api.py</code>? Reintento cada 3 segundos.`;
+  retry = setTimeout(connect, 3000);
+}
+wsHost.addEventListener("change", () => { store.set("qbo.wsHost", wsHost.value.trim()); if (ws) { ws.onclose = null; ws.close(); ws = null; } connect(); });
+
+/* ===================== Tacto → arnés ===================== */
+const touchUrl = document.getElementById("touchUrl"), touchStatus = document.getElementById("touchStatus");
+const touchHost = (wsHost.value.trim() || "localhost:8000").split(":")[0];
+touchUrl.value = params.get("touch") || store.get("qbo.touchUrl") || `http://${touchHost}:8001/sensors/touch`;
+touchUrl.addEventListener("change", () => store.set("qbo.touchUrl", touchUrl.value.trim()));
+const ZONE_PAD = { right: 1, up: 2, left: 3 };
+const ZONE_ES = { left: "izquierda", up: "arriba", right: "derecha" };
+
+async function touch(zone) {
+  flashPad(ZONE_PAD[zone]);
+  const body = { zone };
+  document.getElementById("touchBody").textContent = JSON.stringify(body);
+  log("tacto", body, "out");
+  touchStatus.className = "status-line"; touchStatus.textContent = `Enviando toque ${ZONE_ES[zone]} al arnés…`;
+  try {
+    const r = await fetch(touchUrl.value.trim(), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    touchStatus.className = "status-line " + (r.ok ? "ok" : "bad");
+    touchStatus.textContent = r.ok ? `El arnés recibió el toque ${ZONE_ES[zone]} (${r.status})` : `El arnés respondió ${r.status}`;
+  } catch (_) {
+    touchStatus.className = "status-line bad";
+    touchStatus.textContent = "No hay ningún arnés escuchando en esa URL. Corré tools/fake_harness.py o cambiá la URL.";
+  }
+}
+document.querySelectorAll("[data-zone]").forEach(b => b.onclick = () => touch(b.dataset.zone));
+
+/* ===================== Probar mensajes a mano ===================== */
+const PRESETS = [
+  { "text": "Hola, acá estoy" }, { "color": "green" }, { "color": "red" }, { "color": "blue" }, { "color": "none" },
+  { "expression": "smile" }, { "expression": "sad" }, { "expression": "serious" }, { "expression": "love" },
+  { "axis": 1, "angle": 30 }, { "axis": 1, "angle": -30 }, { "axis": 2, "angle": 20 }, { "axis": 2, "angle": -20 }, { "axis": 1, "angle": 0 },
+];
+const tryPreset = document.getElementById("tryPreset"), tryJson = document.getElementById("tryJson"), tryStatus = document.getElementById("tryStatus");
+PRESETS.forEach((p, i) => { const o = document.createElement("option"); o.value = i; o.textContent = `${toolOf(p)} · ${JSON.stringify(p)}`; tryPreset.appendChild(o); });
+const setTry = i => tryJson.value = JSON.stringify(PRESETS[i]);
+tryPreset.onchange = () => setTry(+tryPreset.value); setTry(0);
+document.getElementById("tryApply").onclick = () => {
+  let m; try { m = JSON.parse(tryJson.value); } catch (_) { tryStatus.className = "status-line bad"; tryStatus.textContent = "No es un JSON válido."; return; }
+  const ok = apply(m, "prueba");
+  tryStatus.className = "status-line " + (ok ? "ok" : "bad");
+  tryStatus.textContent = ok ? `Aplicado como ${toolOf(m)}.` : "No coincide con ninguna herramienta del contrato.";
+};
+
+/* ===================== Log ===================== */
+const entries = document.getElementById("entries");
+let logCount = 0;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmtTime = () => { const d = new Date(); return d.toLocaleTimeString("es-AR", { hour12: false }) + "." + String(d.getMilliseconds()).padStart(3, "0").slice(0, 2); };
+function prettyJson(o) {
+  return esc(JSON.stringify(o)).replace(/(&quot;[^&]*?&quot;)(\s*:)?|\b(-?\d+(\.\d+)?)\b/g, (m, str, colon, num) =>
+    str ? `<span class="${colon ? "k" : "s"}">${str}</span>${colon || ""}` : `<span class="n">${num}</span>`);
+}
+function log(tool, payload, kind = "") {
+  if (!logCount) entries.innerHTML = "";
+  const isText = typeof payload === "string";
+  entries.insertAdjacentHTML("afterbegin", `<div class="entry"><span class="t">${fmtTime()}</span>
+    <span class="tool ${kind}">${esc(kind === "sys" ? "·" : tool)}</span>
+    <span class="json${isText ? " plain" : ""}">${isText ? esc(payload) : prettyJson(payload)}</span></div>`);
+  logCount++;
+  while (entries.children.length > 100) entries.lastElementChild.remove();
+}
+document.getElementById("clearLog").onclick = () => { logCount = 0; entries.innerHTML = '<div class="empty">Log vacío.</div>'; };
+
+/* ===================== Estado visible ===================== */
+function refresh() {
+  for (const [id, v] of [["hNose", state.nose], ["sNose", state.nose], ["hMouth", state.expression], ["sMouth", state.expression],
+                         ["sAxis1", state.angle[1] + "°"], ["sAxis2", state.angle[2] + "°"]]) document.getElementById(id).textContent = v;
+  updateFace();
+}
+
+/* ===================== Voz y globo ===================== */
+const bubble = document.getElementById("bubble"), toast = document.getElementById("toast");
+let bubbleTimer = 0, toastTimer = 0;
+function showBubble(text) {
+  bubble.textContent = text; bubble.hidden = false;
+  clearTimeout(bubbleTimer); bubbleTimer = setTimeout(() => bubble.hidden = true, 1800 + text.length * 70);
+  if (document.getElementById("useVoice").checked && "speechSynthesis" in window) {
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text); u.lang = "es-ES"; u.rate = 1.02; u.pitch = 1.25;
+      const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.startsWith("es")); if (v) u.voice = v;
+      speechSynthesis.speak(u);
+    } catch (_) {}
+  }
+}
+function showToast(t) { toast.textContent = t; toast.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.hidden = true, 1600); }
+
+/* ===================== Escena 3D ===================== */
+const canvas = document.getElementById("gl"), stage = document.getElementById("stage");
+let renderer, scene, camera, panGroup, tiltGroup, headTop, noseMat, noseLight, leds = [], glows = [], pads = {};
+const orbit = { yaw: 0.28, pitch: 0.08, dist: 8.2, target: null };
+let down = null, ray = null, ndc = null;
+
+function sph(phi, theta, r) {  // phi alrededor de Y (π/2 = frente), theta desde +Y
+  return new THREE.Vector3(-Math.cos(phi) * Math.sin(theta) * r, Math.cos(theta) * r, Math.sin(phi) * Math.sin(theta) * r);
+}
+function orient(obj, normal) { obj.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal.clone().normalize()); }
+function glowTexture() {
+  const c = document.createElement("canvas"); c.width = c.height = 64; const g = c.getContext("2d");
+  const grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grd.addColorStop(0, "rgba(255,90,70,0.9)"); grd.addColorStop(0.35, "rgba(255,50,30,0.35)"); grd.addColorStop(1, "rgba(255,40,20,0)");
+  g.fillStyle = grd; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c);
+}
+function shadowTexture() {
+  const c = document.createElement("canvas"); c.width = c.height = 128; const g = c.getContext("2d");
+  const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  grd.addColorStop(0, "rgba(0,0,0,0.35)"); grd.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = grd; g.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c);
+}
+
+function buildScene() {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8796a8, 0.85));
+  const key = new THREE.DirectionalLight(0xffffff, 0.85); key.position.set(3, 5, 5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xbfdcff, 0.5); rim.position.set(-4, 3, -4); scene.add(rim);
+
+  const white = new THREE.MeshStandardMaterial({ color: 0xeef1f4, roughness: 0.38, metalness: 0.05 });
+  const grey = new THREE.MeshStandardMaterial({ color: 0xaab3bd, roughness: 0.5, metalness: 0.2 });
+  const dark = new THREE.MeshStandardMaterial({ color: 0x1e232a, roughness: 0.45, metalness: 0.3 });
+
+  // sombra y base
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 3.6), new THREE.MeshBasicMaterial({ map: shadowTexture(), transparent: true, depthWrite: false }));
+  shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.001; scene.add(shadow);
+
+  // cuerpo (perfil de revolución)
+  const prof = new THREE.SplineCurve([[0.001, 0], [0.84, 0], [0.95, 0.12], [0.99, 0.45], [0.95, 0.85], [0.84, 1.17], [0.6, 1.39], [0.3, 1.48], [0.001, 1.5]].map(p => new THREE.Vector2(p[0], p[1]))).getPoints(48);
+  const body = new THREE.Mesh(new THREE.LatheGeometry(prof, 64), white); scene.add(body);
+  const belt = new THREE.Mesh(new THREE.TorusGeometry(0.975, 0.025, 12, 80), grey); belt.rotation.x = Math.PI / 2; belt.position.y = 0.55; scene.add(belt);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.84, 0.86, 0.06, 64), dark); base.position.y = 0.03; scene.add(base);
+
+  // cuello + articulaciones
+  panGroup = new THREE.Group(); panGroup.position.y = 1.46; scene.add(panGroup);
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.3, 0.42, 32), grey); neck.position.y = 0.16; panGroup.add(neck);
+  tiltGroup = new THREE.Group(); tiltGroup.position.y = 0.36; panGroup.add(tiltGroup);
+
+  const head = new THREE.Group(); head.position.y = 0.82; tiltGroup.add(head);
+  head.add(new THREE.Mesh(new THREE.SphereGeometry(1, 72, 54), white));
+  const seam = new THREE.Mesh(new THREE.TorusGeometry(1.002, 0.012, 8, 96), grey); head.add(seam);
+  headTop = new THREE.Object3D(); headTop.position.y = 1.15; head.add(headTop);
+
+  // ojos = cámaras estéreo
+  for (const side of [-1, 1]) {
+    const eye = new THREE.Group();
+    const dir = sph(Math.PI / 2 - side * 0.36, 1.33, 1);
+    eye.position.copy(dir.clone().multiplyScalar(0.97)); orient(eye, dir); head.add(eye);
+    const bezel = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.27, 0.16, 48), dark); bezel.rotation.x = Math.PI / 2; bezel.position.z = 0.05; eye.add(bezel);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.205, 0.022, 12, 48), grey); ring.position.z = 0.135; eye.add(ring);
+    const lens = new THREE.Mesh(new THREE.SphereGeometry(0.185, 40, 24), new THREE.MeshStandardMaterial({ color: 0x040608, roughness: 0.08, metalness: 0.7 }));
+    lens.scale.z = 0.45; lens.position.z = 0.12; eye.add(lens);
+    const iris = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.018, 10, 40), new THREE.MeshStandardMaterial({ color: 0x1b3d58, emissive: 0x0b2235, roughness: 0.3, metalness: 0.5 }));
+    iris.position.z = 0.2; eye.add(iris);
+    const spark = new THREE.Mesh(new THREE.SphereGeometry(0.03, 12, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+    spark.position.set(-0.06, 0.06, 0.2); eye.add(spark);
+  }
+
+  // nariz RGB
+  const noseDir = sph(Math.PI / 2, 1.72, 1);
+  const noseHouse = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.095, 0.05, 32), dark);
+  const nh = new THREE.Group(); nh.position.copy(noseDir.clone().multiplyScalar(1.0)); orient(nh, noseDir); head.add(nh);
+  noseHouse.rotation.x = Math.PI / 2; nh.add(noseHouse);
+  noseMat = new THREE.MeshStandardMaterial({ color: 0x222222, emissive: 0x000000, roughness: 0.25 });
+  const noseBulb = new THREE.Mesh(new THREE.SphereGeometry(0.065, 24, 16), noseMat); noseBulb.position.z = 0.03; nh.add(noseBulb);
+  noseLight = new THREE.PointLight(0xffffff, 0, 1.4); noseLight.position.copy(noseDir.clone().multiplyScalar(1.25)); head.add(noseLight);
+
+  // boca: matriz 4x5 de LEDs sobre una ventana oscura curva
+  const T0 = 1.92, DT = 0.1, P0 = Math.PI / 2, DP = 0.12;
+  const win = new THREE.Mesh(new THREE.SphereGeometry(1.004, 40, 16, P0 - 2.8 * DP, 5.6 * DP, T0 - 0.07, 4 * DT + 0.14),
+    new THREE.MeshStandardMaterial({ color: 0x14080a, roughness: 0.25, metalness: 0.2, side: THREE.DoubleSide }));
+  head.add(win);
+  const ledGeo = new THREE.BoxGeometry(0.085, 0.062, 0.03);
+  const glowTex = glowTexture();
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++) {
+    const dir = sph(P0 + (c - 2) * DP, T0 + (r + 0.5) * DT, 1);
+    const mat = new THREE.MeshStandardMaterial({ color: 0x3a1616, emissive: 0x000000, roughness: 0.4 });
+    const led = new THREE.Mesh(ledGeo, mat); led.position.copy(dir.clone().multiplyScalar(1.012)); orient(led, dir); head.add(led);
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+    glow.scale.set(0.24, 0.24, 1); glow.position.copy(dir.clone().multiplyScalar(1.05)); glow.visible = false; head.add(glow);
+    leds.push(mat); glows.push(glow);
+  }
+
+  // sensores táctiles (CAP1203): 1 = derecha del robot, 2 = arriba, 3 = izquierda del robot
+  const padDefs = { 1: new THREE.Vector3(-1, 0.1, 0.12), 2: new THREE.Vector3(0, 1, 0.08), 3: new THREE.Vector3(1, 0.1, 0.12) };
+  for (const [k, d] of Object.entries(padDefs)) {
+    const n = d.clone().normalize(); const g = new THREE.Group(); g.position.copy(n.clone().multiplyScalar(1.003)); orient(g, n); head.add(g);
+    const disc = new THREE.Mesh(new THREE.CircleGeometry(0.16, 40), new THREE.MeshStandardMaterial({ color: 0xdfe4ea, roughness: 0.6 }));
+    const ringMat = new THREE.MeshStandardMaterial({ color: 0x0a737c, emissive: 0x000000, roughness: 0.4 });
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.014, 8, 48), ringMat);
+    g.add(disc, ring); disc.userData.pad = +k; pads[k] = { disc, ringMat, until: 0 };
+  }
+
+  orbit.target = new THREE.Vector3(0, 2.0, 0); ray = new THREE.Raycaster(); ndc = new THREE.Vector2();
+  resize(); new ResizeObserver(resize).observe(stage);
+}
+function resize() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h;
+  camera.fov = w < 520 ? 38 : 30; camera.updateProjectionMatrix();
+}
+
+function updateFace() {
+  if (!leds.length) return;
+  const rows = MOUTH[state.expression] || [0, 0, 0, 0];
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++) {
+    const on = !!(rows[r] & (1 << (4 - c))), i = r * 5 + c;
+    leds[i].emissive.setHex(on ? 0xff3b2f : 0x000000); leds[i].color.setHex(on ? 0xff6a5c : 0x3a1616); glows[i].visible = on;
+  }
+  const [R, G, B] = NOSE_RGB[state.nose] || [0, 0, 0], col = new THREE.Color(R, G, B), on = state.nose !== "none";
+  noseMat.emissive.copy(col); noseMat.color.setHex(on ? 0xffffff : 0x222222);
+  noseLight.color.copy(col); noseLight.intensity = on ? 0.9 : 0;
+}
+function flashPad(v) {
+  const p = pads[v]; if (!p) return;
+  p.until = performance.now() + 900;
+  showToast({ 1: "Toque: derecha", 2: "Toque: arriba", 3: "Toque: izquierda" }[v]);
+}
+function pickPad(ev) {
+  if (!ray) return 0;
+  const r = canvas.getBoundingClientRect();
+  ndc.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hit = ray.intersectObjects(Object.values(pads).map(p => p.disc))[0];
+  return hit ? hit.object.userData.pad : 0;
+}
+const PAD_ZONE = { 1: "right", 2: "up", 3: "left" };
+canvas.addEventListener("pointerdown", ev => { down = { x: ev.clientX, y: ev.clientY, yaw: orbit.yaw, pitch: orbit.pitch, moved: false, type: ev.pointerType }; canvas.setPointerCapture(ev.pointerId); });
+canvas.addEventListener("pointermove", ev => {
+  if (!down) { canvas.classList.toggle("hover", !!pickPad(ev)); return; }
+  const dx = ev.clientX - down.x, dy = ev.clientY - down.y;
+  if (Math.hypot(dx, dy) > 4) { down.moved = true; canvas.classList.add("dragging"); }
+  orbit.yaw = down.yaw - dx * 0.008;
+  if (down.type === "mouse") orbit.pitch = Math.max(-0.25, Math.min(0.9, down.pitch + dy * 0.006));
+});
+canvas.addEventListener("pointerup", ev => {
+  if (down && !down.moved) { const p = pickPad(ev); if (p) touch(PAD_ZONE[p]); }
+  down = null; canvas.classList.remove("dragging");
+});
+canvas.addEventListener("wheel", ev => { ev.preventDefault(); orbit.dist = Math.max(4.5, Math.min(13, orbit.dist * (1 + Math.sign(ev.deltaY) * 0.08))); }, { passive: false });
+
+const hAxis1 = document.getElementById("hAxis1"), hAxis2 = document.getElementById("hAxis2");
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  for (const a of [1, 2]) {
+    const step = DEG_PER_SEC * dt, diff = state.angle[a] - state.pos[a];
+    state.pos[a] = Math.abs(diff) <= step ? state.angle[a] : state.pos[a] + Math.sign(diff) * step;
+  }
+  // eje 1 positivo = la cabeza gira hacia SU derecha; eje 2 positivo = mira hacia arriba
+  panGroup.rotation.y = -THREE.MathUtils.degToRad(state.pos[1]);
+  tiltGroup.rotation.x = -THREE.MathUtils.degToRad(state.pos[2]);
+  hAxis1.textContent = state.pos[1].toFixed(0) + "°"; hAxis2.textContent = state.pos[2].toFixed(0) + "°";
+
+  for (const p of Object.values(pads)) {
+    const k = Math.max(0, (p.until - now) / 900);
+    p.ringMat.emissive.setRGB(0.05 * k, 0.9 * k, 0.95 * k);
+  }
+  camera.position.set(
+    orbit.target.x + Math.sin(orbit.yaw) * Math.cos(orbit.pitch) * orbit.dist,
+    orbit.target.y + Math.sin(orbit.pitch) * orbit.dist,
+    orbit.target.z + Math.cos(orbit.yaw) * Math.cos(orbit.pitch) * orbit.dist);
+  camera.lookAt(orbit.target);
+  renderer.render(scene, camera);
+  if (!bubble.hidden) {
+    const p = new THREE.Vector3(); headTop.getWorldPosition(p); p.project(camera);
+    bubble.style.left = ((p.x + 1) / 2 * stage.clientWidth) + "px";
+    bubble.style.top = Math.max(60, (1 - p.y) / 2 * stage.clientHeight - 8) + "px";
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ===================== Arranque ===================== */
+if (window.THREE) { buildScene(); requestAnimationFrame(frame); }
+else stage.insertAdjacentHTML("beforeend", '<p class="note" style="position:absolute;inset:auto 16px 50% 16px;text-align:center">No se pudo cargar Three.js. Revisá la conexión a internet.</p>');
+refresh();
+connect();
+})();
+</script>
+</body>
+</html>

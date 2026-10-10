@@ -6,6 +6,7 @@ python3-requests
 python3-numpy
 python3-opencv
 python3-pyaudio
+python3-aiohttp
 python3-audioop-lts
 python3-standard-aifc
 alsa-utils

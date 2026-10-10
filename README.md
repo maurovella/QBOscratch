@@ -16,8 +16,9 @@ qué falta probar en el robot está en [MIGRATION.md](MIGRATION.md).
 | Carpeta | Qué es |
 | --- | --- |
 | `qbo/` | Código compartido: protocolo de la Q-board (`protocol.py`), TTS (`tts.py`), cliente del LLM (`llm/`), rutas, sensor táctil, alertas por mail |
-| `apps/` | Lo que se ejecuta: `tooly.py`, `picmd.py`, `say.py`, `listen.py`, `feel.py`, `find_face.py`, `face_follow.py` |
+| `apps/` | Lo que se ejecuta: `tooly.py`, `picmd.py`, `say.py`, `listen.py`, `feel.py`, `find_face.py`, `face_follow.py`, `tools_api.py` |
 | `tools/` | Scripts de prueba manual: cámaras, servos, cabeza |
+| `web/` | Cabeza 3D del simulador, que dibuja lo que manda la API de herramientas |
 | `Python projects/` | Puentes hacia `apps/`. Los daemons y los comandos de siempre siguen usando estas rutas |
 | `deamonsScripts/` | Scripts `QBO_*` de arranque y parada del modo Scratch |
 | `deploy/` | Instalación en la Pi y units de systemd |
@@ -122,6 +123,28 @@ Las alertas por mail leen la cuenta y los destinatarios de variables de entorno:
 
 Para que arranque solo, `deploy/systemd/qbo-tooly.service` tiene las
 instrucciones en el encabezado.
+
+## API de herramientas y simulador
+
+El arnés decide qué hacer y llama a una de cuatro herramientas por HTTP. La API
+las ejecuta y una página las muestra en una cabeza 3D, así se puede mostrar el
+robot sin tenerlo:
+
+```sh
+python3 apps/tools_api.py          # API + cabeza 3D en http://localhost:8000
+python3 tools/fake_harness.py      # arnés de prueba, para el tacto
+apps/tools_api.py --robot          # en la Pi: además mueve la cabeza real
+```
+
+```text
+POST /tools/say    {"text": "Hola, acá estoy"}
+POST /tools/nose   {"color": "green"}           none, red, blue, green
+POST /tools/mouth  {"expression": "smile"}      smile, sad, serious, love
+POST /tools/head   {"axis": 1, "angle": 20}     axis 1 gira, axis 2 inclina
+```
+
+Contrato completo, decisiones pendientes de confirmar con el arnés y qué está
+verificado: [docs/Simulador_cabeza_3D.md](docs/Simulador_cabeza_3D.md).
 
 ## Modo Scratch
 
